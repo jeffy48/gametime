@@ -261,7 +261,7 @@ Returns all the groups.
 - Request
 
   - Method: GET
-  - URL: /groups
+  - URL: "/groups"
   - Body: none
 
 - Successful Response
@@ -339,7 +339,7 @@ Returns the details of a group specified by its id.
 - Request
 
   - Method: GET
-  - URL: /groups/:groupId
+  - URL: "/groups/:groupId"
   - Body: none
 
 - Successful Response
@@ -531,7 +531,7 @@ Updates and returns an existing group.
 - Request
 
   - Method: PUT
-  - URL: /groups/:groupId
+  - URL: "/groups/:groupId"
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -612,7 +612,7 @@ Deletes an existing group.
 - Request
 
   - Method: DELETE
-  - URL: /groups/:groupId
+  - URL: "/groups/:groupId"
   - Body: none
 
 - Successful Response
@@ -653,7 +653,7 @@ Returns all venues for a group specified by its id
 - Request
 
   - Method: GET
-  - URL: /groups/:groupId/venues
+  - URL: "/groups/:groupId/venues"
   - Headers:
     - Content-Type: application/json
   - Body: none
@@ -704,7 +704,7 @@ Creates and returns a new venue for a group specified by its id
 - Request
 
   - Method: POST
-  - URL: /groups/:groupId/venues
+  - URL: "/groups/:groupId/venues"
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -781,7 +781,7 @@ Edit a new venue specified by its id
 - Request
 
   - Method: PUT
-  - URL: /venues/:venueId
+  - URL: "/venues/:venueId"
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1001,7 +1001,7 @@ Returns the details of an event specified by its id.
 - Request
 
   - Method: GET
-  - URL: /events/:eventId
+  - URL: "/events/:eventId"
   - Body: none
 
 - Successful Response
@@ -1077,7 +1077,7 @@ Creates and returns a new event for a group specified by its id
 - Request
 
   - Method: POST
-  - URL: /groups/:groupId/events
+  - URL: "/groups/:groupId/events"
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1212,7 +1212,7 @@ Edit and returns an event specified by its id
 - Request
 
   - Method: PUT
-  - URL: "/events/:eventId
+  - URL: "/events/:eventId"
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1311,7 +1311,7 @@ Delete an event specified by its id
 - Request
 
   - Method: DELETE
-  - URL: "/events/:eventId
+  - URL: "/events/:eventId"
   - Body: none
 
 - Successful Response
@@ -1786,7 +1786,7 @@ Request attendance for an event specified by id.
 - Request
 
   - Method: POST
-  - URL: /events/:eventId/join
+  - URL: "/events/:eventId/join"
   - Headers:
     - Content-Type: application/json
   - Body: none
