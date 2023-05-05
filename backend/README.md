@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-`<insert database schema design here>`
+![dbdiagram](./dbdiagram.png)
 
 ## API Documentation
 
@@ -2165,3 +2165,5 @@ Return events filtered by query parameters.
       }
     }
     ```
+
+[def]: ./dbdiagram.pdf
