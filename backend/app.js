@@ -5,11 +5,14 @@ const cors = require('cors');
 const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
-const routes = require('./routes');
+
 const { environment } = require('./config');
 const isProduction = environment === 'production';
 
+const routes = require('./routes');
+
 const app = express();
+
 app.use(morgan('dev')); // logs info about requests and responses
 app.use(cookieParser()); // parses cookies
 app.use(express.json()); // parses json bodies of requests w/ Content-Type of application/json
