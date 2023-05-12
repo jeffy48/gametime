@@ -7,6 +7,22 @@ const { User } = require('../../db/models');
 
 const router = express.Router();
 
+//Get Session User API Route
+router.get(
+    '/',
+    (req, res) => {
+        const { user } = req;
+        if (user) {
+            const safeUser = {
+                id: user.id,
+                email: user.email,
+                username: user.username
+            };
+            return res.json({ user: safeUser });
+        } else return res.json({ user: null });
+    }
+);
+
 //Log In
 router.post(
     '/',
@@ -44,6 +60,7 @@ router.post(
     }
 );
 
+//Log Out
 router.delete(
     '/',
     (_req, res) => {
