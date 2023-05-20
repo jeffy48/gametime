@@ -3,7 +3,7 @@ const {
   Model, Validator
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Group extends Model {
+  class Event extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,9 +13,12 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Group.init({
-    id: DataTypes.INTEGER,
-    organizerId: {
+  Event.init({
+    groupId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    venueId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -27,35 +30,38 @@ module.exports = (sequelize, DataTypes) => {
         isAlphanumeric: true
       }
     },
-    about: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
     type: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isIn: [['In person', 'Online', 'Hybrid']]
+        isIn: [['in-person', 'online', 'hybrid']]
       }
     },
-    private: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false
-    },
-    city: {
-      type: DataTypes.STRING(50),
+    startDate: {
+      type: DataTypes.DATE,
       allowNull: false,
       validate: {
-        len: [1, 50],
-        isAlphanumeric: true
+        isDate: true
       }
     },
-    state: {
-      type: DataTypes.STRING(2),
+    endDate: {
+      type: DataTypes.DATE,
       allowNull: false,
       validate: {
-        len: [2, 2],
-        isAlpha: true
+        isDate: true
+      }
+    },
+    capacity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        isInt: true
+      }
+    },
+    price: {
+      type: DataTypes.DECIMAL,
+      validate: {
+        isDecimal: true
       }
     },
     previewImage: {
@@ -66,7 +72,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Group',
+    modelName: 'Event',
   });
-  return Group;
+  return Event;
 };

@@ -3,7 +3,7 @@ const {
   Model, Validator
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Group extends Model {
+  class Venue extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,40 +13,19 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Group.init({
-    id: DataTypes.INTEGER,
-    organizerId: {
+  Venue.init({
+    groupId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    name: {
+    address: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-        isAlphanumeric: true
-      }
-    },
-    about: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
-    type: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isIn: [['In person', 'Online', 'Hybrid']]
-      }
-    },
-    private: {
-      type: DataTypes.BOOLEAN,
       allowNull: false
     },
     city: {
       type: DataTypes.STRING(50),
       allowNull: false,
       validate: {
-        len: [1, 50],
         isAlphanumeric: true
       }
     },
@@ -54,19 +33,27 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(2),
       allowNull: false,
       validate: {
-        len: [2, 2],
+        len: [2,2],
         isAlpha: true
       }
     },
-    previewImage: {
-      type: DataTypes.STRING,
+    lat: {
+      type: DataTypes.DECIMAL,
+      allowNull: false,
       validate: {
-        isUrl: true
+        isFloat: true
+      }
+    },
+    lng: {
+      type: DataTypes.DECIMAL,
+      allowNull: false,
+      validate: {
+        isFloat: true
       }
     }
   }, {
     sequelize,
-    modelName: 'Group',
+    modelName: 'Venue',
   });
-  return Group;
+  return Venue;
 };
