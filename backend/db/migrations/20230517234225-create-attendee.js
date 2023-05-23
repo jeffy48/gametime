@@ -17,11 +17,21 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
+        onDelete: 'cascade'
       },
       eventId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'Events',
+          key: 'id'
+        },
+        onDelete: 'cascade'
       },
       status: {
         type: Sequelize.STRING,

@@ -11,6 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Image.belongsTo(models.Group, {
+        foreignKey: "imageableId",
+        constraints: false
+      });
+      Image.belongsTo(models.Event, {
+        foreignKey: "imageableId",
+        constraints: false
+      })
     }
   }
   Image.init({
@@ -19,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     imageableType: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM("Group", "Event"),
       allowNull: false,
       validate: {
         isIn: [["Group", "Event"]]

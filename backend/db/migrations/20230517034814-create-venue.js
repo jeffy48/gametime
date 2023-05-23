@@ -16,9 +16,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       groupId: {
-        //foreign key (group)
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'Groups',
+          key: 'id'
+        },
+        onDelete: 'cascade'
       },
       address: {
         type: Sequelize.STRING,

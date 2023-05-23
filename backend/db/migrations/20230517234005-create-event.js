@@ -16,14 +16,22 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       groupId: {
-        //foreign key (group)
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'Groups',
+          key: 'id'
+        },
+        onDelete: 'cascade'
       },
       venueId: {
-        // foreign key (venueId)
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'Venues',
+          key: 'id'
+        },
+        onDelete: 'cascade'
       },
       name: {
         type: Sequelize.STRING,
