@@ -19,10 +19,17 @@ module.exports = (sequelize, DataTypes) => {
         models.User,
           { foreignKey: 'organizerId' }
       );
+      Group.hasMany(
+        models.Event,
+          { foreignKey: 'groupId', onDelete: 'CASCADE',  hooks: true }
+      );
+      Group.hasMany(
+        models.Venue,
+          { foreignKey: 'groupId', onDelete: 'CASCADE',  hooks: true }
+      );
     }
   }
   Group.init({
-    id: DataTypes.INTEGER,
     organizerId: {
       type: DataTypes.INTEGER,
       allowNull: false
