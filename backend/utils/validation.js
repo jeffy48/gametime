@@ -21,6 +21,23 @@ const handleValidationErrors = (req, _res, next) => {
     next();
 };
 
+const handleGroupErrors = (req, _res, next) => {
+    const validationErrors = validationResult(req);
+
+    if (!validationErrors.isEmpty()) {
+        // const errors = {};
+        // validationErrors
+        //     .array()
+        //     .forEach(error => errors[error.param] = error.msg);
+
+        const err = Error("Group couldn't be found");
+        // err.errors = errors;
+        err.status = 404;
+        next(err);
+    }
+    next();
+};
+
 module.exports = {
-    handleValidationErrors
+    handleValidationErrors, handleGroupErrors
   };

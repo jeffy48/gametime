@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       );
       Group.belongsTo(
         models.User,
-          { foreignKey: 'organizerId' }
+          { foreignKey: 'organizerId', as: "Organizer" }
       );
       Group.hasMany(
         models.Event,
@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
       Group.hasMany(
         models.Venue,
           { foreignKey: 'groupId', onDelete: 'CASCADE',  hooks: true }
+      );
+      Group.hasMany(
+        models.Image,
+        { foreignKey: 'imageableId', as: "GroupImages", onDelete: 'CASCADE', hooks: true }
       );
     }
   }
@@ -71,12 +75,6 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: [2, 2],
         isAlpha: true
-      }
-    },
-    previewImage: {
-      type: DataTypes.STRING,
-      validate: {
-        isUrl: true
       }
     }
   }, {
