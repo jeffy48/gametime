@@ -1,4 +1,5 @@
 # Gametime
+https://gametime-4lie.onrender.com
 
 ## Database Schema Design
 
@@ -53,7 +54,7 @@ Returns the information about the current user that is logged in.
 - Request
 
   - Method: GET
-  - URL: "users/current"
+  - URL: "/session"
   - Body: none
 
 - Successful Response when there is a logged in user
@@ -97,7 +98,7 @@ information.
 - Request
 
   - Method: POST
-  - URL: "/login"
+  - URL: "/session"
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -167,7 +168,7 @@ user's information.
 - Request
 
   - Method: POST
-  - URL: "/signup"
+  - URL: "/users"
   - Headers:
     - Content-Type: application/json
   - Body:
