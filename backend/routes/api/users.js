@@ -55,10 +55,7 @@ router.post(
             err.errors = {
                 email: "User with that email already exists"
             }
-            res.send({
-                ...err.message,
-                ...err.errors
-            });
+            res.send(err);
         };
 
         const user = await User.create({ firstName, lastName, username, email, hashedPassword });
