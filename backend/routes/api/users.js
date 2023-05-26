@@ -13,11 +13,11 @@ const validateSignup = [
     check('firstName')
         .exists({ checkFalsy: true })
         .isLength({ min: 2 })
-        .withMessage('Please provide a valid first name with at least 2 characters.'),
+        .withMessage('First Name is required'),
     check('lastName')
         .exists({ checkFalsy: true })
         .isLength({ min: 2 })
-        .withMessage('Please provide a valid last name with at least 2 characters.'),
+        .withMessage('Last Name is required'),
     check('email')
         .exists({ checkFalsy: true })
         .isEmail()
@@ -37,7 +37,7 @@ const validateSignup = [
     handleValidationErrors
 ];
 
-//User Signup
+//Sign Up a User
 router.post(
     '/',
     validateSignup,
@@ -55,7 +55,7 @@ router.post(
             err.errors = {
                 email: "User with that email already exists"
             }
-            res.send(err);
+            return next(err);
         };
 
         const user = await User.create({ firstName, lastName, username, email, hashedPassword });
@@ -77,5 +77,6 @@ router.post(
 );
 
 //signup error handler
+
 
 module.exports = router;
