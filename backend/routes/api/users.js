@@ -50,12 +50,8 @@ router.post(
             where: { email: email}
         });
         if (emailAlreadyExists) {
-            throw new Error({
-                message: "User already exists",
-                errors: {
-                    email: "User with that email already exists"
-                }
-            })
+            throw new Error("User already exists")
+
         };
 
         const user = await User.create({ firstName, lastName, username, email, hashedPassword });
