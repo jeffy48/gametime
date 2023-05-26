@@ -1,4 +1,5 @@
 # Gametime
+
 https://gametime-4lie.onrender.com
 
 ## Database Schema Design
@@ -301,7 +302,7 @@ Returns all the groups.
 - Request
 
   - Method: GET
-  - URL: users/current/groups
+  - URL: groups/current
   - Body: none
 
 - Successful Response

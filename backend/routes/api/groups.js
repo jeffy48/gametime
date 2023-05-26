@@ -19,7 +19,7 @@ const validateGroupId = [
 
 const router = express.Router();
 
-// Get all groups
+// Get all Groups
 router.get('/', async (req, res) => {
     const allGroups = {Groups: []};
     const groups = await Group.findAll();
@@ -46,7 +46,24 @@ router.get('/', async (req, res) => {
         allGroups.Groups.push(group);
     };
     res.json(allGroups);
-})
+});
+
+//Get all Groups joined or organized by the Current User
+router.get(
+    '/',
+    requireAuth,
+    async (req, res) => {
+        const { user } = req;
+        console.log(user)
+        const userGroup = await Group.findAll({
+            where: {
+                organizerId: user.id
+            }
+        })
+        const userGroups2 = user.getGroups();
+        console.log(userGroups2);
+    }
+);
 
 //get details of a group from an id
 router.get('/:groupId', validateGroupId, async (req, res,) => {
@@ -82,6 +99,6 @@ router.get('/:groupId', validateGroupId, async (req, res,) => {
         }
     });
     res.json(group);
-})
+});
 
 module.exports = router;

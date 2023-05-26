@@ -89,7 +89,6 @@ router.post(
     }
 );
 
-//signup error handler
 
 
 module.exports = router;
