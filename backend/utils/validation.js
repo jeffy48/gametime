@@ -11,7 +11,7 @@ const handleValidationErrors = (req, _res, next) => {
         validationErrors
             .array()
             .forEach(error => {
-                errors[error.param] = error.msg;
+                errors[error.path] = error.msg;
                 console.log(error);
             });
         const err = Error('Bad request.');
