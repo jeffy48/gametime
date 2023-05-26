@@ -13,8 +13,7 @@ const validateGroupId = [
         if (!group) {
           throw new Error("Group couldn't be found");
     }
-    }),
-    handleGroupErrors
+    })
 ];
 
 const router = express.Router();
