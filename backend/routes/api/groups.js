@@ -12,9 +12,9 @@ const validateGroupId = [
         const group = await Group.findByPk(value);
         if (!group) {
           throw new Error("Group couldn't be found");
-    },
-    handleGroupErrors()
-    })
+    }
+    }),
+    handleGroupErrors
 ];
 
 const router = express.Router();
