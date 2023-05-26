@@ -45,7 +45,7 @@ router.post(
         const { firstName, lastName, username, email, password } = req.body;
         const hashedPassword = bcrypt.hashSync(password);
 
-        //check if email already exists
+        //check if email already exists (error handler: probably not the best way as each query is expensive)
         const emailAlreadyExists = await User.findOne({
             where: { email: email}
         });
@@ -54,6 +54,19 @@ router.post(
             err.status = 500;
             err.errors = {
                 email: "User with that email already exists"
+            }
+            return next(err);
+        };
+
+        //check if username already exists (error handler)
+        const usernameAlreadyExists = await User.findOne({
+            where: { username: username}
+        });
+        if (usernameAlreadyExists) {
+            const err = new Error("User already exists");
+            err.status = 500;
+            err.errors = {
+                username: "User with that username already exists"
             }
             return next(err);
         };
