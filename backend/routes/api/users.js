@@ -55,7 +55,7 @@ router.post(
             err.errors = {
                 email: "User with that email already exists"
             }
-            next();
+            res.send(err);
         };
 
         const user = await User.create({ firstName, lastName, username, email, hashedPassword });
@@ -77,11 +77,5 @@ router.post(
 );
 
 //signup error handler
-router.use((err, req, res, next) => {
-    res.render({
-        message: err.message,
-        err.errors
-      });
-});
 
 module.exports = router;
