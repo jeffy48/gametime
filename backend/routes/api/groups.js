@@ -60,8 +60,9 @@ router.get(
                 organizerId: user.id
             }
         })
-        const userGroups2 = user.getGroups();
+        const userGroups2 = await user.getGroups();
         console.log(userGroups2);
+        res.json(userGroups2);
     }
 );
 
