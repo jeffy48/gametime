@@ -54,15 +54,17 @@ router.get(
     requireAuth,
     async (req, res) => {
         const { user } = req;
+        console.log("LOGGG");
         console.log(user)
-        const userGroup = await Group.findAll({
-            where: {
-                organizerId: user.id
-            }
-        })
-        const userGroups2 = await user.getGroups();
-        console.log(userGroups2);
-        res.json(userGroups2);
+        const groups = await user.getGroups({ joinTableAttributes: [] })
+        console.log(groups);
+        const userGroups = {
+            Groups:
+                groups
+
+        }
+        res.json(userGroups);
+        //not working, rethink
     }
 );
 

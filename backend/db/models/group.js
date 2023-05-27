@@ -76,6 +76,12 @@ module.exports = (sequelize, DataTypes) => {
         len: [2, 2],
         isAlpha: true
       }
+    },
+    previewImage: {
+      type: DataTypes.STRING,
+      validate: {
+        isUrl: true
+      }
     }
   }, {
     sequelize,
