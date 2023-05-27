@@ -17,36 +17,24 @@ const validateGroupId = [
     handleGroupErrors
 ];
 
-const router = express.Router();
+//helper func
+const getNumMembers = async (groupInstance) => {
+    const groupObj = {Groups: []};
 
-// Get all Groups
-router.get('/', async (req, res) => {
-    const allGroups = {Groups: []};
-    const groups = await Group.findAll();
-    for (let i = 0; i < groups.length; i++) {
-        const group = { ...groups[i].dataValues };
+    for (let i = 0; i < groupInstance.length; i++) {
+        const group = { ...groupInstance[i].dataValues };
         const id = group.id;
         group.numMembers = await Member.count({
             where: {
                 groupId: { [Op.eq]: id }
             }
-        })
-
-        const previewImage = await Image.findOne({
-            where: {
-                imageableId: id,
-                imageableType: "Group",
-                preview: true
-            }
         });
-        if (previewImage) {
-            group.previewImage = previewImage.dataValues.url;
-        }
-
-        allGroups.Groups.push(group);
+        groupObj.Groups.push(group);
     };
-    res.json(allGroups);
-});
+    return groupObj;
+};
+
+const router = express.Router();
 
 //Get all Groups joined or organized by the Current User
 router.get(
@@ -54,21 +42,13 @@ router.get(
     requireAuth,
     async (req, res) => {
         const { user } = req;
-        console.log("LOGGG");
-        console.log(user)
-        const groups = await user.getGroups({ joinTableAttributes: [] })
-        console.log(groups);
-        const userGroups = {
-            Groups:
-                groups
-
-        }
-        res.json(userGroups);
-        //not working, rethink
+        const groups = await user.getGroups({ joinTableAttributes: [] });
+        const userGroup = await getNumMembers(groups);
+        res.json(userGroup);
     }
 );
 
-//get details of a group from an id
+//Get details of a Group from an id
 router.get('/:groupId', validateGroupId, async (req, res,) => {
     const id = req.params.groupId;
     const group = await Group.findByPk(id, {
@@ -86,15 +66,9 @@ router.get('/:groupId', validateGroupId, async (req, res,) => {
             model: Venue,
             attributes: { exclude: ['createdAt', 'updatedAt'] }
             }
-        ]
+        ],
+        attributes: { exclude: ['previewImage'] }
     });
-    // if (!group) {
-    //     console.log(group)
-    //     const err = new Error("Couldn't find a Group with the specified id");
-    //         err.status = 404;
-    //         err.message = "Group couldn't be found";
-    //     throw err;
-    // }
     // counts num of entries in Members table with matching group id and sets numMembers key to equal that
     group.dataValues.numMembers = await Member.count({
         where: {
@@ -102,6 +76,18 @@ router.get('/:groupId', validateGroupId, async (req, res,) => {
         }
     });
     res.json(group);
+});
+
+//Create a Group
+router.post('/', requireAuth, async (req, res) => {
+
+})
+
+// Get all Groups
+router.get('/', async (req, res) => {
+    const groups = await Group.findAll();
+    const allGroups = await getNumMembers(groups);
+    res.json(allGroups);
 });
 
 module.exports = router;
