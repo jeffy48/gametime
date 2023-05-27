@@ -88,7 +88,17 @@ router.get(
     requireAuth,
     async (req, res) => {
         const { user } = req;
-        const groups = await user.getGroups({ joinTableAttributes: [] });
+        const members = await Member.findAll({
+            where: { userId: user.id }
+        });
+        const groupArr = [];
+        members.forEach((member) => {
+            groupArr.push(member.groupId);
+        });
+        console.log(groupArr);
+        // console.log(groups);
+        const groups = await Group.findAll({ where: { id: {[Op.in]: groupArr }}});
+        console.log(groups);
         const userGroup = await getNumMembers(groups);
         res.json(userGroup);
     }
