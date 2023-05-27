@@ -39,12 +39,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-        isAlphanumeric: true
-      }
+      type: DataTypes.STRING(60),
+      allowNull: false
     },
     about: {
       type: DataTypes.TEXT,
@@ -52,10 +48,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     type: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isIn: [['In person', 'Online', 'Hybrid']]
-      }
+      allowNull: false
     },
     private: {
       type: DataTypes.BOOLEAN,
@@ -63,11 +56,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     city: {
       type: DataTypes.STRING(50),
-      allowNull: false,
-      validate: {
-        len: [1, 50],
-        isAlphanumeric: true
-      }
+      allowNull: false
     },
     state: {
       type: DataTypes.STRING(2),
@@ -85,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Group',
+    modelName: 'Group'
   });
   return Group;
 };

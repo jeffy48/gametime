@@ -40,6 +40,30 @@ const handleGroupErrors = (req, _res, next) => {
     next();
 };
 
+const handleValidationErrorsCreateUpdateGroup = (req, _res, next) => {
+    const validationErrors = validationResult(req);
+
+    if (!validationErrors.isEmpty()) {
+        const errors = {};
+        validationErrors
+            .array()
+            .forEach(error => {
+                //this is still giving undefined for type if multiple validation errors including type are thrown
+                if (errors[error.path] === 'undefined') errors.type = error.msg
+                else {
+                    errors[error.path] = error.msg;
+                    console.log(error);
+                }
+            });
+        const err = Error('Bad request.');
+        err.errors = errors;
+        err.status = 400;
+        err.title = "Bad request.";
+        next(err);
+    }
+    next();
+};
+
 module.exports = {
-    handleValidationErrors, handleGroupErrors
+    handleValidationErrors, handleGroupErrors, handleValidationErrorsCreateUpdateGroup
   };

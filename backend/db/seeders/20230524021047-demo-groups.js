@@ -23,7 +23,7 @@ module.exports = {
         organizerId: 1,
         name: "Bay Area Sixers",
         about: "something about us",
-        type: "Hybrid",
+        type: "In person",
         private: true,
         city: "San Jose",
         state: "CA",
