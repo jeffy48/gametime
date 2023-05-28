@@ -26,10 +26,9 @@ const validateCreateUpdate = [
         .exists({ checkFalsy: true })
         .isLength({ min: 50 })
         .withMessage('About must be 50 characters or more'),
-    oneOf([
-        check('type').equals('Online'),
-        check('type').equals('In person'),
-        ], { message: "Type must be 'Online' or 'In person'"}),
+    check('type')
+        .isIn(['Online', 'In person'])
+        .withMessage("Type must be 'Online' or 'In person'"),
     check('private')
         .exists({ checkFalsy: false })
         .isBoolean()
