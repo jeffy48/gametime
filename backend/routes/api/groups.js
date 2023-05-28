@@ -159,7 +159,20 @@ router.post('/', requireAuth, validateCreateUpdate, async (req, res) => {
     const userId = user.id;
 
     const group = await Group.create({ organizerId: userId, name, about, type, private, city, state});
-    res.json(group);
+    console.log(group);
+    const resGroup = {
+        id: group.dataValues.id,
+        organizerId: group.dataValues.organizerId,
+        name: group.dataValues.name,
+        about: group.dataValues.about,
+        type: group.dataValues.type,
+        private: group.dataValues.private,
+        city: group.dataValues.city,
+        state: group.dataValues.state,
+        createdAt: group.dataValues.createdAt,
+        updatedAt: group.dataValues.updatedAt
+    };
+    res.json(resGroup);
 });
 
 // Get all Groups
