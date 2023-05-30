@@ -22,42 +22,42 @@ module.exports = {
       {
         userId: 1,
         groupId: 1,
-        status: "Host"
+        status: "host"
       },
       {
         userId: 1,
         groupId: 2,
-        status: "Host"
+        status: "host"
       },
       {
         userId: 2,
         groupId: 3,
-        status: "Host"
+        status: "host"
       },
       {
         userId: 3,
         groupId: 4,
-        status: "Host"
+        status: "host"
       },
       {
         userId: 4,
         groupId: 1,
-        status: "Co-host"
+        status: "co-host"
       },
       {
         userId: 4,
         groupId: 2,
-        status: "Member"
+        status: "member"
       },
       {
         userId: 4,
         groupId: 3,
-        status: "Member"
+        status: "member"
       },
       {
         userId: 4,
         groupId: 4,
-        status: "Pending"
+        status: "pending"
       }
     ], {});
   },

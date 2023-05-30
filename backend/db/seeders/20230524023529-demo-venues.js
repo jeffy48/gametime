@@ -50,6 +50,14 @@ module.exports = {
         state: "CA",
         lat: 35.1234567,
         lng: -110.1234567
+      },
+      {
+        groupId: 1,
+        address: "789 Random Way",
+        city: "San Jose",
+        state: "CA",
+        lat: 55.1234527,
+        lng: -111.1234567
       }
     ], {});
   },

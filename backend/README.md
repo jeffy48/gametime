@@ -655,7 +655,7 @@ Returns all venues for a group specified by its id
 - Request
 
   - Method: GET
-  - URL: "/groups/:groupId/venues"
+  - URL: "/venues/:groupId"
   - Headers:
     - Content-Type: application/json
   - Body: none
@@ -706,7 +706,7 @@ Creates and returns a new venue for a group specified by its id
 - Request
 
   - Method: POST
-  - URL: "/groups/:groupId/venues"
+  - URL: "/venues/:groupId"
   - Headers:
     - Content-Type: application/json
   - Body:

@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { jwtConfig } = require('../config');
-const { User, Group } = require('../db/models');
+const { User, Group, Member } = require('../db/models');
+const { Op } = require('sequelize');
 
 const { secret, expiresIn } = jwtConfig;
 
@@ -86,5 +87,42 @@ const requireOrganizerAuth = async (req, _res, next) => {
     err.errors = { message: 'Forbidden' };
     err.status = 403;
     return next(err);
+};
+
+const requireCoHostAuth = async (req, _res, next) => {
+    const id = req.user.id;
+    const group = await Member.findOne({
+        where: {
+            userId: id,
+            groupId: req.params.groupId,
+            status: { [Op.or]: ['host', 'co-host'] }
+        }
+    });
+    if (group) return next();
+
+    const err = new Error('Forbidden');
+    // err.title = 'Authentication required';
+    err.errors = { message: 'Forbidden' };
+    err.status = 403;
+    return next(err);
+};
+
+const requireCoHostAuthVenue = async (req, _res, next) => {
+    const id = req.user.id;
+    const group = await Member.findOne({
+        where: {
+            userId: id,
+            groupId: req.params.venueId,
+            status: { [Op.or]: ['host', 'co-host'] }
+        }
+    });
+    if (group) return next();
+
+    const err = new Error('Forbidden');
+    // err.title = 'Authentication required';
+    err.errors = { message: 'Forbidden' };
+    err.status = 403;
+    return next(err);
 }
-module.exports = { setTokenCookie, restoreUser, requireAuth, requireOrganizerAuth };
+
+module.exports = { setTokenCookie, restoreUser, requireAuth, requireOrganizerAuth, requireCoHostAuth, requireCoHostAuthVenue };
