@@ -75,7 +75,7 @@ const validateVenueReqBody = [
 const router  = express.Router();
 
 //Get All Venues for a Group specified by id
-router.get('/group/:groupId', validateGroupId, requireAuth, requireCoHostAuth, async (req, res) => {
+router.get('/groups/:groupId', validateGroupId, requireAuth, requireCoHostAuth, async (req, res) => {
     // console.log(validateGroupId);
     const venues = await Venue.findAll({
         where: { groupId: req.params.groupId },
@@ -87,7 +87,7 @@ router.get('/group/:groupId', validateGroupId, requireAuth, requireCoHostAuth, a
 
 //Create a new Venue for a Group specified by its id
 //working but body val errors aren't showing correct msg
-router.post('/group/:groupId', validateGroupId, validateVenueReqBody, requireAuth, requireCoHostAuthVenue, async (req, res) => {
+router.post('/groups/:groupId', validateGroupId, validateVenueReqBody, requireAuth, requireCoHostAuthVenue, async (req, res) => {
     const { address, city, state, lat, lng } = req.body;
     const venue = await Venue.create({ groupId: Number(req.params.groupId), address, city, state, lat, lng });
     console.log(req.params.groupId);

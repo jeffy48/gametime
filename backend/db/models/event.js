@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
         models.Venue,
           { foreignKey: 'venueId' }
       );
+      Event.hasMany(
+        models.Image,
+          { foreignKey: 'imageableId', as: "EventImages", onDelete: 'CASCADE', hooks: true }
+      );
     }
   }
   Event.init({
@@ -38,51 +42,33 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-        isAlphanumeric: true
-      }
+      allowNull: false
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false
     },
     type: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isIn: [['in-person', 'online', 'hybrid']]
-      }
+      allowNull: false
     },
     startDate: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        isDate: true
-      }
+      allowNull: false
     },
     endDate: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        isDate: true
-      }
+      allowNull: false
     },
     capacity: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        isInt: true
-      }
+      allowNull: false
     },
     price: {
-      type: DataTypes.DECIMAL,
-      validate: {
-        isDecimal: true
-      }
+      type: DataTypes.DECIMAL
     },
     previewImage: {
-      type: DataTypes.STRING,
-      validate: {
-        isUrl: true
-      }
+      type: DataTypes.STRING
     }
   }, {
     sequelize,

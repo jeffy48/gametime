@@ -655,7 +655,7 @@ Returns all venues for a group specified by its id
 - Request
 
   - Method: GET
-  - URL: "/venues/:groupId"
+  - URL: "/venues/group/:groupId"
   - Headers:
     - Content-Type: application/json
   - Body: none
@@ -706,7 +706,7 @@ Creates and returns a new venue for a group specified by its id
 - Request
 
   - Method: POST
-  - URL: "/venues/:groupId"
+  - URL: "/venues/groups/:groupId"
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -925,7 +925,7 @@ Returns all the events of a group specified by its id
 - Request
 
   - Method: GET
-  - URL: "/groups/:groupId/events"
+  - URL: "/events/groups/:groupId"
   - Body: none
 
 - Successful Response
@@ -1079,7 +1079,7 @@ Creates and returns a new event for a group specified by its id
 - Request
 
   - Method: POST
-  - URL: "/groups/:groupId/events"
+  - URL: "/events/groups/:groupId"
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1519,7 +1519,7 @@ Change the status of a membership for a group specified by id.
 - Request
 
   - Method: PUT
-  - URL: "/groups/:groupId/members"
+  - URL: "/groups/:groupId/membership"
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1615,7 +1615,7 @@ Delete a membership to a group specified by id.
 - Request
 
   - Method: DELETE
-  - URL: /groups/:groupId/members"
+  - URL: /groups/:groupId/membership"
   - Headers:
     - Content-Type: application/json
   - Body:
