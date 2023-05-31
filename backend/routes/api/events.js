@@ -458,6 +458,7 @@ router.put('/:eventId', validateEventId, validateVenueId, requireAuth, async (re
     const updatedEvent = await Event.findByPk(req.params.eventId, {
         attributes: { exclude: ['description', 'previewImage', 'createdAt', 'updatedAt'] }
     })
+    updatedEvent.dataValues.price = parseFloat(updatedEvent.dataValues.price);
     res.json(updatedEvent);
 });
 
