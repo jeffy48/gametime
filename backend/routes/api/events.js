@@ -396,6 +396,12 @@ router.post('/groups/:groupId', validateGroupId, validateEventBody, requireAuth,
         groupId: req.params.groupId, venueId, name, type, capacity, price, description, startDate, endDate
     });
 
+    const attendee = await Attendee.create({
+        userId: req.user.id,
+        eventId: event.dataValues.id,
+        status: 'host'
+    });
+
     const newEvent = {
         id: event.dataValues.id,
         groupId: event.dataValues.groupId,
