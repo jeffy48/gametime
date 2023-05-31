@@ -476,6 +476,7 @@ router.post('/', requireAuth, validateCreateUpdate, async (req, res) => {
         createdAt: group.dataValues.createdAt,
         updatedAt: group.dataValues.updatedAt
     };
+    res.status = 201;
     res.json(resGroup);
 });
 
