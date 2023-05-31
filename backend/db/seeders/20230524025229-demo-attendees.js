@@ -43,6 +43,11 @@ module.exports = {
         userId: 4,
         eventId: 1,
         status: "attending"
+      },
+      {
+        userId: 2,
+        eventId: 1,
+        status: 'attending'
       }
     ], {});
   },

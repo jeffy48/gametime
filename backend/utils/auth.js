@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { jwtConfig } = require('../config');
-const { User, Group, Member, Attendee } = require('../db/models');
+const { User, Group, Member, Attendee, Event } = require('../db/models');
 const { Op } = require('sequelize');
 
 const { secret, expiresIn } = jwtConfig;
@@ -107,6 +107,30 @@ const requireCoHostAuth = async (req, _res, next) => {
     return next(err);
 };
 
+const requireCoHostAuthEvent = async (req, _res, next) => {
+    const id = req.user.id;
+    const event = await Event.findOne({
+        where: {
+            id: req.params.eventId
+        }
+    });
+    const groupId = event.dataValues.groupId;
+    const group = await Member.findOne({
+        where: {
+            userId: id,
+            groupId,
+            status: { [Op.or]: ['host', 'co-host'] }
+        }
+    });
+    if (group) return next();
+
+    const err = new Error('Forbidden');
+    // err.title = 'Authentication required';
+    err.errors = { message: 'Forbidden' };
+    err.status = 403;
+    return next(err);
+};
+
 const requireCoHostAuthVenue = async (req, _res, next) => {
     const id = req.user.id;
     const group = await Member.findOne({
@@ -162,4 +186,4 @@ const requireHostOrCoHostAuth = async (req, res, next) => {
     return next(err);
 };
 
-module.exports = { setTokenCookie, restoreUser, requireAuth, requireOrganizerAuth, requireCoHostAuth, requireCoHostAuthVenue, requireCoHostAuthAttendee, requireHostOrCoHostAuth };
+module.exports = { setTokenCookie, restoreUser, requireAuth, requireOrganizerAuth, requireCoHostAuth, requireCoHostAuthVenue, requireCoHostAuthAttendee, requireHostOrCoHostAuth, requireCoHostAuthEvent };

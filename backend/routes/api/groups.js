@@ -3,7 +3,7 @@ const { check, oneOf, body } = require('express-validator');
 const { Op } = require('sequelize');
 const { requireAuth, requireOrganizerAuth, requireCoHostAuth, requireHostOrCoHostAuth } = require('../../utils/auth');
 const { User, Group, Image, Venue, Event, Attendee, Member, sequelize } = require('../../db/models');
-const { handleValidationErrors, handleGroupErrors, handleValidationErrorsCreateUpdateGroup } = require('../../utils/validation');
+const { handleValidationErrors, handleGroupErrors, handleValidationErrorsCreateUpdateGroup, handleGroupImageErrors } = require('../../utils/validation');
 const { param } = require('express-validator');
 
 const validateGroupId = [
@@ -11,6 +11,16 @@ const validateGroupId = [
         const group = await Group.findByPk(value);
         if (!group) {
           throw new Error("Group couldn't be found");
+    }
+    }),
+    handleGroupImageErrors
+];
+
+const validateImageId = [
+    param('imageId').custom(async value => {
+        const image = await Image.findByPk(value);
+        if (!image) {
+          throw new Error("Group Image couldn't be found");
     }
     }),
     handleGroupErrors
@@ -123,8 +133,34 @@ router.post('/:groupId/images', validateGroupId, requireAuth, requireOrganizerAu
     res.json(groupImage);
 });
 
+//Delete an Image for a Group
+router.delete('/:groupId/images/:imageId', requireAuth, requireCoHostAuth, validateImageId, async (req, res) => {
+    const destroyed = await Image.destroy({
+        where: {
+            id: req.params.imageId
+        }
+    });
+    res.json({
+        message: "Successfully deleted"
+      });
+});
+
 //Delete membership to a group specified by id
 router.delete('/:groupId/membership', validateBodyMember, validateGroupId, requireAuth, async (req, res) => {
+    const id = req.user.id;
+    //check if curr user is host of group
+    const checkHost = await Group.findOne({ where: {
+        organizerId: id,
+        id: req.params.groupId
+    }});
+    //if curr user isn't host and isn't deleting their own id from group
+    if (!checkHost && req.body.memberId !== id) {
+        const err = new Error('Forbidden');
+        err.errors = { message: 'Forbidden' };
+        err.status = 403;
+        throw err;
+    };
+
     const checkMembership = await Member.findOne({
         where: {
             userId: req.body.memberId,
@@ -213,6 +249,7 @@ router.put('/:groupId/membership', validateGroupId, validateBodyMember, validate
             const err = new Error('Forbidden');
             err.errors = { message: 'Forbidden' };
             err.status = 403;
+            throw err;
         };
 
         const member = await Member.update({
@@ -267,7 +304,7 @@ router.put('/:groupId/membership', validateGroupId, validateBodyMember, validate
 });
 
 //Get all Members of a Group specified by its id
-router.get('/:groupId/members', validateGroupId, requireAuth, async (req, res) => {
+router.get('/:groupId/members', validateGroupId, async (req, res) => {
     //if you are the host or co-host of the group
     const id = req.user.id;
     const hostOrCoHost = await Member.findOne({

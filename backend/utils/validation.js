@@ -40,6 +40,23 @@ const handleGroupErrors = (req, _res, next) => {
     next();
 };
 
+const handleGroupImageErrors = (req, _res, next) => {
+    const validationErrors = validationResult(req);
+
+    if (!validationErrors.isEmpty()) {
+        // const errors = {};
+        // validationErrors
+        //     .array()
+        //     .forEach(error => errors[error.param] = error.msg);
+
+        const err = Error("Group Image couldn't be found");
+        // err.errors = errors;
+        err.status = 404;
+        next(err);
+    }
+    next();
+};
+
 const handleEventErrors = (req, _res, next) => {
     const validationErrors = validationResult(req);
 
@@ -99,5 +116,5 @@ const handleValidationErrorsCreateUpdateGroup = (req, _res, next) => {
 };
 
 module.exports = {
-    handleValidationErrors, handleGroupErrors, handleValidationErrorsCreateUpdateGroup, handleEventErrors, handleVenueErrors
+    handleValidationErrors, handleGroupErrors, handleValidationErrorsCreateUpdateGroup, handleEventErrors, handleVenueErrors, handleGroupImageErrors
   };
