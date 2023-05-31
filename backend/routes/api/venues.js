@@ -87,11 +87,9 @@ router.get('/groups/:groupId', validateGroupId, requireAuth, requireCoHostAuth, 
 
 //Create a new Venue for a Group specified by its id
 //working but body val errors aren't showing correct msg
-router.post('/groups/:groupId', validateGroupId, validateVenueReqBody, requireAuth, requireCoHostAuthVenue, async (req, res) => {
+router.post('/groups/:groupId', validateGroupId, validateVenueReqBody, requireAuth, requireCoHostAuth, async (req, res) => {
     const { address, city, state, lat, lng } = req.body;
-    console.log(req.params.groupId);
     const venue = await Venue.create({ groupId: Number(req.params.groupId), address, city, state, lat, lng });
-    // console.log(req.params.groupId);
     const newVenue = {
         id: venue.dataValues.id,
         groupId: venue.dataValues.groupId,
