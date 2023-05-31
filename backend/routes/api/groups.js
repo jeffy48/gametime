@@ -463,6 +463,14 @@ router.post('/', requireAuth, validateCreateUpdate, async (req, res) => {
     const userId = user.id;
 
     const group = await Group.create({ organizerId: userId, name, about, type, private, city, state});
+
+    const groupId = group.dataValues.id;
+    const member = await Member.create({
+        userId,
+        groupId,
+        status: 'host'
+    });
+
     console.log(group);
     const resGroup = {
         id: group.dataValues.id,
