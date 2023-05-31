@@ -388,6 +388,8 @@ router.get(
     requireAuth,
     async (req, res) => {
         const { user } = req;
+        console.log(user.id)
+        console.log('here')
         const members = await Member.findAll({
             where: { userId: user.id }
         });
