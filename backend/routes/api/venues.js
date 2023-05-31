@@ -3,7 +3,7 @@ const { check, oneOf } = require('express-validator');
 const { Op } = require('sequelize');
 const { requireAuth, requireOrganizerAuth, requireCoHostAuth, requireCoHostAuthVenue } = require('../../utils/auth');
 const { User, Group, Image, Venue, Event, Attendee, Member, sequelize } = require('../../db/models');
-const { handleValidationErrors, handleGroupErrors, handleValidationErrorsCreateUpdateGroup } = require('../../utils/validation');
+const { handleValidationErrors, handleGroupErrors, handleValidationErrorsCreateUpdateGroup, handleVenueErrors } = require('../../utils/validation');
 const { param } = require('express-validator');
 
 const validateGroupId = [
@@ -23,7 +23,7 @@ const validateVenueId = [
           throw new Error("Venue couldn't be found");
     }
     }),
-    handleGroupErrors
+    handleVenueErrors
 ];
 
 const validateVenueReqBody = [
@@ -111,7 +111,17 @@ router.put('/:venueId', validateVenueId, validateVenueReqBody, requireAuth, requ
     const updatedVenue = await Venue.findByPk(req.params.venueId, {
         attributes: { exclude: ['createdAt', 'updatedAt'] }
     });
-    res.json(updatedVenue);
+    const resVenue = {
+        id: updatedVenue.dataValues.id,
+        groupId: updatedVenue.dataValues.groupId,
+        address: updatedVenue.dataValues.address,
+        city: updatedVenue.dataValues.city,
+        state: updatedVenue.dataValues.state,
+        lat: parseFloat(updatedVenue.dataValues.lat),
+        lng: parseFloat(updatedVenue.dataValues.lng)
+    };
+    res.json(resVenue);
+
 })
 
 module.exports = router;

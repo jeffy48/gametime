@@ -403,7 +403,7 @@ router.post('/groups/:groupId', validateGroupId, validateEventBody, requireAuth,
         name: event.dataValues.name,
         type: event.dataValues.type,
         capacity: event.dataValues.capacity,
-        price: event.dataValues.price,
+        price: parseFloat(event.dataValues.price),
         description: event.dataValues.description,
         startDate: event.dataValues.startDate,
         endDate: event.dataValues.endDate
