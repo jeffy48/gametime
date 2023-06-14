@@ -13,7 +13,7 @@ const validateGroupId = [
           throw new Error("Group couldn't be found");
     }
     }),
-    handleGroupImageErrors
+    handleGroupErrors
 ];
 
 const validateImageId = [

@@ -176,8 +176,11 @@ const requireHostOrCoHostAuth = async (req, res, next) => {
             status: { [Op.or]: ['host', 'co-host'] }
         }
     });
-    req.memberStatus = member.dataValues.status;
-    if (member) return next();
+
+    if (member) {
+        req.memberStatus = member.dataValues.status;
+        return next();
+    };
 
     const err = new Error('Forbidden');
     // err.title = 'Authentication required';
