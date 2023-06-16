@@ -136,7 +136,7 @@ const requireCoHostAuthVenue = async (req, _res, next) => {
     const group = await Member.findOne({
         where: {
             userId: id,
-            groupId: req.params.venueId,
+            groupId: req.params.groupId,
             status: { [Op.or]: ['host', 'co-host'] }
         }
     });
