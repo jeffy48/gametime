@@ -322,7 +322,7 @@ router.post('/:eventId/join', validateEventId, requireAuth, async (req, res) => 
     const id = req.user.id;
     const checkEvent = await Event.findOne({
         where: {
-            eventId: req.params.eventId,
+            id: req.params.eventId,
         }
     });
     const groupId = checkEvent.dataValues.groupId;
