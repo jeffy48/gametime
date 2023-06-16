@@ -133,10 +133,16 @@ const requireCoHostAuthEvent = async (req, _res, next) => {
 
 const requireCoHostAuthVenue = async (req, _res, next) => {
     const id = req.user.id;
+    const venue = await Venue.findOne({
+        where: {
+            id: req.params.venueId
+        }
+    });
+
     const group = await Member.findOne({
         where: {
             userId: id,
-            groupId: req.params.groupId,
+            groupId: venue.dataValues.groupId,
             status: { [Op.or]: ['host', 'co-host'] }
         }
     });
