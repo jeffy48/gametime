@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { jwtConfig } = require('../config');
-const { User, Group, Member, Attendee, Event } = require('../db/models');
+const { User, Group, Member, Attendee, Event, Venue } = require('../db/models');
 const { Op } = require('sequelize');
 
 const { secret, expiresIn } = jwtConfig;
