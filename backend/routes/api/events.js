@@ -523,7 +523,7 @@ router.get('/:eventId', validateEventId, async (req, res) => {
         }
     });
     // console.log(event.dataValues.price);
-    event.dataValues.price = parseFloat(event.dataValues.price).toFixed(2);
+    event.dataValues.price = Number(event.dataValues.price).toFixed(2);
     res.json(event);
 });
 
