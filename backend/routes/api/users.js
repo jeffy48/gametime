@@ -15,38 +15,32 @@ const validateSignup = [
         .notEmpty()
         .isString()
         .isAlpha()
-        .isLength({ min: 1, max: 50 })
-        .withMessage('First Name is required'),
+        .isLength({ min: 1, max: 50 }),
     check('lastName', 'Last Name is required')
         .exists({ checkFalsy: true })
         .notEmpty()
         .isString()
         .isAlpha()
-        .isLength({ min: 1, max: 50 })
-        .withMessage('Last Name is required'),
+        .isLength({ min: 1, max: 50 }),
     check('email', 'Invalid email')
         .exists({ checkFalsy: true })
         .isEmail()
         .notEmpty()
         .isString()
-        .isLength({ min: 1, max: 100 })
-        .withMessage('Invalid email'),
+        .isLength({ min: 1, max: 100 }),
     check('username', 'Invalid username')
         .exists({ checkFalsy: true })
         .notEmpty()
         .isString()
-        .isLength({ min: 1, max: 50 })
-        .withMessage('Invalid username'),
+        .isLength({ min: 1, max: 50 }),
     check('username', 'Username cannot be an email')
         .not()
-        .isEmail()
-        .withMessage('Username cannot be an email.'),
+        .isEmail(),
     check('password', 'Password must be 6 characters or more')
         .exists({ checkFalsy: true })
         .notEmpty()
         .isString()
-        .isLength({ min: 6 })
-        .withMessage('Password must be 6 characters or more'),
+        .isLength({ min: 6 }),
     handleValidationErrors
 ];
 

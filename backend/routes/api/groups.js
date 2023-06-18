@@ -54,28 +54,22 @@ const validateCreateUpdate = [
         .exists({ checkFalsy: true })
         .notEmpty()
         .isString()
-        .isLength({ min: 2, max: 60 })
-        .withMessage('Name must be 60 characters or less'),
+        .isLength({ min: 2, max: 60 }),
     check('about', 'About must be 50 characters or more')
         .exists({ checkFalsy: true })
-        .isLength({ min: 50 })
-        .withMessage('About must be 50 characters or more'),
+        .isLength({ min: 50 }),
     check('type', "Type must be 'Online' or 'In person'")
-        .isIn(['Online', 'In person'])
-        .withMessage("Type must be 'Online' or 'In person'"),
+        .isIn(['Online', 'In person']),
     check('private', 'Private must be a boolean')
         .exists({ checkFalsy: false })
-        .isBoolean()
-        .withMessage('Private must be a boolean'),
+        .isBoolean(),
     check('city', 'City is required')
         .exists({ checkFalsy: true })
-        .isLength({ min: 2, max: 50 })
-        .withMessage('City is required'),
+        .isLength({ min: 2, max: 50 }),
     check('state', 'State is required')
         .exists({ checkFalsy: true })
         .isLength({ min: 2, max: 2 })
-        .isAlpha()
-        .withMessage('State is required'),
+        .isAlpha(),
     handleValidationErrors
 ];
 
@@ -441,7 +435,6 @@ router.get('/:groupId', validateGroupId, async (req, res,) => {
 });
 
 //Edit a Group
-//as of now, code doesnt update dynamically (requires client to pass in all required columns. make it better by allowing client to update what they choose to update)
 router.put('/:groupId', validateGroupId, validateCreateUpdate, requireAuth, requireOrganizerAuth, async (req, res) => {
     const { name, about, type, private, city, state } = req.body;
     const group = await Group.update({ name, about, type, private, city, state },
