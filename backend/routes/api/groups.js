@@ -57,18 +57,26 @@ const validateCreateUpdate = [
         .isLength({ min: 2, max: 60 }),
     check('about', 'About must be 50 characters or more')
         .exists({ checkFalsy: true })
+        .notEmpty()
+        .isString()
         .isLength({ min: 50 }),
     check('type', "Type must be 'Online' or 'In person'")
+        .notEmpty()
+        .isString()
         .isIn(['Online', 'In person']),
     check('private', 'Private must be a boolean')
         .exists({ checkFalsy: false })
         .isBoolean(),
     check('city', 'City is required')
         .exists({ checkFalsy: true })
+        .notEmpty()
+        .isString()
         .isLength({ min: 2, max: 50 }),
     check('state', 'State is required')
         .exists({ checkFalsy: true })
         .isLength({ min: 2, max: 2 })
+        .notEmpty()
+        .isString()
         .isAlpha(),
     handleValidationErrors
 ];

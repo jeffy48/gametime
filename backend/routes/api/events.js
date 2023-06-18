@@ -522,6 +522,7 @@ router.get('/:eventId', validateEventId, async (req, res) => {
             status: { [Op.or]: ["attending", "co-host", "host"] }
         }
     });
+    console.log(event.dataValues.price);
     event.dataValues.price = parseFloat(event.dataValues.price);
     res.json(event);
 });

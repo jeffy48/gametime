@@ -27,7 +27,6 @@ const validateVenueId = [
 ];
 
 const validateVenueReqBody = [
-//for some reason, its making me attach .withMessage to each method instead of just chaining one .withMessage at the end for all of them.
     check('address', 'Street address is required')
         .exists({ checkFalsy: true })
         .isLength({ min: 4})
@@ -35,13 +34,14 @@ const validateVenueReqBody = [
         .isString(),
     check('city', 'City is required')
         .exists({ checkFalsy: true })
-        .isLength({ min: 1})
+        .isLength({ min: 2, max: 50})
         .notEmpty()
         .isString(),
     check('state', 'State is required')
         .exists({ checkFalsy: true })
         .isLength({ min: 2, max: 2})
         .notEmpty()
+        .isAlpha()
         .isString(),
     check('lat', 'Latitude is not valid')
         .exists({ checkFalsy: true })
