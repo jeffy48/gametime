@@ -10,9 +10,10 @@ const router = express.Router();
 
 // middleware to add user input validation on user signup requests to the backend server
 const validateSignup = [
-    check('firstName')
+    check('firstName', 'First Name is required')
         .exists({ checkFalsy: true })
         .notEmpty()
+        .isString()
         .isLength({ min: 1, max: 50 })
         .withMessage('First Name is required'),
     check('lastName', 'Last Name is required')
@@ -21,26 +22,29 @@ const validateSignup = [
         .isString()
         .isLength({ min: 1, max: 50 })
         .withMessage('Last Name is required'),
-    check('email')
+    check('email', 'Invalid email')
         .exists({ checkFalsy: true })
         .isEmail()
         .notEmpty()
+        .isString()
         .isLength({ min: 1, max: 100 })
-        .withMessage('Please provide a valid email.'),
-    check('username')
+        .withMessage('Invalid email'),
+    check('username', 'Invalid username')
         .exists({ checkFalsy: true })
         .notEmpty()
+        .isString()
         .isLength({ min: 1, max: 50 })
-        .withMessage('Please provide a valid username.'),
-    check('username')
+        .withMessage('Invalid username'),
+    check('username', 'Username cannot be an email')
         .not()
         .isEmail()
         .withMessage('Username cannot be an email.'),
-    check('password')
+    check('password', 'Password must be 6 characters or more')
         .exists({ checkFalsy: true })
         .notEmpty()
+        .isString()
         .isLength({ min: 6 })
-        .withMessage('Password must be 6 characters or more.'),
+        .withMessage('Password must be 6 characters or more'),
     handleValidationErrors
 ];
 
