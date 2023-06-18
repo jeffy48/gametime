@@ -58,7 +58,7 @@ module.exports = {
         allowNull: false
       },
       price: {
-        type: Sequelize.DECIMAL(5, 1),
+        type: Sequelize.FLOAT(5, 1),
         allowNull: false
       },
       previewImage: {
