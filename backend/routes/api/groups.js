@@ -50,28 +50,31 @@ const validateBodyMember = [
 ];
 
 const validateCreateUpdate = [
-    check('name')
+    check('name', 'Name must be 60 characters or less')
         .exists({ checkFalsy: true })
+        .notEmpty()
+        .isString()
         .isLength({ min: 2, max: 60 })
         .withMessage('Name must be 60 characters or less'),
-    check('about')
+    check('about', 'About must be 50 characters or more')
         .exists({ checkFalsy: true })
         .isLength({ min: 50 })
         .withMessage('About must be 50 characters or more'),
-    check('type')
+    check('type', "Type must be 'Online' or 'In person'")
         .isIn(['Online', 'In person'])
         .withMessage("Type must be 'Online' or 'In person'"),
-    check('private')
+    check('private', 'Private must be a boolean')
         .exists({ checkFalsy: false })
         .isBoolean()
         .withMessage('Private must be a boolean'),
-    check('city')
+    check('city', 'City is required')
         .exists({ checkFalsy: true })
         .isLength({ min: 2, max: 50 })
         .withMessage('City is required'),
-    check('state')
+    check('state', 'State is required')
         .exists({ checkFalsy: true })
         .isLength({ min: 2, max: 2 })
+        .isAlpha()
         .withMessage('State is required'),
     handleValidationErrors
 ];
