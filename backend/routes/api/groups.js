@@ -73,7 +73,7 @@ const validateCreateUpdate = [
         .exists({ checkFalsy: true })
         .isLength({ min: 2, max: 2 })
         .withMessage('State is required'),
-    handleValidationErrorsCreateUpdateGroup
+    handleValidationErrors
 ];
 
 

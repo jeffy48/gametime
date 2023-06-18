@@ -15,6 +15,7 @@ const validateLogin = [
         .exists({ checkFalsy: true })
         .notEmpty()
         .isString()
+        .isLength({ min: 1, max: 100})
         .withMessage('Credential is required'),
     check('password')
         .exists({ checkFalsy: true })

@@ -27,13 +27,7 @@ const handleGroupErrors = (req, _res, next) => {
     const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
-        // const errors = {};
-        // validationErrors
-        //     .array()
-        //     .forEach(error => errors[error.param] = error.msg);
-
         const err = Error("Group couldn't be found");
-        // err.errors = errors;
         err.status = 404;
         next(err);
     }
@@ -44,13 +38,7 @@ const handleGroupImageErrors = (req, _res, next) => {
     const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
-        // const errors = {};
-        // validationErrors
-        //     .array()
-        //     .forEach(error => errors[error.param] = error.msg);
-
         const err = Error("Group Image couldn't be found");
-        // err.errors = errors;
         err.status = 404;
         next(err);
     }
@@ -61,13 +49,7 @@ const handleEventErrors = (req, _res, next) => {
     const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
-        // const errors = {};
-        // validationErrors
-        //     .array()
-        //     .forEach(error => errors[error.param] = error.msg);
-
         const err = Error("Event couldn't be found");
-        // err.errors = errors;
         err.status = 404;
         next(err);
     }
@@ -78,13 +60,7 @@ const handleVenueErrors = (req, _res, next) => {
     const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
-        // const errors = {};
-        // validationErrors
-        //     .array()
-        //     .forEach(error => errors[error.param] = error.msg);
-
         const err = Error("Venue couldn't be found");
-        // err.errors = errors;
         err.status = 404;
         next(err);
     }

@@ -12,26 +12,33 @@ const router = express.Router();
 const validateSignup = [
     check('firstName')
         .exists({ checkFalsy: true })
-        .isLength({ min: 2 })
+        .notEmpty()
+        .isLength({ min: 1, max: 50 })
         .withMessage('First Name is required'),
-    check('lastName')
+    check('lastName', 'Last Name is required')
         .exists({ checkFalsy: true })
-        .isLength({ min: 2 })
+        .notEmpty()
+        .isString()
+        .isLength({ min: 1, max: 50 })
         .withMessage('Last Name is required'),
     check('email')
         .exists({ checkFalsy: true })
         .isEmail()
+        .notEmpty()
+        .isLength({ min: 1, max: 100 })
         .withMessage('Please provide a valid email.'),
     check('username')
         .exists({ checkFalsy: true })
-        .isLength({ min: 4 })
-        .withMessage('Please provide a username with at least 4 characters.'),
+        .notEmpty()
+        .isLength({ min: 1, max: 50 })
+        .withMessage('Please provide a valid username.'),
     check('username')
         .not()
         .isEmail()
         .withMessage('Username cannot be an email.'),
     check('password')
         .exists({ checkFalsy: true })
+        .notEmpty()
         .isLength({ min: 6 })
         .withMessage('Password must be 6 characters or more.'),
     handleValidationErrors
@@ -45,7 +52,6 @@ router.post(
         const { firstName, lastName, username, email, password } = req.body;
         const hashedPassword = bcrypt.hashSync(password);
 
-        //check if email already exists (error handler: probably not the best way as each query is expensive)
         const emailAlreadyExists = await User.findOne({
             where: { email: email}
         });
@@ -57,8 +63,6 @@ router.post(
             }
             return next(err);
         };
-
-        //check if username already exists (error handler)
         const usernameAlreadyExists = await User.findOne({
             where: { username: username}
         });
@@ -72,7 +76,6 @@ router.post(
         };
 
         const user = await User.create({ firstName, lastName, username, email, hashedPassword });
-
         const safeUser = {
             id: user.id,
             firstName: user.firstName,
