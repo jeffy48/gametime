@@ -1445,7 +1445,7 @@ Request a new membership for a group specified by id.
 - Require Authentication: true
 - Request
 
-  - Method: POST?
+  - Method: POST
   - URL: "/groups/:groupId/membership"
   - Headers:
     - Content-Type: application/json
