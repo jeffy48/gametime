@@ -146,12 +146,12 @@ router.delete('/:eventId/attendees', validateEventId, requireAuth, async (req, r
         }
     });
     const groupId = event.dataValues.groupId;
-    //check if curr user is host of group
+
     const checkHost = await Group.findOne({ where: {
         organizerId: id,
         id: groupId
     }});
-    //if curr user isn't host and isn't deleting their own id from group
+
     if (!checkHost && req.body.userId !== id) {
         const err = new Error('Only the User or organizer may delete an Attendance');
         err.status = 403;
@@ -164,12 +164,13 @@ router.delete('/:eventId/attendees', validateEventId, requireAuth, async (req, r
             eventId: req.params.eventId
         }
     });
-    console.log(destroyed)
+
     if (!destroyed) {
         const err = new Error('Attendance does not exist for this User');
         err.status = 404;
         throw err;
     }
+
     res.json({message: 'Successfully deleted attendance from event'});
 });
 

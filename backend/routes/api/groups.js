@@ -23,7 +23,7 @@ const validateImageId = [
           throw new Error("Group Image couldn't be found");
     }
     }),
-    handleGroupErrors
+    handleGroupImageErrors
 ];
 
 const validateBodyStatus = [
