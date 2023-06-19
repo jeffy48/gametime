@@ -276,11 +276,15 @@ router.put('/:groupId/membership', validateGroupId, validateBodyMember, validate
             attributes: ['id']
         });
         const id = updatedMember.dataValues.id;
+        console.log("UpdatedMember->",updatedMember);
+        console.log("datavalues->", updatedMember.dataValues);
+        console.log("key->", updatedMember.groupId, updatedMember.status);
+        console.log("key(datavalues)->", updatedMember.dataValues.groupId, updatedMember.dataValues.status);
         const resMember = {
             id,
-            groupId: updatedMember.dataValues.groupId,
+            groupId: updatedMember.groupId,
             memberId,
-            status: updatedMember.dataValues.status
+            status: updatedMember.status
         };
         res.json(resMember);
     }
@@ -302,11 +306,15 @@ router.put('/:groupId/membership', validateGroupId, validateBodyMember, validate
             attributes: ['id']
         });
         const id = updatedMember.dataValues.id;
+        console.log("UpdatedMember->",updatedMember);
+        console.log("datavalues->", updatedMember.dataValues);
+        console.log("key->", updatedMember.groupId, updatedMember.status);
+        console.log("key(datavalues)->", updatedMember.dataValues.groupId, updatedMember.dataValues.status);
         const resMember = {
             id,
-            groupId: updatedMember.dataValues.groupId,
+            groupId: updatedMember.groupId,
             memberId,
-            status: updatedMember.dataValues.status
+            status: updatedMember.status
         };
         res.json(resMember);
     };
