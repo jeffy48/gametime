@@ -26,8 +26,7 @@ module.exports = {
         type: "In person",
         private: true,
         city: "San Jose",
-        state: "CA",
-        previewImage: "https://wallpapers.com/images/hd/76ers-iphone-1rnx1wg22ng8ou01.jpg"
+        state: "CA"
       },
       {
         organizerId: 2,

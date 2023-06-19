@@ -10,7 +10,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
 const validateLogin = [
-    check('credential', 'Password is required')
+    check('credential', 'Credential is required')
         .exists({ checkFalsy: true })
         .notEmpty()
         .isString()

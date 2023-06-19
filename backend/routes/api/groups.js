@@ -81,9 +81,6 @@ const validateCreateUpdate = [
     handleValidationErrors
 ];
 
-
-
-//helper func
 const getNumMembers = async (groupInstance) => {
     const groupObj = {Groups: []};
 
@@ -129,6 +126,12 @@ router.post('/:groupId/images', validateGroupId, requireAuth, requireOrganizerAu
         url,
         preview
     });
+
+    if (image.preview) {
+        await Group.update({ previewImage: url },
+            { where: { id: req.params.groupId }}
+        );
+    };
 
     const groupImage = {
         id: image.id,
@@ -393,20 +396,18 @@ router.get(
     requireAuth,
     async (req, res) => {
         const { user } = req;
-        console.log(user.id)
-        console.log('here')
         const members = await Member.findAll({
             where: { userId: user.id }
         });
+
         const groupArr = [];
         members.forEach((member) => {
             groupArr.push(member.groupId);
         });
-        console.log(groupArr);
-        // console.log(groups);
+
         const groups = await Group.findAll({ where: { id: {[Op.in]: groupArr }}});
-        console.log(groups);
         const userGroup = await getNumMembers(groups);
+
         res.json(userGroup);
     }
 );
@@ -475,7 +476,6 @@ router.post('/', requireAuth, validateCreateUpdate, async (req, res) => {
         status: 'host'
     });
 
-    console.log(group);
     const resGroup = {
         id: group.dataValues.id,
         organizerId: group.dataValues.organizerId,
