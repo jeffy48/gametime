@@ -273,19 +273,17 @@ router.put('/:groupId/membership', validateGroupId, validateBodyMember, validate
                 userId: memberId,
                 groupId: req.params.groupId
             },
-            attributes: ['id']
+            attributes: ['id', 'groupId', 'status']
         });
+
         const id = updatedMember.dataValues.id;
-        console.log("UpdatedMember->",updatedMember);
-        console.log("datavalues->", updatedMember.dataValues);
-        console.log("key->", updatedMember.groupId, updatedMember.status);
-        console.log("key(datavalues)->", updatedMember.dataValues.groupId, updatedMember.dataValues.status);
         const resMember = {
             id,
-            groupId: updatedMember.groupId,
+            groupId: updatedMember.dataValues.groupId,
             memberId,
-            status: updatedMember.status
+            status: updatedMember.dataValues.status
         };
+
         res.json(resMember);
     }
     else {
@@ -303,19 +301,17 @@ router.put('/:groupId/membership', validateGroupId, validateBodyMember, validate
                 userId: memberId,
                 groupId: req.params.groupId
             },
-            attributes: ['id']
+            attributes: ['id', 'groupId', 'status']
         });
         const id = updatedMember.dataValues.id;
-        console.log("UpdatedMember->",updatedMember);
-        console.log("datavalues->", updatedMember.dataValues);
-        console.log("key->", updatedMember.groupId, updatedMember.status);
-        console.log("key(datavalues)->", updatedMember.dataValues.groupId, updatedMember.dataValues.status);
+
         const resMember = {
             id,
-            groupId: updatedMember.groupId,
+            groupId: updatedMember.dataValues.groupId,
             memberId,
-            status: updatedMember.status
+            status: updatedMember.dataValues.status
         };
+
         res.json(resMember);
     };
 });
