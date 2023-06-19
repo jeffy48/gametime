@@ -65,29 +65,23 @@ const validateBodyStatus = [
 ];
 
 const validateEventBody = [
-    check('name')
+    check('name', 'Name must be at least 5 characters')
         .exists({ checkFalsy: true })
-        .isLength({ min: 5 })
-        .withMessage('Name must be at least 5 characters'),
-    check('type')
-        .isIn(['Online', 'In person'])
-        .withMessage("Type must be 'Online' or 'In person'"),
-    check('capacity')
+        .isLength({ min: 5 }),
+    check('type', "Type must be 'Online' or 'In person'")
+        .isIn(['Online', 'In person']),
+    check('capacity', 'Capacity must be an integer')
         .exists({ checkFalsy: false })
-        .isInt()
-        .withMessage('Capacity must be an integer'),
-    check('price')
+        .isInt(),
+    check('price', 'Price is invalid')
         .exists({ checkFalsy: true })
-        .isDecimal()
-        .withMessage('Price is invalid'),
-    check('description')
+        .isDecimal(),
+    check('description', 'Description is required')
+        .exists({ checkFalsy: true }),
+    check('startDate', 'Start date must be in the future')
         .exists({ checkFalsy: true })
-        .withMessage('Description is required'),
-    check('startDate')
-        .exists({ checkFalsy: true })
-        .isAfter()
-        .withMessage('Start date must be in the future'),
-    body('endDate')
+        .isAfter(),
+    body('endDate', 'End date is less than the start date')
         .exists({ checkFalsy: true })
         .custom((value, { req }) => {
             console.log(req.body.startDate, "HELLO", value)
