@@ -22,7 +22,7 @@ module.exports = {
       {
         organizerId: 1,
         name: "Bay Area Sixers",
-        about: "something about us",
+        about: "something about us something about us something about us something about us something about us something about ussomething about us something about us something about us something about us something about us something about us",
         type: "In person",
         private: true,
         city: "San Jose",
@@ -30,30 +30,30 @@ module.exports = {
         previewImage: "https://wallpapers.com/images/hd/76ers-iphone-1rnx1wg22ng8ou01.jpg"
       },
       {
-        organizerId: 1,
-        name: "Mount Laurel Volleyball",
-        about: "something about us",
+        organizerId: 2,
+        name: "76ers Game Night",
+        about: "something about us something about us something about us something about us something about us something about us",
         type: "In person",
         private: true,
         city: "Mount Laurel",
         state: "NJ"
       },
       {
-        organizerId: 2,
-        name: "Coffee and Boardgames",
-        about: "something about us",
+        organizerId: 3,
+        name: "Eagles Games at Xfinity",
+        about: "something about us something about us something about us something about us something about us something about us",
         type: "In person",
         private: false,
-        city: "Mountain View",
-        state: "CA"
+        city: "Philadelphia",
+        state: "PA"
       },
       {
-        organizerId: 3,
-        name: "Beginner Spanish Online",
-        about: "something about us",
+        organizerId: 4,
+        name: "March Madness Watch Party",
+        about: "something about us something about us something about us something about us something about us something about us",
         type: "Online",
         private: true,
-        city: "San Jose",
+        city: "Mountain View",
         state: "CA"
       },
     ], {});
@@ -68,7 +68,7 @@ module.exports = {
      */
     const Op = Sequelize.Op;
     await queryInterface.bulkDelete(options, {
-      name: { [Op.in]: ['Bay Area Sixers', 'Mount Laurel Volleyball', 'Coffee and Boardgames', 'Beginner Spanish Online'] }
+      id: { [Op.in]: [1, 2, 3, 4] }
     }, {});
   }
 };

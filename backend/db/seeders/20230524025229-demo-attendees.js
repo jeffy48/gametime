@@ -27,27 +27,17 @@ module.exports = {
       {
         userId: 2,
         eventId: 2,
-        status: "attending"
+        status: "host"
       },
       {
         userId: 3,
         eventId: 3,
-        status: "pending"
+        status: "host"
       },
       {
         userId: 4,
         eventId: 4,
-        status: "waitlist"
-      },
-      {
-        userId: 4,
-        eventId: 1,
-        status: "attending"
-      },
-      {
-        userId: 2,
-        eventId: 1,
-        status: 'attending'
+        status: "host"
       }
     ], {});
   },
