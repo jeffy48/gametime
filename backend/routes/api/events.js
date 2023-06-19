@@ -182,6 +182,7 @@ router.put('/:eventId/attendees', validateEventId, validateBodyStatus, requireAu
         }
     });
     const groupId = event.dataValues.groupId;
+
     const hostOrCoHost = await Member.findOne({
         where: {
             userId: id,
@@ -189,6 +190,7 @@ router.put('/:eventId/attendees', validateEventId, validateBodyStatus, requireAu
             status: { [Op.or]: ['host', 'co-host'] }
         }
     });
+
     if (!hostOrCoHost) {
         const err = new Error('Forbidden');
         err.errors = { message: 'Forbidden' };
@@ -203,6 +205,7 @@ router.put('/:eventId/attendees', validateEventId, validateBodyStatus, requireAu
             eventId: req.params.eventId
         }
     });
+
     if (!checkAttendee) {
         const err = new Error('Attendance between the user and the event does not exist');
         err.status = 404;
@@ -217,11 +220,13 @@ router.put('/:eventId/attendees', validateEventId, validateBodyStatus, requireAu
             eventId: req.params.eventId
         }
     });
+
     const updatedAttendee = await Attendee.findOne({
         where: {
             userId,
             eventId: req.params.eventId
-        }
+        },
+        attributes: ['id', 'eventId', 'userId', 'status']
     });
 
     const resAttendee = {
@@ -230,6 +235,7 @@ router.put('/:eventId/attendees', validateEventId, validateBodyStatus, requireAu
         userId,
         status: updatedAttendee.dataValues.status
     };
+
     res.json(resAttendee);
 });
 
@@ -250,6 +256,7 @@ router.get('/:eventId/attendees', validateEventId, async (req, res) => {
             status: { [Op.or]: ['host', 'co-host'] }
         }
     });
+
     if (hostOrCoHost) {
         const attendees = await Attendee.findAll({
             where: {
@@ -281,7 +288,9 @@ router.get('/:eventId/attendees', validateEventId, async (req, res) => {
             const status = attendee.dataValues.Attendance[0].dataValues.status;
             attendee.dataValues.Attendance = {status};
         });
+
         res.json(resAttendees);
+
     } else {
         const attendees = await Attendee.findAll({
             where: {
@@ -289,10 +298,12 @@ router.get('/:eventId/attendees', validateEventId, async (req, res) => {
                 status: { [Op.or]: ['co-host', 'attending', 'host', 'waitlist']}
             }
         });
+
         const attendeeArr = [];
         attendees.forEach((attendee) => {
             attendeeArr.push(attendee.userId);
         });
+
         const users = await User.findAll({
             where: {
                 id: { [Op.in]: attendeeArr }
@@ -309,11 +320,13 @@ router.get('/:eventId/attendees', validateEventId, async (req, res) => {
                 attributes: ['status']
             }
         });
+
         const resAttendees = {Attendees: users};
         resAttendees.Attendees.forEach(attendee => {
             const status = attendee.dataValues.Attendance[0].dataValues.status;
             attendee.dataValues.Attendance = {status};
         });
+
         res.json(resAttendees);
     };
 });
@@ -327,24 +340,28 @@ router.post('/:eventId/join', validateEventId, requireAuth, async (req, res) => 
         }
     });
     const groupId = checkEvent.dataValues.groupId;
+
     const checkMember = await Member.findOne({
         where: {
             userId: id,
             groupId
         }
     });
+
     if (!checkMember) {
         const err = new Error('Forbidden');
         err.errors = { message: 'Forbidden' };
         err.status = 403;
         throw err;
     };
+
     const checkAttendance = await Attendee.findOne({
         where: {
             userId: id,
             eventId: req.params.eventId
         }
     });
+
     if (checkAttendance && checkAttendance.dataValues.status === 'pending') {
         const err = new Error('Attendance has already been requested');
         err.status = 400;
@@ -361,10 +378,12 @@ router.post('/:eventId/join', validateEventId, requireAuth, async (req, res) => 
             eventId: req.params.eventId,
             status: 'pending'
         });
+
         const newAttendee = {
             userId: id,
             status: 'pending'
         };
+
         res.json(newAttendee);
     };
 });
