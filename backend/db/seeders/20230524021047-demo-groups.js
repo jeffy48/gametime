@@ -26,7 +26,8 @@ module.exports = {
         type: "In person",
         private: true,
         city: "San Jose",
-        state: "CA"
+        state: "CA",
+        previewImage: "https://www.thesprucepets.com/thmb/uQnGtOt9VQiML2oG2YzAmPErrHo=/5441x0/filters:no_upscale():strip_icc()/all-about-tabby-cats-552489-hero-a23a9118af8c477b914a0a1570d4f787.jpg"
       },
       {
         organizerId: 2,
@@ -35,7 +36,8 @@ module.exports = {
         type: "In person",
         private: true,
         city: "Mount Laurel",
-        state: "NJ"
+        state: "NJ",
+        previewImage: "https://www.thesprucepets.com/thmb/uQnGtOt9VQiML2oG2YzAmPErrHo=/5441x0/filters:no_upscale():strip_icc()/all-about-tabby-cats-552489-hero-a23a9118af8c477b914a0a1570d4f787.jpg"
       },
       {
         organizerId: 3,
@@ -44,7 +46,8 @@ module.exports = {
         type: "In person",
         private: false,
         city: "Philadelphia",
-        state: "PA"
+        state: "PA",
+        previewImage: "https://www.thesprucepets.com/thmb/uQnGtOt9VQiML2oG2YzAmPErrHo=/5441x0/filters:no_upscale():strip_icc()/all-about-tabby-cats-552489-hero-a23a9118af8c477b914a0a1570d4f787.jpg"
       },
       {
         organizerId: 4,
@@ -53,7 +56,8 @@ module.exports = {
         type: "Online",
         private: true,
         city: "Mountain View",
-        state: "CA"
+        state: "CA",
+        previewImage: "https://www.thesprucepets.com/thmb/uQnGtOt9VQiML2oG2YzAmPErrHo=/5441x0/filters:no_upscale():strip_icc()/all-about-tabby-cats-552489-hero-a23a9118af8c477b914a0a1570d4f787.jpg"
       },
     ], {});
   },

@@ -28,7 +28,8 @@ module.exports = {
         startDate: Sequelize.literal('CURRENT_TIMESTAMP'),
         endDate: Sequelize.literal('CURRENT_TIMESTAMP'),
         capacity: 50,
-        price: 10.5
+        price: 10.5,
+        previewImage: "https://www.thesprucepets.com/thmb/uQnGtOt9VQiML2oG2YzAmPErrHo=/5441x0/filters:no_upscale():strip_icc()/all-about-tabby-cats-552489-hero-a23a9118af8c477b914a0a1570d4f787.jpg"
       },
       {
         groupId: 2,
@@ -39,7 +40,8 @@ module.exports = {
         startDate: Sequelize.literal('CURRENT_TIMESTAMP'),
         endDate: Sequelize.literal('CURRENT_TIMESTAMP'),
         capacity: 48,
-        price: 3.5
+        price: 3.5,
+        previewImage: "https://www.thesprucepets.com/thmb/uQnGtOt9VQiML2oG2YzAmPErrHo=/5441x0/filters:no_upscale():strip_icc()/all-about-tabby-cats-552489-hero-a23a9118af8c477b914a0a1570d4f787.jpg"
       },
       {
         groupId: 3,
@@ -50,7 +52,8 @@ module.exports = {
         startDate: Sequelize.literal('CURRENT_TIMESTAMP'),
         endDate: Sequelize.literal('CURRENT_TIMESTAMP'),
         capacity: 15,
-        price: 4.5
+        price: 4.5,
+        previewImage: "https://www.thesprucepets.com/thmb/uQnGtOt9VQiML2oG2YzAmPErrHo=/5441x0/filters:no_upscale():strip_icc()/all-about-tabby-cats-552489-hero-a23a9118af8c477b914a0a1570d4f787.jpg"
       },
       {
         groupId: 4,
@@ -61,7 +64,8 @@ module.exports = {
         startDate: Sequelize.literal('CURRENT_TIMESTAMP'),
         endDate: Sequelize.literal('CURRENT_TIMESTAMP'),
         capacity: 5,
-        price: 15.9
+        price: 15.9,
+        previewImage: "https://www.thesprucepets.com/thmb/uQnGtOt9VQiML2oG2YzAmPErrHo=/5441x0/filters:no_upscale():strip_icc()/all-about-tabby-cats-552489-hero-a23a9118af8c477b914a0a1570d4f787.jpg"
       }
     ], {});
   },
