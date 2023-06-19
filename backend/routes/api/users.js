@@ -8,7 +8,6 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-// middleware to add user input validation on user signup requests to the backend server
 const validateSignup = [
     check('firstName', 'First Name is required')
         .exists({ checkFalsy: true })
@@ -91,7 +90,5 @@ router.post(
         });
     }
 );
-
-
 
 module.exports = router;
