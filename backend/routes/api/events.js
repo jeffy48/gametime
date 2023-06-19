@@ -65,29 +65,23 @@ const validateBodyStatus = [
 ];
 
 const validateEventBody = [
-    check('name')
+    check('name', 'Name must be at least 5 characters')
         .exists({ checkFalsy: true })
-        .isLength({ min: 5 })
-        .withMessage('Name must be at least 5 characters'),
-    check('type')
-        .isIn(['Online', 'In person'])
-        .withMessage("Type must be 'Online' or 'In person'"),
-    check('capacity')
+        .isLength({ min: 5 }),
+    check('type', "Type must be 'Online' or 'In person'")
+        .isIn(['Online', 'In person']),
+    check('capacity', 'Capacity must be an integer')
         .exists({ checkFalsy: false })
-        .isInt()
-        .withMessage('Capacity must be an integer'),
-    check('price')
+        .isInt(),
+    check('price', 'Price is invalid')
         .exists({ checkFalsy: true })
-        .isDecimal()
-        .withMessage('Price is invalid'),
-    check('description')
+        .isDecimal(),
+    check('description', 'Description is required')
+        .exists({ checkFalsy: true }),
+    check('startDate', 'Start date must be in the future')
         .exists({ checkFalsy: true })
-        .withMessage('Description is required'),
-    check('startDate')
-        .exists({ checkFalsy: true })
-        .isAfter()
-        .withMessage('Start date must be in the future'),
-    body('endDate')
+        .isAfter(),
+    body('endDate', 'End date is less than the start date')
         .exists({ checkFalsy: true })
         .custom((value, { req }) => {
             console.log(req.body.startDate, "HELLO", value)
@@ -111,6 +105,13 @@ router.post('/:eventId/images', validateEventId, requireAuth, requireAuth, requi
         url,
         preview
     });
+
+    if (image.preview) {
+        await Event.update({ previewImage: url },
+            { where: { id: req.params.eventId }}
+        );
+    };
+
     const eventImage = {
         id: image.id,
         url: image.url,
@@ -145,12 +146,12 @@ router.delete('/:eventId/attendees', validateEventId, requireAuth, async (req, r
         }
     });
     const groupId = event.dataValues.groupId;
-    //check if curr user is host of group
+
     const checkHost = await Group.findOne({ where: {
         organizerId: id,
         id: groupId
     }});
-    //if curr user isn't host and isn't deleting their own id from group
+
     if (!checkHost && req.body.userId !== id) {
         const err = new Error('Only the User or organizer may delete an Attendance');
         err.status = 403;
@@ -163,12 +164,13 @@ router.delete('/:eventId/attendees', validateEventId, requireAuth, async (req, r
             eventId: req.params.eventId
         }
     });
-    console.log(destroyed)
+
     if (!destroyed) {
         const err = new Error('Attendance does not exist for this User');
         err.status = 404;
         throw err;
     }
+
     res.json({message: 'Successfully deleted attendance from event'});
 });
 
@@ -181,6 +183,7 @@ router.put('/:eventId/attendees', validateEventId, validateBodyStatus, requireAu
         }
     });
     const groupId = event.dataValues.groupId;
+
     const hostOrCoHost = await Member.findOne({
         where: {
             userId: id,
@@ -188,6 +191,7 @@ router.put('/:eventId/attendees', validateEventId, validateBodyStatus, requireAu
             status: { [Op.or]: ['host', 'co-host'] }
         }
     });
+
     if (!hostOrCoHost) {
         const err = new Error('Forbidden');
         err.errors = { message: 'Forbidden' };
@@ -202,6 +206,7 @@ router.put('/:eventId/attendees', validateEventId, validateBodyStatus, requireAu
             eventId: req.params.eventId
         }
     });
+
     if (!checkAttendee) {
         const err = new Error('Attendance between the user and the event does not exist');
         err.status = 404;
@@ -216,11 +221,13 @@ router.put('/:eventId/attendees', validateEventId, validateBodyStatus, requireAu
             eventId: req.params.eventId
         }
     });
+
     const updatedAttendee = await Attendee.findOne({
         where: {
             userId,
             eventId: req.params.eventId
-        }
+        },
+        attributes: ['id', 'eventId', 'userId', 'status']
     });
 
     const resAttendee = {
@@ -229,6 +236,7 @@ router.put('/:eventId/attendees', validateEventId, validateBodyStatus, requireAu
         userId,
         status: updatedAttendee.dataValues.status
     };
+
     res.json(resAttendee);
 });
 
@@ -249,6 +257,7 @@ router.get('/:eventId/attendees', validateEventId, async (req, res) => {
             status: { [Op.or]: ['host', 'co-host'] }
         }
     });
+
     if (hostOrCoHost) {
         const attendees = await Attendee.findAll({
             where: {
@@ -280,7 +289,9 @@ router.get('/:eventId/attendees', validateEventId, async (req, res) => {
             const status = attendee.dataValues.Attendance[0].dataValues.status;
             attendee.dataValues.Attendance = {status};
         });
+
         res.json(resAttendees);
+
     } else {
         const attendees = await Attendee.findAll({
             where: {
@@ -288,10 +299,12 @@ router.get('/:eventId/attendees', validateEventId, async (req, res) => {
                 status: { [Op.or]: ['co-host', 'attending', 'host', 'waitlist']}
             }
         });
+
         const attendeeArr = [];
         attendees.forEach((attendee) => {
             attendeeArr.push(attendee.userId);
         });
+
         const users = await User.findAll({
             where: {
                 id: { [Op.in]: attendeeArr }
@@ -308,11 +321,13 @@ router.get('/:eventId/attendees', validateEventId, async (req, res) => {
                 attributes: ['status']
             }
         });
+
         const resAttendees = {Attendees: users};
         resAttendees.Attendees.forEach(attendee => {
             const status = attendee.dataValues.Attendance[0].dataValues.status;
             attendee.dataValues.Attendance = {status};
         });
+
         res.json(resAttendees);
     };
 });
@@ -326,24 +341,28 @@ router.post('/:eventId/join', validateEventId, requireAuth, async (req, res) => 
         }
     });
     const groupId = checkEvent.dataValues.groupId;
+
     const checkMember = await Member.findOne({
         where: {
             userId: id,
             groupId
         }
     });
+
     if (!checkMember) {
         const err = new Error('Forbidden');
         err.errors = { message: 'Forbidden' };
         err.status = 403;
         throw err;
     };
+
     const checkAttendance = await Attendee.findOne({
         where: {
             userId: id,
             eventId: req.params.eventId
         }
     });
+
     if (checkAttendance && checkAttendance.dataValues.status === 'pending') {
         const err = new Error('Attendance has already been requested');
         err.status = 400;
@@ -360,10 +379,12 @@ router.post('/:eventId/join', validateEventId, requireAuth, async (req, res) => 
             eventId: req.params.eventId,
             status: 'pending'
         });
+
         const newAttendee = {
             userId: id,
             status: 'pending'
         };
+
         res.json(newAttendee);
     };
 });
@@ -424,7 +445,6 @@ router.get('/groups/:groupId', validateGroupId, async (req, res) => {
         where: { groupId: req.params.groupId },
         include: [{
             model: Group,
-            // as: "GroupImages",
             attributes: ['id', 'name', 'city', 'state']
             },
             {
@@ -439,8 +459,7 @@ router.get('/groups/:groupId', validateGroupId, async (req, res) => {
 });
 
 //Edit an Event specified by its id
-router.put('/:eventId', validateEventId, validateVenueId, requireAuth, async (req, res) => {
-    //check authorization
+router.put('/:eventId', validateEventBody, validateEventId, validateVenueId, requireAuth, async (req, res) => {
     const checkEvent = await Event.findOne({ where: { id: req.params.eventId }});
     const groupId = checkEvent.dataValues.groupId;
     const checkMemberStatus = await Member.findOne({
@@ -470,7 +489,6 @@ router.put('/:eventId', validateEventId, validateVenueId, requireAuth, async (re
 
 //Delete an Event specified by its id
 router.delete('/:eventId', validateEventId, requireAuth, async (req, res) => {
-    //check auth
     const checkEvent = await Event.findOne({ where: { id: req.params.eventId }});
     const groupId = checkEvent.dataValues.groupId;
     const checkMemberStatus = await Member.findOne({
@@ -522,14 +540,13 @@ router.get('/:eventId', validateEventId, async (req, res) => {
             status: { [Op.or]: ["attending", "co-host", "host"] }
         }
     });
-    event.dataValues.price = parseFloat(event.dataValues.price);
+
     res.json(event);
 });
 
 //Get all events
 router.get('/', query('startDate').isDate(), async (req, res, next) => {
     let { page, size, name, type, startDate } = req.query;
-    console.log(page, size, name, type, startDate);
     page = parseInt(page);
     size = parseInt(size);
     if (Number.isNaN(page)) {
@@ -538,25 +555,20 @@ router.get('/', query('startDate').isDate(), async (req, res, next) => {
     if (Number.isNaN(size)) {
         size = 20
     }
-    console.log(page, size)
 
     const errors = {};
-
     if ( page < 1 || page > 10 ) {
         errors.page = 'Page must be greater than or equal to 1';
     };
-
     if (size < 1 || size > 20) {
         errors.size = 'Size must be greater than or equal to 1';
     };
     if (name && typeof name !== 'string') {
         errors.name = "Name must be a string";
     };
-    console.log(type);
     if (type && (type.toString() !== 'Online' && type.toString() !== 'In Person')) {
         errors.type = "Type must be 'Online' or 'In Person'";
     };
-
     if (Object.keys(errors).length > 0) {
         const err = new Error('Bad Request');
         err.status = 400;

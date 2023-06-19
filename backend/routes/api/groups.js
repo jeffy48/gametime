@@ -23,7 +23,7 @@ const validateImageId = [
           throw new Error("Group Image couldn't be found");
     }
     }),
-    handleGroupErrors
+    handleGroupImageErrors
 ];
 
 const validateBodyStatus = [
@@ -50,35 +50,37 @@ const validateBodyMember = [
 ];
 
 const validateCreateUpdate = [
-    check('name')
+    check('name', 'Name must be 60 characters or less')
         .exists({ checkFalsy: true })
-        .isLength({ min: 2, max: 60 })
-        .withMessage('Name must be 60 characters or less'),
-    check('about')
+        .notEmpty()
+        .isString()
+        .isLength({ min: 2, max: 60 }),
+    check('about', 'About must be 50 characters or more')
         .exists({ checkFalsy: true })
-        .isLength({ min: 50 })
-        .withMessage('About must be 50 characters or more'),
-    check('type')
-        .isIn(['Online', 'In person'])
-        .withMessage("Type must be 'Online' or 'In person'"),
-    check('private')
+        .notEmpty()
+        .isString()
+        .isLength({ min: 50 }),
+    check('type', "Type must be 'Online' or 'In person'")
+        .notEmpty()
+        .isString()
+        .isIn(['Online', 'In person']),
+    check('private', 'Private must be a boolean')
         .exists({ checkFalsy: false })
-        .isBoolean()
-        .withMessage('Private must be a boolean'),
-    check('city')
+        .isBoolean(),
+    check('city', 'City is required')
         .exists({ checkFalsy: true })
-        .isLength({ min: 2, max: 50 })
-        .withMessage('City is required'),
-    check('state')
+        .notEmpty()
+        .isString()
+        .isLength({ min: 2, max: 50 }),
+    check('state', 'State is required')
         .exists({ checkFalsy: true })
         .isLength({ min: 2, max: 2 })
-        .withMessage('State is required'),
-    handleValidationErrorsCreateUpdateGroup
+        .notEmpty()
+        .isString()
+        .isAlpha(),
+    handleValidationErrors
 ];
 
-
-
-//helper func
 const getNumMembers = async (groupInstance) => {
     const groupObj = {Groups: []};
 
@@ -125,6 +127,12 @@ router.post('/:groupId/images', validateGroupId, requireAuth, requireOrganizerAu
         preview
     });
 
+    if (image.preview) {
+        await Group.update({ previewImage: url },
+            { where: { id: req.params.groupId }}
+        );
+    };
+
     const groupImage = {
         id: image.id,
         url: image.url,
@@ -148,12 +156,11 @@ router.delete('/:groupId/images/:imageId', requireAuth, requireCoHostAuth, valid
 //Delete membership to a group specified by id
 router.delete('/:groupId/membership', validateBodyMember, validateGroupId, requireAuth, async (req, res) => {
     const id = req.user.id;
-    //check if curr user is host of group
     const checkHost = await Group.findOne({ where: {
         organizerId: id,
         id: req.params.groupId
     }});
-    //if curr user isn't host and isn't deleting their own id from group
+
     if (!checkHost && req.body.memberId !== id) {
         const err = new Error('Forbidden');
         err.errors = { message: 'Forbidden' };
@@ -266,14 +273,17 @@ router.put('/:groupId/membership', validateGroupId, validateBodyMember, validate
                 userId: memberId,
                 groupId: req.params.groupId
             },
-            attributes: ['id']
+            attributes: ['id', 'groupId', 'status']
         });
+
         const id = updatedMember.dataValues.id;
         const resMember = {
             id,
-            groupId: req.params.groupId,
-            memberId
+            groupId: updatedMember.dataValues.groupId,
+            memberId,
+            status: updatedMember.dataValues.status
         };
+
         res.json(resMember);
     }
     else {
@@ -291,21 +301,23 @@ router.put('/:groupId/membership', validateGroupId, validateBodyMember, validate
                 userId: memberId,
                 groupId: req.params.groupId
             },
-            attributes: ['id']
+            attributes: ['id', 'groupId', 'status']
         });
         const id = updatedMember.dataValues.id;
+
         const resMember = {
             id,
-            groupId: req.params.groupId,
-            memberId
+            groupId: updatedMember.dataValues.groupId,
+            memberId,
+            status: updatedMember.dataValues.status
         };
+
         res.json(resMember);
     };
 });
 
 //Get all Members of a Group specified by its id
 router.get('/:groupId/members', validateGroupId, async (req, res) => {
-    //if you are the host or co-host of the group
     const id = req.user.id;
     const hostOrCoHost = await Member.findOne({
         where: {
@@ -388,20 +400,18 @@ router.get(
     requireAuth,
     async (req, res) => {
         const { user } = req;
-        console.log(user.id)
-        console.log('here')
         const members = await Member.findAll({
             where: { userId: user.id }
         });
+
         const groupArr = [];
         members.forEach((member) => {
             groupArr.push(member.groupId);
         });
-        console.log(groupArr);
-        // console.log(groups);
+
         const groups = await Group.findAll({ where: { id: {[Op.in]: groupArr }}});
-        console.log(groups);
         const userGroup = await getNumMembers(groups);
+
         res.json(userGroup);
     }
 );
@@ -427,7 +437,7 @@ router.get('/:groupId', validateGroupId, async (req, res,) => {
         ],
         attributes: { exclude: ['previewImage'] }
     });
-    // counts num of entries in Members table with matching group id and sets numMembers key to equal that
+
     group.dataValues.numMembers = await Member.count({
         where: {
             groupId: { [Op.eq]: id },
@@ -438,7 +448,6 @@ router.get('/:groupId', validateGroupId, async (req, res,) => {
 });
 
 //Edit a Group
-//as of now, code doesnt update dynamically (requires client to pass in all required columns. make it better by allowing client to update what they choose to update)
 router.put('/:groupId', validateGroupId, validateCreateUpdate, requireAuth, requireOrganizerAuth, async (req, res) => {
     const { name, about, type, private, city, state } = req.body;
     const group = await Group.update({ name, about, type, private, city, state },
@@ -471,7 +480,6 @@ router.post('/', requireAuth, validateCreateUpdate, async (req, res) => {
         status: 'host'
     });
 
-    console.log(group);
     const resGroup = {
         id: group.dataValues.id,
         organizerId: group.dataValues.organizerId,

@@ -25,43 +25,43 @@ module.exports = {
         status: "host"
       },
       {
-        userId: 1,
-        groupId: 2,
-        status: "host"
-      },
-      {
         userId: 2,
-        groupId: 3,
+        groupId: 2,
         status: "host"
       },
       {
         userId: 3,
-        groupId: 4,
+        groupId: 3,
         status: "host"
       },
       {
         userId: 4,
-        groupId: 1,
+        groupId: 4,
+        status: "host"
+      },
+      {
+        userId: 1,
+        groupId: 2,
         status: "co-host"
       },
       {
-        userId: 4,
-        groupId: 2,
-        status: "member"
-      },
-      {
-        userId: 4,
+        userId: 1,
         groupId: 3,
         status: "member"
       },
       {
-        userId: 4,
+        userId: 1,
         groupId: 4,
-        status: "pending"
+        status: "member"
       },
       {
         userId: 2,
         groupId: 1,
+        status: "pending"
+      },
+      {
+        userId: 3,
+        groupId: 4,
         status: 'member'
       }
     ], {});

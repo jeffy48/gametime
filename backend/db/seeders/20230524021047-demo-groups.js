@@ -22,39 +22,42 @@ module.exports = {
       {
         organizerId: 1,
         name: "Bay Area Sixers",
-        about: "something about us",
+        about: "something about us something about us something about us something about us something about us something about ussomething about us something about us something about us something about us something about us something about us",
         type: "In person",
         private: true,
         city: "San Jose",
         state: "CA",
-        previewImage: "https://wallpapers.com/images/hd/76ers-iphone-1rnx1wg22ng8ou01.jpg"
-      },
-      {
-        organizerId: 1,
-        name: "Mount Laurel Volleyball",
-        about: "something about us",
-        type: "In person",
-        private: true,
-        city: "Mount Laurel",
-        state: "NJ"
+        previewImage: "https://www.thesprucepets.com/thmb/uQnGtOt9VQiML2oG2YzAmPErrHo=/5441x0/filters:no_upscale():strip_icc()/all-about-tabby-cats-552489-hero-a23a9118af8c477b914a0a1570d4f787.jpg"
       },
       {
         organizerId: 2,
-        name: "Coffee and Boardgames",
-        about: "something about us",
+        name: "76ers Game Night",
+        about: "something about us something about us something about us something about us something about us something about us",
         type: "In person",
-        private: false,
-        city: "Mountain View",
-        state: "CA"
+        private: true,
+        city: "Mount Laurel",
+        state: "NJ",
+        previewImage: "https://www.thesprucepets.com/thmb/uQnGtOt9VQiML2oG2YzAmPErrHo=/5441x0/filters:no_upscale():strip_icc()/all-about-tabby-cats-552489-hero-a23a9118af8c477b914a0a1570d4f787.jpg"
       },
       {
         organizerId: 3,
-        name: "Beginner Spanish Online",
-        about: "something about us",
+        name: "Eagles Games at Xfinity",
+        about: "something about us something about us something about us something about us something about us something about us",
+        type: "In person",
+        private: false,
+        city: "Philadelphia",
+        state: "PA",
+        previewImage: "https://www.thesprucepets.com/thmb/uQnGtOt9VQiML2oG2YzAmPErrHo=/5441x0/filters:no_upscale():strip_icc()/all-about-tabby-cats-552489-hero-a23a9118af8c477b914a0a1570d4f787.jpg"
+      },
+      {
+        organizerId: 4,
+        name: "March Madness Watch Party",
+        about: "something about us something about us something about us something about us something about us something about us",
         type: "Online",
         private: true,
-        city: "San Jose",
-        state: "CA"
+        city: "Mountain View",
+        state: "CA",
+        previewImage: "https://www.thesprucepets.com/thmb/uQnGtOt9VQiML2oG2YzAmPErrHo=/5441x0/filters:no_upscale():strip_icc()/all-about-tabby-cats-552489-hero-a23a9118af8c477b914a0a1570d4f787.jpg"
       },
     ], {});
   },
@@ -68,7 +71,7 @@ module.exports = {
      */
     const Op = Sequelize.Op;
     await queryInterface.bulkDelete(options, {
-      name: { [Op.in]: ['Bay Area Sixers', 'Mount Laurel Volleyball', 'Coffee and Boardgames', 'Beginner Spanish Online'] }
+      id: { [Op.in]: [1, 2, 3, 4] }
     }, {});
   }
 };

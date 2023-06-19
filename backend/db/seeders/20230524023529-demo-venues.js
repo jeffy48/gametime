@@ -36,17 +36,17 @@ module.exports = {
         lng: -125.2421432
       },
       {
-        groupId: 3,
+        groupId: 4,
         address: "456 Something Lane",
-        city: "Mountain View",
+        city: "San Jose",
         state: "CA",
         lat: 32.1234567,
         lng: -120.1234567
       },
       {
-        groupId: 4,
+        groupId: 3,
         address: "654 Random Way",
-        city: "San Jose",
+        city: "Mountain View",
         state: "CA",
         lat: 35.1234567,
         lng: -110.1234567

@@ -8,32 +8,38 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-// middleware to add user input validation on user signup requests to the backend server
 const validateSignup = [
-    check('firstName')
+    check('firstName', 'First Name is required')
         .exists({ checkFalsy: true })
-        .isLength({ min: 2 })
-        .withMessage('First Name is required'),
-    check('lastName')
+        .notEmpty()
+        .isString()
+        .isAlpha()
+        .isLength({ min: 1, max: 50 }),
+    check('lastName', 'Last Name is required')
         .exists({ checkFalsy: true })
-        .isLength({ min: 2 })
-        .withMessage('Last Name is required'),
-    check('email')
+        .notEmpty()
+        .isString()
+        .isAlpha()
+        .isLength({ min: 1, max: 50 }),
+    check('email', 'Invalid email')
         .exists({ checkFalsy: true })
         .isEmail()
-        .withMessage('Please provide a valid email.'),
-    check('username')
+        .notEmpty()
+        .isString()
+        .isLength({ min: 1, max: 100 }),
+    check('username', 'Invalid username')
         .exists({ checkFalsy: true })
-        .isLength({ min: 4 })
-        .withMessage('Please provide a username with at least 4 characters.'),
-    check('username')
+        .notEmpty()
+        .isString()
+        .isLength({ min: 1, max: 50 }),
+    check('username', 'Username cannot be an email')
         .not()
-        .isEmail()
-        .withMessage('Username cannot be an email.'),
-    check('password')
+        .isEmail(),
+    check('password', 'Password must be 6 characters or more')
         .exists({ checkFalsy: true })
-        .isLength({ min: 6 })
-        .withMessage('Password must be 6 characters or more.'),
+        .notEmpty()
+        .isString()
+        .isLength({ min: 6 }),
     handleValidationErrors
 ];
 
@@ -45,7 +51,6 @@ router.post(
         const { firstName, lastName, username, email, password } = req.body;
         const hashedPassword = bcrypt.hashSync(password);
 
-        //check if email already exists (error handler: probably not the best way as each query is expensive)
         const emailAlreadyExists = await User.findOne({
             where: { email: email}
         });
@@ -57,8 +62,6 @@ router.post(
             }
             return next(err);
         };
-
-        //check if username already exists (error handler)
         const usernameAlreadyExists = await User.findOne({
             where: { username: username}
         });
@@ -72,7 +75,6 @@ router.post(
         };
 
         const user = await User.create({ firstName, lastName, username, email, hashedPassword });
-
         const safeUser = {
             id: user.id,
             firstName: user.firstName,
@@ -88,7 +90,5 @@ router.post(
         });
     }
 );
-
-
 
 module.exports = router;

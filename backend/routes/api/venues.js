@@ -27,48 +27,30 @@ const validateVenueId = [
 ];
 
 const validateVenueReqBody = [
-//for some reason, its making me attach .withMessage to each method instead of just chaining one .withMessage at the end for all of them.
-    check('address')
+    check('address', 'Street address is required')
         .exists({ checkFalsy: true })
-        .withMessage('Street address is required')
         .isLength({ min: 4})
-        .withMessage('Street address is required')
         .notEmpty()
-        .withMessage('Street address is required')
-        .isString()
-        .withMessage('Street address is required'),
-    check('city')
+        .isString(),
+    check('city', 'City is required')
         .exists({ checkFalsy: true })
-        .withMessage('City is required')
-        .isLength({ min: 1})
-        .withMessage('City is required')
+        .isLength({ min: 2, max: 50})
         .notEmpty()
-        .withMessage('City is required')
-        .isString()
-        .withMessage('City is required'),
-    check('state')
+        .isString(),
+    check('state', 'State is required')
         .exists({ checkFalsy: true })
-        .withMessage('State is required')
         .isLength({ min: 2, max: 2})
-        .withMessage('State is required')
         .notEmpty()
-        .withMessage('State is required')
-        .isString()
-        .withMessage('State is required'),
-    check('lat')
+        .isAlpha()
+        .isString(),
+    check('lat', 'Latitude is not valid')
         .exists({ checkFalsy: true })
-        .withMessage('Latitude is not valid')
         .isDecimal()
-        .withMessage('Latitude is not valid')
-        .notEmpty()
-        .withMessage('Latitude is not valid'),
-    check('lng')
+        .notEmpty(),
+    check('lng', 'Longitude is not valid')
         .exists({ checkFalsy: true })
-        .withMessage('Latitude is not valid')
         .isDecimal()
-        .withMessage('Latitude is not valid')
-        .notEmpty()
-        .withMessage('Longitude is not valid'),
+        .notEmpty(),
     handleValidationErrors
 ];
 
@@ -76,7 +58,6 @@ const router  = express.Router();
 
 //Get All Venues for a Group specified by id
 router.get('/groups/:groupId', validateGroupId, requireAuth, requireCoHostAuth, async (req, res) => {
-    // console.log(validateGroupId);
     const venues = await Venue.findAll({
         where: { groupId: req.params.groupId },
         attributes: { exclude: ['createdAt', 'updatedAt'] }
@@ -86,7 +67,6 @@ router.get('/groups/:groupId', validateGroupId, requireAuth, requireCoHostAuth, 
 });
 
 //Create a new Venue for a Group specified by its id
-//working but body val errors aren't showing correct msg
 router.post('/groups/:groupId', validateGroupId, validateVenueReqBody, requireAuth, requireCoHostAuth, async (req, res) => {
     const { address, city, state, lat, lng } = req.body;
     const venue = await Venue.create({ groupId: Number(req.params.groupId), address, city, state, lat, lng });

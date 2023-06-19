@@ -9,18 +9,16 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-// validation middleware to check and validate body of log-in post req
 const validateLogin = [
-    check('credential')
+    check('credential', 'Credential is required')
         .exists({ checkFalsy: true })
         .notEmpty()
         .isString()
-        .withMessage('Credential is required'),
-    check('password')
+        .isLength({ min: 1, max: 100}),
+    check('password', 'Password is required')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .isString()
-        .withMessage('Password is required'),
+        .isString(),
     handleValidationErrors
 ];
 
@@ -29,7 +27,6 @@ router.get(
     '/',
     (req, res) => {
         const { user } = req;
-        console.log(user);
         if (user) {
             const safeUser = {
                 id: user.id,
@@ -43,7 +40,7 @@ router.get(
     }
 );
 
-//Log In
+//Log In (USE credential KEY TO LOG IN, which the value can either be email or username)
 router.post(
     '/',
     validateLogin,

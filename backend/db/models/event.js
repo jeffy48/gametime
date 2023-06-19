@@ -65,7 +65,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     price: {
-      type: DataTypes.DECIMAL
+      type: DataTypes.DECIMAL(5, 1)
     },
     previewImage: {
       type: DataTypes.STRING
