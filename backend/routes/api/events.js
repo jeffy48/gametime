@@ -469,7 +469,6 @@ router.put('/:eventId', validateEventBody, validateEventId, validateVenueId, req
 
 //Delete an Event specified by its id
 router.delete('/:eventId', validateEventId, requireAuth, async (req, res) => {
-    //check auth
     const checkEvent = await Event.findOne({ where: { id: req.params.eventId }});
     const groupId = checkEvent.dataValues.groupId;
     const checkMemberStatus = await Member.findOne({

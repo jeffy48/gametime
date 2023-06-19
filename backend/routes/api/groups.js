@@ -303,8 +303,9 @@ router.put('/:groupId/membership', validateGroupId, validateBodyMember, validate
         const id = updatedMember.dataValues.id;
         const resMember = {
             id,
-            groupId: req.params.groupId,
-            memberId
+            groupId: updatedMember.dataValues.groupId,
+            memberId,
+            status: updatedMember.dataValues.status
         };
         res.json(resMember);
     };
