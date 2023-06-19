@@ -124,7 +124,9 @@ router.post('/:eventId/images', validateEventId, requireAuth, requireAuth, requi
 router.delete('/:eventId/images/:imageId', requireAuth, requireCoHostAuthEvent, async (req, res) => {
     const destroyed = await Image.destroy({
         where: {
-            id: req.params.imageId
+            id: req.params.imageId,
+            imageableId: req.params.eventId,
+            imageableType: "Event"
         }
     });
     if (!destroyed) {

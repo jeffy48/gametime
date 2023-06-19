@@ -145,9 +145,18 @@ router.post('/:groupId/images', validateGroupId, requireAuth, requireOrganizerAu
 router.delete('/:groupId/images/:imageId', requireAuth, requireCoHostAuth, validateImageId, async (req, res) => {
     const destroyed = await Image.destroy({
         where: {
-            id: req.params.imageId
+            id: req.params.imageId,
+            imageableId: req.params.groupId,
+            imageableType: "Group"
         }
     });
+
+    if (!destroyed) {
+        const err = new Error("Group Image couldn't be found");
+        err.status = 404;
+        throw err;
+    };
+
     res.json({
         message: "Successfully deleted"
       });
