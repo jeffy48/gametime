@@ -156,12 +156,11 @@ router.delete('/:groupId/images/:imageId', requireAuth, requireCoHostAuth, valid
 //Delete membership to a group specified by id
 router.delete('/:groupId/membership', validateBodyMember, validateGroupId, requireAuth, async (req, res) => {
     const id = req.user.id;
-    //check if curr user is host of group
     const checkHost = await Group.findOne({ where: {
         organizerId: id,
         id: req.params.groupId
     }});
-    //if curr user isn't host and isn't deleting their own id from group
+
     if (!checkHost && req.body.memberId !== id) {
         const err = new Error('Forbidden');
         err.errors = { message: 'Forbidden' };
@@ -313,7 +312,6 @@ router.put('/:groupId/membership', validateGroupId, validateBodyMember, validate
 
 //Get all Members of a Group specified by its id
 router.get('/:groupId/members', validateGroupId, async (req, res) => {
-    //if you are the host or co-host of the group
     const id = req.user.id;
     const hostOrCoHost = await Member.findOne({
         where: {
@@ -433,7 +431,7 @@ router.get('/:groupId', validateGroupId, async (req, res,) => {
         ],
         attributes: { exclude: ['previewImage'] }
     });
-    // counts num of entries in Members table with matching group id and sets numMembers key to equal that
+
     group.dataValues.numMembers = await Member.count({
         where: {
             groupId: { [Op.eq]: id },

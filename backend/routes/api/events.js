@@ -111,6 +111,13 @@ router.post('/:eventId/images', validateEventId, requireAuth, requireAuth, requi
         url,
         preview
     });
+
+    if (image.preview) {
+        await Event.update({ previewImage: url },
+            { where: { id: req.params.eventId }}
+        );
+    };
+
     const eventImage = {
         id: image.id,
         url: image.url,
@@ -424,7 +431,6 @@ router.get('/groups/:groupId', validateGroupId, async (req, res) => {
         where: { groupId: req.params.groupId },
         include: [{
             model: Group,
-            // as: "GroupImages",
             attributes: ['id', 'name', 'city', 'state']
             },
             {
@@ -522,15 +528,13 @@ router.get('/:eventId', validateEventId, async (req, res) => {
             status: { [Op.or]: ["attending", "co-host", "host"] }
         }
     });
-    // console.log(event.dataValues.price);
-    // event.dataValues.price = parseFloat(event.dataValues.price).toFixed(2);
+
     res.json(event);
 });
 
 //Get all events
 router.get('/', query('startDate').isDate(), async (req, res, next) => {
     let { page, size, name, type, startDate } = req.query;
-    console.log(page, size, name, type, startDate);
     page = parseInt(page);
     size = parseInt(size);
     if (Number.isNaN(page)) {
@@ -539,25 +543,20 @@ router.get('/', query('startDate').isDate(), async (req, res, next) => {
     if (Number.isNaN(size)) {
         size = 20
     }
-    console.log(page, size)
 
     const errors = {};
-
     if ( page < 1 || page > 10 ) {
         errors.page = 'Page must be greater than or equal to 1';
     };
-
     if (size < 1 || size > 20) {
         errors.size = 'Size must be greater than or equal to 1';
     };
     if (name && typeof name !== 'string') {
         errors.name = "Name must be a string";
     };
-    console.log(type);
     if (type && (type.toString() !== 'Online' && type.toString() !== 'In Person')) {
         errors.type = "Type must be 'Online' or 'In Person'";
     };
-
     if (Object.keys(errors).length > 0) {
         const err = new Error('Bad Request');
         err.status = 400;
