@@ -445,8 +445,7 @@ router.get('/groups/:groupId', validateGroupId, async (req, res) => {
 });
 
 //Edit an Event specified by its id
-router.put('/:eventId', validateEventId, validateVenueId, requireAuth, async (req, res) => {
-    //check authorization
+router.put('/:eventId', validateEventBody, validateEventId, validateVenueId, requireAuth, async (req, res) => {
     const checkEvent = await Event.findOne({ where: { id: req.params.eventId }});
     const groupId = checkEvent.dataValues.groupId;
     const checkMemberStatus = await Member.findOne({
