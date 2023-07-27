@@ -74,13 +74,15 @@ router.post(
             return next(err);
         };
 
-        const user = await User.create({ firstName, lastName, username, email, hashedPassword });
+        const user = await User.unscoped().create({ firstName, lastName, username, email, hashedPassword });
         const safeUser = {
             id: user.id,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
-            username: user.username
+            username: user.username,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt
         };
 
         await setTokenCookie(res, safeUser);
