@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 function GroupPage() {
   const dispatch = useDispatch();
-  const groupList = useSelector(state => state.group.list);
-
+  const groupList = useSelector(state => state.group ? state.group.list : []);
+console.log("haha", groupList.Groups)
   useEffect(() => {
     dispatch(getGroups());
   }, [dispatch])
@@ -20,7 +20,7 @@ function GroupPage() {
       </div>
       <div>Groups in Meetup</div>
       <nav>
-        {groupList?.Groups.map(group => {
+        {groupList?.map(group => {
           return (
             <NavLink key={group.id} to={`/groups/${group.id}`}>
               <div>
