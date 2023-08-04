@@ -1,0 +1,60 @@
+.about {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: auto;
+  align-self: center;
+  margin-top: 50px;
+}
+
+.about > h1 {
+  grid-row-start: 1;
+  grid-row-end: 2;
+  font: 24pt bold;
+  justify-self: center;
+}
+
+.about > p {
+  grid-row-start: 2;
+  grid-row-end: 3;
+  font: 14pt;
+  text-align: center;
+  align-self: center;
+}
+
+.about > img {
+  grid-row-start: 1;
+  grid-row-end: 3;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  justify-self: center;
+  align-self: center;
+  width: 559px;
+  height: 241px;
+  object-fit: contain;
+}
+
+.info {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: auto;
+  margin-top: 75px;
+  margin-bottom: 75px;
+}
+
+.info > h1 {
+  font: 24pt bold;
+  justify-self: center;
+}
+
+.info > div {
+  font: 14pt;
+  text-align: center;
+}
+
+.join {
+  display: grid;
+}
+
+.join > button {
+  justify-self: center;
+}
