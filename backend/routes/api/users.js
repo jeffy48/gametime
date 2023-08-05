@@ -9,13 +9,13 @@ const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
 const validateSignup = [
-    check('firstName', 'First Name is required')
+    check('firstName', 'Invalid first name')
         .exists({ checkFalsy: true })
         .notEmpty()
         .isString()
         .isAlpha()
         .isLength({ min: 1, max: 50 }),
-    check('lastName', 'Last Name is required')
+    check('lastName', 'Invalid last name')
         .exists({ checkFalsy: true })
         .notEmpty()
         .isString()
