@@ -1,12 +1,13 @@
 import { NavLink } from "react-router-dom";
 import { getGroups } from "../../store/group.js";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { GroupDetailPage } from './GroupDetailPage.js';
 
 function GroupPage() {
   const dispatch = useDispatch();
   const groupList = useSelector(state => state.group ? state.group.list : []);
-console.log("haha", groupList.Groups)
+
   useEffect(() => {
     dispatch(getGroups());
   }, [dispatch])

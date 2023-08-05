@@ -8,16 +8,16 @@ function Navigation({isLoaded}) {
   const sessionUser = useSelector(state => state.session.user);
 
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
-      </li>
+    <div className="nav-container">
+        <NavLink exact to="/" className="logo">
+          <img className="logo-img" src="https://www.meetup.com/mu_static/en-US/logo--script.257d0bb1.svg"/>
+        </NavLink>
       {isLoaded && (
-        <li>
+        <div className="profile">
           <ProfileButton user={sessionUser} />
-        </li>
+        </div>
       )}
-    </ul>
+    </div>
   );
 };
 

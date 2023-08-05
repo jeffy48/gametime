@@ -1,3 +1,14 @@
 .hidden {
   display: none
 }
+
+.logo-img {
+  width: 100px;
+  height: 50px;
+}
+
+.nav-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}

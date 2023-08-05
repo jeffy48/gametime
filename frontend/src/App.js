@@ -5,6 +5,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
 import GroupPage from "./components/Group/GroupPage.js";
+import GroupDetailPage from "./components/Group/GroupDetailPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,6 +19,9 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route path="/groups/:groupId">
+            <GroupDetailPage />
+          </Route>
           <Route path="/groups">
             <GroupPage />
           </Route>

@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import './LandingPage.css'
 
 function LandingPage() {
@@ -16,8 +17,12 @@ function LandingPage() {
         <h1>How Meetup works</h1>
         <div>See who's hosting local events for all the things you love<br></br>or<br></br>Create your own Meetup group, and draw from a community of millions</div>
       </div>
-      <div className="links">
-        Links go here!
+      <div className="links-container">
+        <div className="groups">
+          <NavLink exact to="/groups">
+            See all groups
+          </NavLink>
+        </div>
       </div>
       <div className="join">
         <button type="button">Join Meetup</button>
