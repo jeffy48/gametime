@@ -3,7 +3,6 @@
   grid-template-rows: auto;
   grid-template-columns: auto;
   align-self: center;
-  margin-top: 50px;
 }
 
 .about > h1 {
@@ -11,6 +10,7 @@
   grid-row-end: 2;
   font: 24pt bold;
   justify-self: center;
+  align-self: end;
 }
 
 .about > p {
@@ -18,7 +18,7 @@
   grid-row-end: 3;
   font: 14pt;
   text-align: center;
-  align-self: center;
+  align-self: start;
 }
 
 .about > img {
@@ -28,17 +28,17 @@
   grid-column-end: 3;
   justify-self: center;
   align-self: center;
-  width: 559px;
-  height: 241px;
-  object-fit: contain;
+  width: 580px;
+  height: 340px;
+  object-fit: fill;
 }
 
 .info {
   display: grid;
   grid-template-rows: auto;
   grid-template-columns: auto;
-  margin-top: 75px;
-  margin-bottom: 75px;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .info > h1 {
@@ -52,9 +52,50 @@
 }
 
 .join {
-  display: grid;
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
-.join > button {
-  justify-self: center;
+.links {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
+}
+
+.links img {
+  width: 300px;
+  height: 200px;
+  object-fit: fill;
+}
+
+.links > * {
+  margin: 50px 50px 50px 50px
+}
+
+a:hover {
+  color: red;
+  text-decoration: underline;
+}
+
+a {
+  color: black;
+  text-decoration-line: none;
+}
+
+.groups {
+  display:flex;
+  flex-direction: column;
+}
+
+.events {
+  display:flex;
+  flex-direction: column;
+}
+
+.join-button {
+  display:flex;
+  flex-direction: column;
 }
