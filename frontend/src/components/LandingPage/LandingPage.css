@@ -1,19 +1,19 @@
-.about {
+.home__welcome {
   display: grid;
   grid-template-rows: auto;
   grid-template-columns: auto;
   align-self: center;
 }
 
-.about > h1 {
+.home__welcome > h1 {
   grid-row-start: 1;
   grid-row-end: 2;
-  font: 24pt bold;
+  font: 26pt bold;
   justify-self: center;
   align-self: end;
 }
 
-.about > p {
+.home__welcome > p {
   grid-row-start: 2;
   grid-row-end: 3;
   font: 14pt;
@@ -21,7 +21,7 @@
   align-self: start;
 }
 
-.about > img {
+.home__welcome > img {
   grid-row-start: 1;
   grid-row-end: 3;
   grid-column-start: 2;
@@ -33,7 +33,7 @@
   object-fit: fill;
 }
 
-.info {
+.home__info {
   display: grid;
   grid-template-rows: auto;
   grid-template-columns: auto;
@@ -41,37 +41,37 @@
   margin-bottom: 40px;
 }
 
-.info > h1 {
-  font: 24pt bold;
+.home__info > h1 {
+  font: 20pt bold;
   justify-self: center;
 }
 
-.info > div {
+.home__info > div {
   font: 14pt;
   text-align: center;
 }
 
-.join {
+.home__signup {
   display: flex;
   justify-content: center;
   margin-top: 40px;
   margin-bottom: 40px;
 }
 
-.links {
+.home__links {
   display: flex;
   justify-content: center;
   justify-items: center;
   text-align: center;
 }
 
-.links img {
+.home__links img {
   width: 300px;
   height: 200px;
   object-fit: fill;
 }
 
-.links > * {
+.home__links > * {
   margin: 50px 50px 50px 50px
 }
 
@@ -85,17 +85,41 @@ a {
   text-decoration-line: none;
 }
 
-.groups {
+.home__links__groups {
   display:flex;
   flex-direction: column;
 }
 
-.events {
+.home__links__events {
   display:flex;
   flex-direction: column;
 }
 
-.join-button {
+.home__links__join {
   display:flex;
   flex-direction: column;
+}
+
+.home__links a {
+  color: teal;
+  font: 16pt bold;
+}
+
+.home__links__join--nonlink {
+  color: rgb(127, 124, 124);
+  font: 16pt bold;
+}
+
+.home__signup > button {
+  background-color: teal;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: white;
+  box-shadow: 3px 3px 3px black;
+}
+
+.home__links > div > div {
+  margin-top: 10px;
 }

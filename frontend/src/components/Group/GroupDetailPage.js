@@ -8,7 +8,7 @@ function GroupDetailPage() {
   const dispatch = useDispatch();
   const details = useSelector(state => state.group ? state.group.details : {});
   const sessionUser = useSelector(state => state.session.user);
-  console.log(details)
+
   useEffect(() => {
     dispatch(getDetails(groupId));
   }, [dispatch])
@@ -37,10 +37,10 @@ function GroupDetailPage() {
   return (
     <main>
       <div>
-      {"<  "}
-      <NavLink exact to="/groups">
-        Groups
-      </NavLink>
+        {"<  "}
+        <NavLink exact to="/groups">
+          Groups
+        </NavLink>
       </div>
       <div>
         {/* background image */}

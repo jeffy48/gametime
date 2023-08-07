@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import * as sessionActions from "../../store/session";
 import { useModal } from '../../context/Modal';
 import "./SignupForm.css";
@@ -43,11 +42,11 @@ function SignupFormModal() {
     };
 
     return (
-        <>
+        <div className="signup-modal">
             <h1>Sign Up</h1>
             <form onSubmit={handleSubmit}>
                 <label>
-                    Email
+                    <span>Email</span>
                     <input
                         type='text'
                         value={email}
@@ -55,9 +54,9 @@ function SignupFormModal() {
                         required
                     />
                 </label>
-                {errors.email && <p>{errors.email}</p>}
+                {errors.email && <p className="signup-modal__errors">{errors.email}</p>}
                 <label>
-                    Username
+                    <span>Username</span>
                     <input
                         type='text'
                         value={username}
@@ -65,9 +64,9 @@ function SignupFormModal() {
                         required
                     />
                 </label>
-                {errors.username && <p>{errors.username}</p>}
+                {errors.username && <p className="signup-modal__errors">{errors.username}</p>}
                 <label>
-                    First Name
+                    <span>First Name</span>
                     <input
                         type='text'
                         value={firstName}
@@ -75,9 +74,9 @@ function SignupFormModal() {
                         required
                     />
                 </label>
-                {errors.firstName && <p>{errors.firstName}</p>}
+                {errors.firstName && <p className="signup-modal__errors">{errors.firstName}</p>}
                 <label>
-                    Last Name
+                    <span>Last Name</span>
                     <input
                         type='text'
                         value={lastName}
@@ -85,9 +84,9 @@ function SignupFormModal() {
                         required
                     />
                 </label>
-                {errors.lastName && <p>{errors.lastName}</p>}
+                {errors.lastName && <p className="signup-modal__errors">{errors.lastName}</p>}
                 <label>
-                    Password
+                    <span>Password</span>
                     <input
                         type='password'
                         value={password}
@@ -95,9 +94,9 @@ function SignupFormModal() {
                         required
                     />
                 </label>
-                {errors.password && <p>{errors.password}</p>}
+                {errors.password && <p className="signup-modal__errors">{errors.password}</p>}
                 <label>
-                    Confirm Password
+                    <span>Confirm Password</span>
                     <input
                         type='password'
                         value={confirmPassword}
@@ -106,11 +105,11 @@ function SignupFormModal() {
                     />
                 </label>
                 {errors.confirmPassword && (
-                    <p>{errors.confirmPassword}</p>
+                    <p className="signup-modal__errors">{errors.confirmPassword}</p>
                 )}
                 <button disabled={!(username.length >= 4) || !(password.length >= 6) || !(confirmPassword.length >= 6) || !(email.length > 0) || !(firstName.length > 0) || !(lastName.length > 0)} type="submit">Sign Up</button>
             </form>
-        </>
+        </div>
     );
 };
 

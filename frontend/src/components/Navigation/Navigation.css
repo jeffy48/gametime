@@ -2,12 +2,12 @@
   display: none
 }
 
-.logo-img {
+.navbar__logo__img {
   width: 100px;
   height: auto;
 }
 
-.nav-container {
+.navbar {
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -15,12 +15,27 @@
   height: 60px;
 }
 
-.logo {
+.navbar__logo {
   position: relative;
   left: 25px;
   top: 10px;
 }
 
-a.logo.active {
+a.navbar__logo.active {
   height: 36px;
+}
+
+.navbar__profile {
+  align-self: center;
+  position: relative;
+  top: -4px;
+}
+
+.navbar__new-group {
+  align-self: center;
+  position: absolute;
+  left:90%;
+  margin-left:-90px;
+  color:teal;
+  font: 12pt bold;
 }

@@ -10,8 +10,6 @@ function NumberOfEvents({ group }) {
     dispatch(getGroupEvents(group.id))
   }, [dispatch]);
 
-
-
   return (
     <div className="other">{eventList.length} events · {group.private ? 'Private' : 'Public'}</div>
   );
