@@ -121,6 +121,7 @@ function CreateGroupPage() {
             id="group-type-select"
             onChange={(e) => setType(e.target.value)}
             value={type}>
+            <option value="" selected disabled hidden>(select one)</option>
             <option value="In person">In person</option>
             <option value="Online">Online</option>
           </select>
@@ -129,6 +130,7 @@ function CreateGroupPage() {
             id="group-private-select"
             onChange={(e) => setGroupPrivate(e.target.value)}
             value={groupPrivate}>
+            <option value="" selected disabled hidden>(select one)</option>
             <option value="true">Private</option>
             <option value="false">Public</option>
           </select>
