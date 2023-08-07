@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, NavLink } from 'react-router-dom'
 import './GroupDetailPage.css';
+import NumberOfEvents from "../Event/NumberOfEvents";
 
 function GroupDetailPage() {
   const { groupId } = useParams();
@@ -19,7 +20,7 @@ function GroupDetailPage() {
   };
 
   const isOrganizer = () => {
-    if (sessionUser.id === details.organizerId) return true;
+    if (sessionUser?.id === details?.organizerId) return true;
   };
 
   const renderJoinButton = () => {
@@ -47,7 +48,9 @@ function GroupDetailPage() {
         <img style={{objectFit: "contain", height: "22vw", width: "50vw"}} src={details?.previewImage}/>
         <div className="group-detail-page__card__name">{details?.name}</div>
         <div className="group-detail-page__card__location">{details?.city}, {details?.state}</div>
-        <div className="group-detail-page__card__numevents">{/* number of events*/} events · {details?.private ? 'Private' : 'Public'}</div>
+        <div className="group-detail-page__card__numevents">
+          <NumberOfEvents group={details}/>
+        </div>
         <div className="group-detail-page__card__organizer">Organized by {details?.Organizer?.firstName} {details?.Organizer?.lastName}</div>
         {renderJoinButton() && (
           <button onClick={handleOnClick}>Join this group</button>
