@@ -8,6 +8,7 @@ import GroupPage from "./components/Group/GroupPage.js";
 import GroupDetailPage from "./components/Group/GroupDetailPage";
 import EventPage from "./components/Event/EventPage";
 import EventDetailPage from "./components/Event/EventDetailPage";
+import CreateGroupPage from "./components/Group/CreateGroupPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,6 +22,9 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route exact path="/groups/new">
+            <CreateGroupPage />
+          </Route>
           <Route path="/groups/:groupId">
             <GroupDetailPage />
           </Route>

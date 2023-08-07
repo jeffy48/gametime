@@ -28,7 +28,8 @@
 
 .login__input span {
   text-align: center;
-  font: 12pt bold;
+  font-size: 12pt;
+  font-weight: 500;
 }
 
 .login__input input {

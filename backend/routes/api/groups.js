@@ -64,9 +64,9 @@ const validateCreateUpdate = [
         .notEmpty()
         .isString()
         .isIn(['Online', 'In person']),
-    check('private', 'Private must be a boolean')
-        .exists({ checkFalsy: false })
-        .isBoolean(),
+    check('private', 'Invalid group privacy')
+        .isBoolean()
+        .exists({ checkFalsy: false }),
     check('city', 'City is required')
         .exists({ checkFalsy: true })
         .notEmpty()

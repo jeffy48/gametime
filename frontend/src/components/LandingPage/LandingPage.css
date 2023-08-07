@@ -8,7 +8,8 @@
 .home__welcome > h1 {
   grid-row-start: 1;
   grid-row-end: 2;
-  font: 26pt bold;
+  font-size: 26pt;
+  font-weight: 600;
   justify-self: center;
   align-self: end;
 }
@@ -16,7 +17,7 @@
 .home__welcome > p {
   grid-row-start: 2;
   grid-row-end: 3;
-  font: 14pt;
+  font-size: 12pt;
   text-align: center;
   align-self: start;
 }
@@ -42,12 +43,13 @@
 }
 
 .home__info > h1 {
-  font: 20pt bold;
+  font-size: 20pt;
+  font-weight: 550;
   justify-self: center;
 }
 
 .home__info > div {
-  font: 14pt;
+  font-size: 12pt;
   text-align: center;
 }
 
@@ -102,12 +104,14 @@ a {
 
 .home__links a {
   color: teal;
-  font: 16pt bold;
+  font-size: 16pt;
+  font-weight: 525;
 }
 
 .home__links__join--nonlink {
   color: rgb(127, 124, 124);
-  font: 16pt bold;
+  font-size: 16pt;
+  font-weight: 525;
 }
 
 .home__signup > button {
@@ -122,4 +126,5 @@ a {
 
 .home__links > div > div {
   margin-top: 10px;
+  font-size: 12pt;
 }

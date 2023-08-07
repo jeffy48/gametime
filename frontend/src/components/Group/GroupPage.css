@@ -34,7 +34,8 @@ img {
 }
 
 .headers > a {
-  font: 20pt bold;
+  font-size: 20pt;
+  font-weight: bold;
 }
 
 .groups-list-caption {

@@ -37,5 +37,6 @@ a.navbar__logo.active {
   left:90%;
   margin-left:-90px;
   color:teal;
-  font: 12pt bold;
+  font-size: 12pt;
+  font-weight: 525;
 }

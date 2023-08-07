@@ -1,7 +1,8 @@
 import { csrfFetch } from "./csrf";
 
 const LOAD = 'gametime/group/LOAD';
-const LOAD_DETAILS = 'gametime/group/LOAD_DETAILS'
+const LOAD_DETAILS = 'gametime/group/LOAD_DETAILS';
+const CREATE = 'gametime/group/CREATE';
 
 const load = list => ({
   type: LOAD,
@@ -30,6 +31,30 @@ export const getDetails = (groupId) => async dispatch => {
     dispatch(loadDetails(details));
   };
 };
+
+// export const createGroup = (groupBody) => async (dispatch) => {
+//   const { name, about, type, groupPrivate, city, state, groupImage } = groupBody;
+
+//   if (groupPrivate === 'true') {
+//     groupPrivate = true;
+//   } else {
+//     groupPrivate = false;
+//   };
+
+//   console.log('hi', typeof(groupPrivate))
+//   const res = await csrfFetch("/api/groups", {
+//     method: "POST",
+//     body: JSON.stringify({
+//       name,
+//       about,
+//       type,
+//       groupPrivate,
+//       city,
+//       state
+//     }),
+//   });
+//   const data = await res.json();
+// };
 
 const initialState = { list: [], details: {} };
 
