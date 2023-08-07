@@ -32,30 +32,6 @@ export const getDetails = (groupId) => async dispatch => {
   };
 };
 
-// export const createGroup = (groupBody) => async (dispatch) => {
-//   const { name, about, type, groupPrivate, city, state, groupImage } = groupBody;
-
-//   if (groupPrivate === 'true') {
-//     groupPrivate = true;
-//   } else {
-//     groupPrivate = false;
-//   };
-
-//   console.log('hi', typeof(groupPrivate))
-//   const res = await csrfFetch("/api/groups", {
-//     method: "POST",
-//     body: JSON.stringify({
-//       name,
-//       about,
-//       type,
-//       groupPrivate,
-//       city,
-//       state
-//     }),
-//   });
-//   const data = await res.json();
-// };
-
 const initialState = { list: [], details: {} };
 
 const groupReducer = (state = initialState, action) => {

@@ -17,8 +17,8 @@ function GroupPage() {
 
   return (
     <main>
-      <div className="list">
-        <div className="headers">
+      <div className="grouppage__list">
+        <div className="grouppage__headers">
           <NavLink to='/events'
             style={{color: "dark grey"}}>Events
           </NavLink>
@@ -31,10 +31,10 @@ function GroupPage() {
           return (
             <div className="groupslist">
               <NavLink key={group.id} to={`/groups/${group.id}`}>
-                <img src={group.previewImage} style={{objectFit: "contain", height: "200px", width: "400px"}}/>
-                <div className="name">{group.name}</div>
-                <div className="city">{group.city}, {group.state}</div>
-                <div className="group-about">{group.about}</div>
+                <img src={group.previewImage} style={{objectFit: "contain", height: "16vw", width: "28vw"}}/>
+                <div className="grouplist__name">{group.name}</div>
+                <div className="grouplist__city">{group.city}, {group.state}</div>
+                <div className="grouplist__about">{group.about}</div>
                 <NumberOfEvents group={group}/>
               </NavLink>
             </div>

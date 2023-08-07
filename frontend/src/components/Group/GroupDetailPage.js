@@ -2,6 +2,7 @@ import { getDetails } from "../../store/group";
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, NavLink } from 'react-router-dom'
+import './GroupDetailPage.css';
 
 function GroupDetailPage() {
   const { groupId } = useParams();
@@ -13,53 +14,66 @@ function GroupDetailPage() {
     dispatch(getDetails(groupId));
   }, [dispatch])
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleOnClick = () => {
     alert("Feature coming soon");
   };
 
-  const renderLoginButton = () => {
-    if (!sessionUser) return;
+  const isOrganizer = () => {
+    if (sessionUser.id === details.organizerId) return true;
+  };
 
-    const isOrganizer = () => {
-      if (sessionUser.id === details.organizerId) return true;
-    };
+  const renderJoinButton = () => {
+    if (!sessionUser) return false;
 
-    if (sessionUser && isOrganizer()) return;
+    if (sessionUser && isOrganizer()) return false;
 
-    return (
-      <form onSubmit={handleSubmit}>
-        <button type="submit">Join this Group</button>
-      </form>
-    );
+    return true;
+  };
+
+  const renderButtons = () => {
+    if (sessionUser && isOrganizer()) return true;
+    else return false;
   };
 
   return (
-    <main>
-      <div>
+    <main className="group-detail-page">
+      <div className="group-detail-page__back">
         {"<  "}
         <NavLink exact to="/groups">
           Groups
         </NavLink>
       </div>
-      <div>
-        {/* background image */}
-        <div>{details?.name}</div>
-        <div>{details?.city}, {details?.state}</div>
-        <div>{/* number of events*/} events · {details?.private ? 'Private' : 'Public'}</div>
-        <div>Organized by {details?.Organizer?.firstName} {details?.Organizer?.lastName}</div>
-        {renderLoginButton()}
+      <div className="group-detail-page__card">
+        <img style={{objectFit: "contain", height: "22vw", width: "50vw"}} src={details?.previewImage}/>
+        <div className="group-detail-page__card__name">{details?.name}</div>
+        <div className="group-detail-page__card__location">{details?.city}, {details?.state}</div>
+        <div className="group-detail-page__card__numevents">{/* number of events*/} events · {details?.private ? 'Private' : 'Public'}</div>
+        <div className="group-detail-page__card__organizer">Organized by {details?.Organizer?.firstName} {details?.Organizer?.lastName}</div>
+        {renderJoinButton() && (
+          <button onClick={handleOnClick}>Join this group</button>
+        )}
+        {renderButtons() && (
+          <div className="group-detail-page__card__orgbuttons">
+            <button>Create Event</button>
+            <button>Update</button>
+            <button>Delete</button>
+          </div>
+        )}
       </div>
-      <div>
-        <div>Organizer</div>
-        <div>{details?.Organizer?.firstName} {details?.Organizer?.lastName}</div>
-        <div>What we're about</div>
-        <div>{details?.about}</div>
-        <div>
-
+      <div className="group-detail-page__bottom__container">
+        <div className="group-detail-page__bottom">
+          <div className="group-detail-page__bottom__orghead">Organizer</div>
+          <div className="group-detail-page__bottom__organizer">{details?.Organizer?.firstName} {details?.Organizer?.lastName}</div>
+          <div className="group-detail-page__bottom__abouthead">What we're about</div>
+          <div className="group-detail-page__bottom__about">{details?.about}</div>
+          <div className="group-detail-page__bottom__events">
+            {/* Upcoming events component */}
+          </div>
+          <div className="group-detail-page__bottom__events">
+            {/* Past events component */}
+          </div>
         </div>
       </div>
-
     </main>
   );
 };

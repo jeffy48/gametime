@@ -1,14 +1,18 @@
 import { useState } from 'react';
 import { csrfFetch } from '../../store/csrf';
+import { useHistory } from 'react-router-dom';
+import './CreateGroupPage.css';
 
 function CreateGroupPage() {
   const [ location, setLocation ] = useState("");
   const [ name, setName ] = useState("");
   const [ about, setAbout ] = useState("");
   const [ groupImage, setGroupImage ] = useState("");
-  const [ type, setType ] = useState("");
-  const [ groupPrivate, setGroupPrivate ] = useState(undefined);
+  const [ type, setType ] = useState("In person");
+  const [ groupPrivate, setGroupPrivate ] = useState("false");
   const [ errors, setErrors ] = useState({});
+  const [ imageErrors, setImageErrors ] = useState({});
+  const history = useHistory();
 
   const createGroup = async (groupBody) => {
     const { name, about, type, groupPrivate, city, state, groupImage } = groupBody;
@@ -18,16 +22,6 @@ function CreateGroupPage() {
     } else {
       newPrivate = false;
     };
-
-    console.log('hi', newPrivate)
-    console.log(JSON.stringify({
-      name,
-      about,
-      type,
-      newPrivate,
-      city,
-      state
-    }))
 
     const res = await csrfFetch("/api/groups", {
       method: "POST",
@@ -42,10 +36,28 @@ function CreateGroupPage() {
     });
 
     const data = await res.json();
-};
+    return data;
+  };
+
+  const createGroupImage = async (url, groupId) => {
+    const res = await csrfFetch(`/api/groups/${groupId}/images`, {
+      method: "POST",
+      body: JSON.stringify({
+        imageableId: groupId,
+        imageableType: "Group",
+        url,
+        preview: true
+      }),
+    });
+
+    const data = res.json();
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors({});
+    setImageErrors({});
+
     const [ city, state ] = location.split(', ');
 
     const body = {
@@ -59,16 +71,25 @@ function CreateGroupPage() {
     };
 
     return createGroup(body)
+      .then((data) => {
+        const groupId = data.id;
+        return groupId;
+      })
+      .then((groupId) => {
+        createGroupImage(groupImage, groupId)
+        history.push(`/groups/${groupId}`);
+      })
       .catch(async (res) => {
         const data = await res.json();
-        console.log(data);
+        if (data && data.errors) {
+          setErrors(data.errors);
+        }
       })
   };
 
   return (
     <main className="create-group">
       <div className="create-group__title">Start a New Group</div>
-      {/* {errors && <p>{errors}</p>} */}
       <form onSubmit={handleSubmit}>
         <div className="create-group__location">
           <h1>Set your group's location</h1>
@@ -83,6 +104,8 @@ function CreateGroupPage() {
             onChange={(e) => setLocation(e.target.value)}
             required
           />
+          {errors.city && <p>{errors.city}</p>}
+          {errors.state && <p>{errors.state}</p>}
         </div>
         <div className="create-group__name">
           <h1>What will your group's name be?</h1>
@@ -97,6 +120,7 @@ function CreateGroupPage() {
             onChange={(e) => setName(e.target.value)}
             required
           />
+          {errors.name && <p>{errors.name}</p>}
         </div>
         <div className="create-group__about">
           <h1>Describe the purpose of your group</h1>
@@ -109,31 +133,34 @@ function CreateGroupPage() {
           </div>
           <input
             type="text"
-            placeholder="Please write at least 30 characters."
+            className='create-group__about__input'
+            placeholder="Please write at least 50 characters."
             value={about}
             onChange={(e) => setAbout(e.target.value)}
             required
-            />
+          />
+          {errors.about && <p>{errors.about}</p>}
         </div>
         <div className="create-group__final">
-          <label for="group-type-select">Is this an in-person or online group?</label>
+          <label style={{marginTop: "10px"}} for="group-type-select">Is this an in-person or online group?</label>
           <select
             id="group-type-select"
             onChange={(e) => setType(e.target.value)}
             value={type}>
-            <option value="" selected disabled hidden>(select one)</option>
             <option value="In person">In person</option>
             <option value="Online">Online</option>
           </select>
+          {errors.type && <p>{errors.type}</p>}
+          {/* {<p>hello</p>} */}
           <label for="group-private-select">Is this group private or public?</label>
           <select
             id="group-private-select"
             onChange={(e) => setGroupPrivate(e.target.value)}
             value={groupPrivate}>
-            <option value="" selected disabled hidden>(select one)</option>
             <option value="true">Private</option>
             <option value="false">Public</option>
           </select>
+          {errors.private && <p>{errors.private}</p>}
           <label for="group-image-input">Please add an image url for your group below.</label>
           <input
             type="text"
@@ -141,9 +168,14 @@ function CreateGroupPage() {
             value={groupImage}
             onChange={(e) => setGroupImage(e.target.value)}
             required
-            />
+          />
         </div>
-        <button type="submit" className="create-group__submit">Create group</button>
+        <button
+          type="submit"
+          className="create-group__submit"
+          disabled={!(location?.length > 0) || !(name?.length > 0) || !(about?.length > 0) || !(type?.length > 0) || !(groupPrivate?.length > 0) || !(groupImage?.length > 0)}
+          >Create group
+        </button>
       </form>
     </main>
   );
