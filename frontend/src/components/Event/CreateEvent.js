@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 
 function CreateEvent() {
   const { groupId } = useParams();
@@ -10,6 +11,35 @@ function CreateEvent() {
   const [ endDate, setEndDate ] = useState("");
   const [ url, setUrl ] = useState("");
   const [ desc, setDesc ] = useState("");
+  const [ errors, setErrors ] = useState({});
+
+  const createEvent = async (eventBody) => {
+    const { name, type, eventPrivate, price, startDate, endDate, url, desc } = groupBody;
+    let newPrivate;
+
+    if (eventPrivate === 'true') {
+      newPrivate = true;
+    } else {
+      newPrivate = false;
+    };
+
+    const res = await csrfFetch(`/events/groups/${groupId}`, {
+      method: "POST",
+      body: JSON.stringify({
+        name,
+        about,
+        type,
+        private: newPrivate,
+        city,
+        state
+      }),
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      return data;
+    }
+  };
 
   return (
     <main>
