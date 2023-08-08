@@ -13,33 +13,33 @@ function CreateEvent() {
   const [ desc, setDesc ] = useState("");
   const [ errors, setErrors ] = useState({});
 
-  const createEvent = async (eventBody) => {
-    const { name, type, eventPrivate, price, startDate, endDate, url, desc } = groupBody;
-    let newPrivate;
+  // const createEvent = async (eventBody) => {
+  //   const { name, type, eventPrivate, price, startDate, endDate, url, desc } = groupBody;
+  //   let newPrivate;
 
-    if (eventPrivate === 'true') {
-      newPrivate = true;
-    } else {
-      newPrivate = false;
-    };
+  //   if (eventPrivate === 'true') {
+  //     newPrivate = true;
+  //   } else {
+  //     newPrivate = false;
+  //   };
 
-    const res = await csrfFetch(`/events/groups/${groupId}`, {
-      method: "POST",
-      body: JSON.stringify({
-        name,
-        about,
-        type,
-        private: newPrivate,
-        city,
-        state
-      }),
-    });
+  //   const res = await csrfFetch(`/events/groups/${groupId}`, {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       groupId,
+  //       about,
+  //       type,
+  //       private: newPrivate,
+  //       city,
+  //       state
+  //     }),
+  //   });
 
-    if (res.ok) {
-      const data = await res.json();
-      return data;
-    }
-  };
+  //   if (res.ok) {
+  //     const data = await res.json();
+  //     return data;
+  //   }
+  // };
 
   return (
     <main>
@@ -54,14 +54,14 @@ function CreateEvent() {
       />
       <label>Is this an in person or online event?</label>
       <select
-        onChange={() => setType(e.target.value)}
+        onChange={(e) => setType(e.target.value)}
         value={type}>
         <option value="In person">In person</option>
         <option value="Online">Online</option>
       </select>
       <label>Is this event private or public?</label>
       <select
-        onChange={() => setEventPrivate(e.target.value)}
+        onChange={(e) => setEventPrivate(e.target.value)}
         value={eventPrivate}>
         <option value="true">Private</option>
         <option value="false">Public</option>
