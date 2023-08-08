@@ -7,7 +7,6 @@ import './EventPage.css';
 function EventPage() {
   const dispatch = useDispatch();
   const eventList = useSelector(state => state.event ? state.event.list : []);
-  console.log(eventList)
 
   useEffect(() => {
     dispatch(getEvents());

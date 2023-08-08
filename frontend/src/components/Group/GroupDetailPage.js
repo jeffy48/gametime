@@ -3,13 +3,16 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, NavLink } from 'react-router-dom'
 import './GroupDetailPage.css';
-import NumberOfEvents from "../Event/NumberOfEvents";
+import DeleteGroupModal from './DeleteGroupModal.js';
+import OpenModalButton from "../Modal/OpenModalButton";
+import './DeleteGroupModal.css';
 
 function GroupDetailPage() {
   const { groupId } = useParams();
   const dispatch = useDispatch();
   const details = useSelector(state => state.group ? state.group.details : {});
   const sessionUser = useSelector(state => state.session.user);
+  console.log(details);
 
   useEffect(() => {
     dispatch(getDetails(groupId));
@@ -49,7 +52,7 @@ function GroupDetailPage() {
         <div className="group-detail-page__card__name">{details?.name}</div>
         <div className="group-detail-page__card__location">{details?.city}, {details?.state}</div>
         <div className="group-detail-page__card__numevents">
-          <NumberOfEvents group={details}/>
+          <div className="grouppage__other">{'put num events here'} events · {details?.type ? 'Private' : 'Public'}</div>
         </div>
         <div className="group-detail-page__card__organizer">Organized by {details?.Organizer?.firstName} {details?.Organizer?.lastName}</div>
         {renderJoinButton() && (
@@ -59,7 +62,10 @@ function GroupDetailPage() {
           <div className="group-detail-page__card__orgbuttons">
             <button>Create Event</button>
             <button>Update</button>
-            <button>Delete</button>
+            <OpenModalButton
+              buttonText="Delete"
+              modalComponent={<DeleteGroupModal />}
+            />
           </div>
         )}
       </div>

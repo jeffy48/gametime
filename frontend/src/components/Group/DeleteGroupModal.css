@@ -1,0 +1,30 @@
+.delete-group-modal__1 {
+  margin: .5vw;
+  text-align: center;
+}
+
+.delete-group-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.delete-group-modal__2 {
+  margin: .5vw;
+}
+
+.delete-group-modal__3 {
+  margin: .5vw;
+  background-color: red;
+  color: white;
+  height: 4vw;
+  box-shadow: 2px 2px 2px black;
+}
+
+.delete-group-modal__4 {
+  margin: .5vw;
+  background-color: grey;
+  color: white;
+  height: 4vw;
+  box-shadow: 2px 2px 2px black;
+}

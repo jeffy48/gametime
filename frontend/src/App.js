@@ -25,12 +25,6 @@ function App() {
           <Route exact path="/groups/new">
             <CreateGroupPage />
           </Route>
-          <Route path="/groups/:groupId">
-            <GroupDetailPage />
-          </Route>
-          <Route path="/events/:eventId">
-            <EventDetailPage />
-          </Route>
           <Route exact path="/groups">
             <GroupPage />
           </Route>
@@ -39,6 +33,12 @@ function App() {
           </Route>
           <Route exact path="/">
             <LandingPage />
+          </Route>
+          <Route path="/groups/:groupId">
+            <GroupDetailPage />
+          </Route>
+          <Route path="/events/:eventId">
+            <EventDetailPage />
           </Route>
         </Switch>
       )}

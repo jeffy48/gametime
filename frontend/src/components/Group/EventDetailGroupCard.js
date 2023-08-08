@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getDetails } from '../../store/group';
 
 function EventDetailGroupCard({groupId}) {
@@ -14,7 +14,7 @@ function EventDetailGroupCard({groupId}) {
   return (
     <div className="event-detail__groupcard__container">
       <NavLink exact to={`/groups/${groupId}`}>
-        <img src />
+        <img src={details?.previewImage} />
         <div>{details?.name}</div>
         {details?.private
           ? <div>Private</div>

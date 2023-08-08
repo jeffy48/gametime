@@ -35,8 +35,10 @@ function CreateGroupPage() {
       }),
     });
 
-    const data = await res.json();
-    return data;
+    if (res.ok) {
+      const data = await res.json();
+      return data;
+    }
   };
 
   const createGroupImage = async (url, groupId) => {

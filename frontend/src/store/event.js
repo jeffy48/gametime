@@ -25,6 +25,7 @@ export const getGroupEvents = (groupId) => async dispatch => {
   if (res.ok) {
     const events = await res.json();
     dispatch(loadEventsByGroup(events.Events));
+
   };
 };
 

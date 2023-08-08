@@ -2,8 +2,6 @@ import { NavLink } from "react-router-dom";
 import { getGroups } from "../../store/group.js";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { GroupDetailPage } from './GroupDetailPage.js';
-import { useLocation } from 'react-router-dom';
 import "./GroupPage.css";
 import NumberOfEvents from "../Event/NumberOfEvents.js";
 
@@ -35,7 +33,7 @@ function GroupPage() {
                 <div className="grouplist__name">{group.name}</div>
                 <div className="grouplist__city">{group.city}, {group.state}</div>
                 <div className="grouplist__about">{group.about}</div>
-                <NumberOfEvents group={group}/>
+                {/* <NumberOfEvents data={groupList}/> */}
               </NavLink>
             </div>
           )
