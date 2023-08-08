@@ -67,3 +67,7 @@ img {
   grid-column: 2 3;
   align-self: end;
 }
+
+.grouplist__other {
+  align-self: end;
+}

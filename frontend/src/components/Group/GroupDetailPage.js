@@ -1,13 +1,14 @@
 import { getDetails } from "../../store/group";
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams, NavLink } from 'react-router-dom'
+import { useParams, NavLink, useHistory } from 'react-router-dom'
 import './GroupDetailPage.css';
 import DeleteGroupModal from './DeleteGroupModal.js';
 import OpenModalButton from "../Modal/OpenModalButton";
 import './DeleteGroupModal.css';
 
 function GroupDetailPage() {
+  const history = useHistory();
   const { groupId } = useParams();
   const dispatch = useDispatch();
   const details = useSelector(state => state.group ? state.group.details : {});
@@ -21,6 +22,10 @@ function GroupDetailPage() {
   const handleOnClick = () => {
     alert("Feature coming soon");
   };
+
+  const handleClick = () => {
+    history.push(`/groups/${groupId}/events/new`)
+  }
 
   const isOrganizer = () => {
     if (sessionUser?.id === details?.organizerId) return true;
@@ -52,7 +57,7 @@ function GroupDetailPage() {
         <div className="group-detail-page__card__name">{details?.name}</div>
         <div className="group-detail-page__card__location">{details?.city}, {details?.state}</div>
         <div className="group-detail-page__card__numevents">
-          <div className="grouppage__other">{'put num events here'} events · {details?.type ? 'Private' : 'Public'}</div>
+          <div className="grouppage__other"># events · {details?.type ? 'Private' : 'Public'}</div>
         </div>
         <div className="group-detail-page__card__organizer">Organized by {details?.Organizer?.firstName} {details?.Organizer?.lastName}</div>
         {renderJoinButton() && (
@@ -60,11 +65,12 @@ function GroupDetailPage() {
         )}
         {renderButtons() && (
           <div className="group-detail-page__card__orgbuttons">
-            <button>Create Event</button>
+            <button onClick={handleClick}>Create Event</button>
             <button>Update</button>
             <OpenModalButton
+              groupId={groupId}
               buttonText="Delete"
-              modalComponent={<DeleteGroupModal />}
+              modalComponent={<DeleteGroupModal groupId={groupId}/>}
             />
           </div>
         )}
@@ -78,7 +84,7 @@ function GroupDetailPage() {
           <div className="group-detail-page__bottom__events">
             {/* Upcoming events component */}
           </div>
-          <div className="group-detail-page__bottom__events">
+          <div className="group-detail-page__bottom__past-events">
             {/* Past events component */}
           </div>
         </div>

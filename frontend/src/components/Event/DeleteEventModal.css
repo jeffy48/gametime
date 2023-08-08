@@ -1,0 +1,30 @@
+.delete-event-modal__1 {
+  margin: .5vw;
+  text-align: center;
+}
+
+.delete-event-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.delete-event-modal__2 {
+  margin: .5vw;
+}
+
+.delete-event-modal__3 {
+  margin: .5vw;
+  background-color: red;
+  color: white;
+  height: 4vw;
+  box-shadow: 2px 2px 2px black;
+}
+
+.delete-event-modal__4 {
+  margin: .5vw;
+  background-color: grey;
+  color: white;
+  height: 4vw;
+  box-shadow: 2px 2px 2px black;
+}

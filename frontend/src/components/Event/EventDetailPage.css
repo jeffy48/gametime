@@ -87,3 +87,15 @@
 .event-detail-details {
   padding-bottom: 5vh;
 }
+
+.event-detail__bottom__info__delete {
+  background-color: grey;
+  color: white;
+  height: 2vw;
+  align-self: flex-end;
+}
+
+.event-detail__bottom__info__button {
+  display: flex;
+  justify-content: end;
+}

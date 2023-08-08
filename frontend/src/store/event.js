@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 const LOAD_EVENTS_BY_GROUP = 'gametime/event/LOAD_EVENTS_BY_GROUP';
 const LOAD_EVENTS = 'gametime/event/LOAD_EVENTS';
 const LOAD_DETAILS = 'gametime/event/LOAD_DETAILS';
+const DELETE = 'gametime/event/DELETE';
 
 const loadEventsByGroup = events => ({
   type: LOAD_EVENTS_BY_GROUP,
@@ -18,6 +19,10 @@ const loadDetails = details => ({
   type: LOAD_DETAILS,
   details: details
 });
+
+const deleteAction = () => ({
+  type: DELETE
+})
 
 export const getGroupEvents = (groupId) => async dispatch => {
   const res = await csrfFetch(`/api/events/groups/${groupId}`);
@@ -48,6 +53,17 @@ export const getDetails = (eventId) => async dispatch => {
   };
 };
 
+export const deleteEvent = (eventId) => async dispatch => {
+  const res = await csrfFetch(`/api/events/${eventId}`, {
+    method: 'DELETE'
+  });
+
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(deleteAction())
+  }
+}
+
 const initialState = { events: [], list: [], details: {} };
 
 const eventReducer = (state = initialState, action) => {
@@ -58,6 +74,8 @@ const eventReducer = (state = initialState, action) => {
       return { ...state, list: action.list }
     case LOAD_DETAILS:
       return { ...state, details: action.details }
+    case DELETE:
+      return { ...state }
     default:
       return state;
   }

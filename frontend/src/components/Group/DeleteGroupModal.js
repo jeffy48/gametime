@@ -4,20 +4,19 @@ import { useDispatch } from 'react-redux';
 import { deleteGroup } from "../../store/group";
 import { useModal } from "../../context/Modal";
 
-function DeleteGroupModal() {
+function DeleteGroupModal({ groupId }) {
+  console.log('groupid',groupId)
   const history = useHistory();
-  const { groupId } = useParams();
   const dispatch = useDispatch();
-  const closeModal = useModal()
+  const { closeModal } = useModal()
 
-  const handleDeleteClick = (e, groupId) => {
-    e.preventDefault();
+  const handleDeleteClick = () => {
     dispatch(deleteGroup(groupId));
+    closeModal();
     history.push("/groups")
   };
 
-  const handleClick = (e) => {
-    e.preventDefault();
+  const handleClick = () => {
     closeModal();
   };
 

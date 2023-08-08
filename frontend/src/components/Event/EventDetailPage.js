@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useParams, NavLink } from 'react-router-dom'
 import './EventDetailPage.css';
+import OpenModalButton from "../Modal/OpenModalButton";
+import DeleteEventModal from "./DeleteEventModal";
 
 function EventDetailPage() {
   const { eventId } = useParams();
@@ -12,6 +14,7 @@ function EventDetailPage() {
   const startTime = details?.startDate?.slice(11, 16);
   const endDate = details?.endDate?.slice(0, 10);
   const endTime = details?.endDate?.slice(11, 16);
+  console.log('eventdeets',details);
 
   useEffect(() => {
     dispatch(getDetails(eventId));
@@ -67,6 +70,14 @@ function EventDetailPage() {
             <div className="event-detail__bottom__info__location">
               <i className="fa-solid fa-map-pin"></i>
               {details?.type}
+            </div>
+            <div className="event-detail__bottom__info__button">
+              <OpenModalButton
+                eventId={eventId}
+                groupId={details?.groupId}
+                buttonText="Delete"
+                modalComponent={<DeleteEventModal eventId={eventId} groupId={details?.groupId}/>}
+              />
             </div>
           </div>
         </div>

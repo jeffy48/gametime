@@ -8,6 +8,7 @@ import NumberOfEvents from "../Event/NumberOfEvents.js";
 function GroupPage() {
   const dispatch = useDispatch();
   const groupList = useSelector(state => state.group ? state.group.list : []);
+  console.log(groupList)
 
   useEffect(() => {
     dispatch(getGroups());
@@ -33,7 +34,7 @@ function GroupPage() {
                 <div className="grouplist__name">{group.name}</div>
                 <div className="grouplist__city">{group.city}, {group.state}</div>
                 <div className="grouplist__about">{group.about}</div>
-                {/* <NumberOfEvents data={groupList}/> */}
+                <div className="grouplist__other"># events · {groupList?.private ? 'Private' : 'Public'}</div>
               </NavLink>
             </div>
           )
