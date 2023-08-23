@@ -4,6 +4,7 @@ const LOAD_EVENTS_BY_GROUP = 'gametime/event/LOAD_EVENTS_BY_GROUP';
 const LOAD_EVENTS = 'gametime/event/LOAD_EVENTS';
 const LOAD_DETAILS = 'gametime/event/LOAD_DETAILS';
 const DELETE = 'gametime/event/DELETE';
+const LOAD_EVENT_ATTENDEES = 'gametime/event/LOAD_EVENT_ATTENDEES';
 
 const loadEventsByGroup = events => ({
   type: LOAD_EVENTS_BY_GROUP,
@@ -22,6 +23,11 @@ const loadDetails = details => ({
 
 const deleteAction = () => ({
   type: DELETE
+})
+
+const loadEventAttendees = attendees => ({
+  type: LOAD_EVENT_ATTENDEES,
+  attendees: attendees
 })
 
 export const getGroupEvents = (groupId) => async dispatch => {
@@ -64,7 +70,16 @@ export const deleteEvent = (eventId) => async dispatch => {
   }
 }
 
-const initialState = { events: [], list: [], details: {} };
+export const getEventAttendees = (eventId) => async dispatch => {
+  const res = await csrfFetch(`/api/events/${eventId}/attendees`);
+
+  if (res.ok) {
+    const attendees = await res.json();
+    dispatch(loadEventAttendees(attendees));
+  }
+}
+
+const initialState = { events: [], list: [], details: {}, attendees: {} };
 
 const eventReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -76,6 +91,8 @@ const eventReducer = (state = initialState, action) => {
       return { ...state, details: action.details }
     case DELETE:
       return { ...state }
+    case LOAD_EVENT_ATTENDEES:
+      return { ...state, attendees: action.attendees }
     default:
       return state;
   }

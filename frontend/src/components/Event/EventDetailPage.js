@@ -1,4 +1,4 @@
-import { getDetails } from "../../store/event";
+import { getDetails, getEventAttendees } from "../../store/event";
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useParams, NavLink } from 'react-router-dom'
@@ -10,14 +10,23 @@ function EventDetailPage() {
   const { eventId } = useParams();
   const dispatch = useDispatch();
   const details = useSelector(state => state.event ? state.event.details : {});
+  const attendees = useSelector(state => state.event ? state.event.attendees : {});
+  const sessionUser = useSelector(state => state.session.user);
   const startDate = details?.startDate?.slice(0, 10);
   const startTime = details?.startDate?.slice(11, 16);
   const endDate = details?.endDate?.slice(0, 10);
   const endTime = details?.endDate?.slice(11, 16);
   console.log('eventdeets',details);
+  console.log('attendees', attendees)
+  console.log('user', sessionUser)
+
 
   useEffect(() => {
     dispatch(getDetails(eventId));
+
+    if (sessionUser) {
+      dispatch(getEventAttendees(eventId));
+    }
   }, [dispatch])
 
   const findPreview = () => {
@@ -31,6 +40,21 @@ function EventDetailPage() {
     };
 
     return previews[previews.length-1];
+  };
+
+  const isHost = () => {
+    const attendance = attendees?.Attendees;
+
+    for (let i = 0; i < attendance?.length; i++) {
+      if (attendance[i]?.id === sessionUser?.id && attendance[i]?.Attendance?.status === 'host') {
+        return true;
+      }
+    }
+  };
+
+  const renderButton = () => {
+    if (sessionUser && isHost()) return true;
+    else return false;
   };
 
   return (
@@ -71,14 +95,16 @@ function EventDetailPage() {
               <i className="fa-solid fa-map-pin"></i>
               {details?.type}
             </div>
-            <div className="event-detail__bottom__info__button">
-              <OpenModalButton
-                eventId={eventId}
-                groupId={details?.groupId}
-                buttonText="Delete"
-                modalComponent={<DeleteEventModal eventId={eventId} groupId={details?.groupId}/>}
-              />
-            </div>
+            {renderButton() && (
+               <div className="event-detail__bottom__info__button">
+               <OpenModalButton
+                 eventId={eventId}
+                 groupId={details?.groupId}
+                 buttonText="Delete"
+                 modalComponent={<DeleteEventModal eventId={eventId} groupId={details?.groupId}/>}
+               />
+             </div>
+            )}
           </div>
         </div>
         <div className="event-detail-caption">Details</div>
