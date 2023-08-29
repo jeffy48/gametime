@@ -57,6 +57,10 @@ function EventDetailPage() {
     else return false;
   };
 
+  const handleUpdate = () => {
+    alert("Feature coming soon");
+  };
+
   return (
     <main className="event-detail">
       <div className="event-detail__head">
@@ -103,6 +107,7 @@ function EventDetailPage() {
                  buttonText="Delete"
                  modalComponent={<DeleteEventModal eventId={eventId} groupId={details?.groupId}/>}
                />
+               <button onClick={handleUpdate}>Update</button>
              </div>
             )}
           </div>

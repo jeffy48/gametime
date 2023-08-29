@@ -6,9 +6,9 @@ const LOAD_DETAILS = 'gametime/event/LOAD_DETAILS';
 const DELETE = 'gametime/event/DELETE';
 const LOAD_EVENT_ATTENDEES = 'gametime/event/LOAD_EVENT_ATTENDEES';
 
-const loadEventsByGroup = events => ({
+const loadEventsByGroup = groupEvents => ({
   type: LOAD_EVENTS_BY_GROUP,
-  events: events
+  groupEvents: groupEvents
 });
 
 const loadEvents = events => ({
@@ -79,12 +79,12 @@ export const getEventAttendees = (eventId) => async dispatch => {
   }
 }
 
-const initialState = { events: [], list: [], details: {}, attendees: {} };
+const initialState = { groupEvents: [], list: [], details: {}, attendees: {} };
 
 const eventReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_EVENTS_BY_GROUP:
-      return { ...state, events: action.events }
+      return { ...state, groupEvents: action.groupEvents }
     case LOAD_EVENTS:
       return { ...state, list: action.list }
     case LOAD_DETAILS:

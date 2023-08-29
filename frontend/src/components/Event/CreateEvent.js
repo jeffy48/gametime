@@ -14,6 +14,7 @@ function CreateEventPage() {
   const [ url, setUrl ] = useState("");
   const [ desc, setDesc ] = useState("");
   const [ errors, setErrors ] = useState({});
+  const [ capacity, setCapacity ] = useState(10);
 
   const createEvent = async (eventBody) => {
     const { name, type, price, startDate, endDate, desc } = eventBody;
@@ -34,6 +35,7 @@ function CreateEventPage() {
     });
 
     if (res.ok) {
+      console.log('res is okay')
       const data = await res.json();
       return data;
     }
@@ -60,7 +62,7 @@ function CreateEventPage() {
       venueId: 1,
       name,
       type,
-      capacity: 100,
+      capacity,
       price,
       description: desc,
       startDate,
@@ -120,6 +122,13 @@ function CreateEventPage() {
         onChange={(e) => setPrice(e.target.value)}
       />
       {errors.price && <p>{errors.price}</p>}
+      <label>What is the capacity of your event?</label>
+      <input
+        type="number"
+        value={capacity}
+        onChange={(e) => setCapacity(e.target.value)}
+      />
+      {errors.capacity && <p>{errors.capacity}</p>}
       <label>When does your event start?</label>
       <input
         type="text"

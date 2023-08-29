@@ -393,21 +393,90 @@ router.post('/:eventId/join', validateEventId, requireAuth, async (req, res) => 
 
 //Create an Event for a Group specified by its id
 router.post('/groups/:groupId', validateGroupId, validateEventBody, requireAuth, requireCoHostAuth, async (req, res) => {
-    const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
+    const { type } = req.body;
+    if (type === 'In person') {
+        const { venueId, name, capacity, price, description, startDate, endDate } = req.body;
 
-    //venueId body val error handler
-    const venueExists = await Venue.findOne({
-        where: {
-            groupId: req.params.groupId,
-            id: venueId
-        }
-    });
-    if (!venueExists) {
-        const err = new Error('Bad Request');
-        err.title = 'Bad Request';
-        err.errors = {venueId: "Venue does not exist"};
-        throw err;
+        const venueExists = await Venue.findOne({
+            where: {
+                groupId: req.params.groupId,
+                id: venueId
+            }
+        });
+
+        if (!venueExists) {
+            const err = new Error('Bad Request');
+            err.title = 'Bad Request';
+            err.errors = {venueId: "Venue does not exist"};
+            throw err;
+        };
+
+        const event = await Event.create({
+            groupId: req.params.groupId, venueId, name, type, capacity, price, description, startDate, endDate
+        });
+
+        const attendee = await Attendee.create({
+            userId: req.user.id,
+            eventId: event.dataValues.id,
+            status: 'host'
+        });
+
+        const newEvent = {
+            id: event.dataValues.id,
+            groupId: event.dataValues.groupId,
+            venueId: event.dataValues.venueId,
+            name: event.dataValues.name,
+            type: event.dataValues.type,
+            capacity: event.dataValues.capacity,
+            price: parseFloat(event.dataValues.price),
+            description: event.dataValues.description,
+            startDate: event.dataValues.startDate,
+            endDate: event.dataValues.endDate
+        };
+
+        res.json(newEvent);
+
+    } else {
+        const { name, capacity, price, description, startDate, endDate } = req.body;
+
+        const event = await Event.create({
+            groupId: req.params.groupId, name, type, capacity, price, description, startDate, endDate
+        });
+
+        const attendee = await Attendee.create({
+            userId: req.user.id,
+            eventId: event.dataValues.id,
+            status: 'host'
+        });
+
+        const newEvent = {
+            id: event.dataValues.id,
+            groupId: event.dataValues.groupId,
+            name: event.dataValues.name,
+            type: event.dataValues.type,
+            capacity: event.dataValues.capacity,
+            price: parseFloat(event.dataValues.price),
+            description: event.dataValues.description,
+            startDate: event.dataValues.startDate,
+            endDate: event.dataValues.endDate
+        };
+
+        res.json(newEvent);
     };
+
+    // //venueId body val error handler
+    // const venueExists = await Venue.findOne({
+    //     where: {
+    //         groupId: req.params.groupId,
+    //         id: venueId
+    //     }
+    // });
+    // if (!venueExists) {
+    //     const err = new Error('Bad Request');
+    //     err.title = 'Bad Request';
+    //     err.errors = {venueId: "Venue does not exist"};
+    //     throw err;
+    // };
     // if (new Date(startDate) >= new Date(endDate)) {
     //     const err = new Error('Bad Request');
     //     err.title = 'Bad Request';
@@ -415,30 +484,30 @@ router.post('/groups/:groupId', validateGroupId, validateEventBody, requireAuth,
     //     throw err;
     // }
 
-    const event = await Event.create({
-        groupId: req.params.groupId, venueId, name, type, capacity, price, description, startDate, endDate
-    });
+    // const event = await Event.create({
+    //     groupId: req.params.groupId, venueId, name, type, capacity, price, description, startDate, endDate
+    // });
 
-    const attendee = await Attendee.create({
-        userId: req.user.id,
-        eventId: event.dataValues.id,
-        status: 'host'
-    });
+    // const attendee = await Attendee.create({
+    //     userId: req.user.id,
+    //     eventId: event.dataValues.id,
+    //     status: 'host'
+    // });
 
-    const newEvent = {
-        id: event.dataValues.id,
-        groupId: event.dataValues.groupId,
-        venueId: event.dataValues.venueId,
-        name: event.dataValues.name,
-        type: event.dataValues.type,
-        capacity: event.dataValues.capacity,
-        price: parseFloat(event.dataValues.price),
-        description: event.dataValues.description,
-        startDate: event.dataValues.startDate,
-        endDate: event.dataValues.endDate
-    };
+    // const newEvent = {
+    //     id: event.dataValues.id,
+    //     groupId: event.dataValues.groupId,
+    //     venueId: event.dataValues.venueId,
+    //     name: event.dataValues.name,
+    //     type: event.dataValues.type,
+    //     capacity: event.dataValues.capacity,
+    //     price: parseFloat(event.dataValues.price),
+    //     description: event.dataValues.description,
+    //     startDate: event.dataValues.startDate,
+    //     endDate: event.dataValues.endDate
+    // };
 
-    res.json(newEvent);
+    // res.json(newEvent);
 });
 
 //Get all Events of a Group specified by its id

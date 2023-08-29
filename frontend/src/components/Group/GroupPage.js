@@ -3,15 +3,17 @@ import { getGroups } from "../../store/group.js";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./GroupPage.css";
-import NumberOfEvents from "../Event/NumberOfEvents.js";
 
 function GroupPage() {
   const dispatch = useDispatch();
   const groupList = useSelector(state => state.group ? state.group.list : []);
-  console.log(groupList)
+  console.log('list:', groupList)
 
   useEffect(() => {
     dispatch(getGroups());
+    // groupList?.map(group => {
+    //   return id;
+    // })
   }, [dispatch])
 
   return (
@@ -27,6 +29,7 @@ function GroupPage() {
         </div>
         <div className="groups-list-caption">Groups in Meetup</div>
         {groupList?.map(group => {
+
           return (
             <div className="groupslist">
               <NavLink key={group.id} to={`/groups/${group.id}`}>
@@ -34,7 +37,7 @@ function GroupPage() {
                 <div className="grouplist__name">{group.name}</div>
                 <div className="grouplist__city">{group.city}, {group.state}</div>
                 <div className="grouplist__about">{group.about}</div>
-                <div className="grouplist__other"># events · {groupList?.private ? 'Private' : 'Public'}</div>
+                <div className="grouplist__other">{group.numEvents} events · {groupList?.private ? 'Private' : 'Public'}</div>
               </NavLink>
             </div>
           )

@@ -27,6 +27,10 @@ function GroupDetailPage() {
     history.push(`/groups/${groupId}/events/new`)
   }
 
+  const handleUpdateClick = () => {
+    history.push(`/groups/${groupId}/edit`)
+  }
+
   const isOrganizer = () => {
     if (sessionUser?.id === details?.organizerId) return true;
   };
@@ -66,7 +70,7 @@ function GroupDetailPage() {
         {renderButtons() && (
           <div className="group-detail-page__card__orgbuttons">
             <button onClick={handleClick}>Create Event</button>
-            <button>Update</button>
+            <button onClick={handleUpdateClick}>Update</button>
             <OpenModalButton
               groupId={groupId}
               buttonText="Delete"

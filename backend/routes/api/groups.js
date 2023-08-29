@@ -93,6 +93,11 @@ const getNumMembers = async (groupInstance) => {
                 status: { [Op.or]: ["member", "host", "co-host"]}
             }
         });
+        group.numEvents = await Event.count({
+            where: {
+                groupId: { [Op.eq]: id }
+            }
+        });
         groupObj.Groups.push(group);
     };
     return groupObj;
@@ -453,6 +458,7 @@ router.get('/:groupId', validateGroupId, async (req, res,) => {
             status: { [Op.or]: ["member", "host", "co-host"]}
         }
     });
+
     res.json(group);
 });
 
