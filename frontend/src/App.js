@@ -11,6 +11,7 @@ import EventDetailPage from "./components/Event/EventDetailPage";
 import CreateGroupPage from "./components/Group/CreateGroupPage";
 import CreateEventPage from "./components/Event/CreateEvent";
 import UpdateGroupPage from "./components/Group/UpdateGroupPage";
+import CreateVenuePage from "./components/Venue/CreateVenuePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +36,9 @@ function App() {
           </Route>
           <Route exact path="/">
             <LandingPage />
+          </Route>
+          <Route path="/venues/groups/:groupId">
+            <CreateVenuePage />
           </Route>
           <Route path="/groups/:groupId/events/new">
             <CreateEventPage />

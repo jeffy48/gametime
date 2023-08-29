@@ -100,7 +100,7 @@ function EventDetailPage() {
               {details?.type}
             </div>
             {renderButton() && (
-               <div className="event-detail__bottom__info__button">
+              <div className="event-detail__bottom__info__button">
                <OpenModalButton
                  eventId={eventId}
                  groupId={details?.groupId}

@@ -79,8 +79,7 @@ const validateEventBody = [
     check('description', 'Description is required')
         .exists({ checkFalsy: true }),
     check('startDate', 'Start date must be in the future')
-        .exists({ checkFalsy: true })
-        .isAfter(),
+        .exists({ checkFalsy: true }),
     body('endDate', 'End date is less than the start date')
         .exists({ checkFalsy: true })
         .custom((value, { req }) => {
@@ -396,7 +395,7 @@ router.post('/groups/:groupId', validateGroupId, validateEventBody, requireAuth,
     const { type } = req.body;
     if (type === 'In person') {
         const { venueId, name, capacity, price, description, startDate, endDate } = req.body;
-
+        // console.log(req.body);
         const venueExists = await Venue.findOne({
             where: {
                 groupId: req.params.groupId,
@@ -411,9 +410,19 @@ router.post('/groups/:groupId', validateGroupId, validateEventBody, requireAuth,
             throw err;
         };
 
+        console.log('got here', startDate)
         const event = await Event.create({
-            groupId: req.params.groupId, venueId, name, type, capacity, price, description, startDate, endDate
+            groupId: req.params.groupId,
+            venueId,
+            name,
+            description,
+            type,
+            startDate,
+            endDate,
+            capacity,
+            price
         });
+        console.log('also got')
 
         const attendee = await Attendee.create({
             userId: req.user.id,
