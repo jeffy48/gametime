@@ -34,6 +34,7 @@ export const createVenue = (groupId, address, city, state, lat, lng) => async di
       lng
     })
   });
+  console.log('bye', res)
 
   if (res.ok) {
     const createdVenue = await res.json();
