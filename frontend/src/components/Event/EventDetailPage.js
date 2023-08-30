@@ -12,14 +12,18 @@ function EventDetailPage() {
   const details = useSelector(state => state.event ? state.event.details : {});
   const attendees = useSelector(state => state.event ? state.event.attendees : {});
   const sessionUser = useSelector(state => state.session.user);
-  const startDate = details?.startDate?.slice(0, 10);
-  const startTime = details?.startDate?.slice(11, 16);
-  const endDate = details?.endDate?.slice(0, 10);
-  const endTime = details?.endDate?.slice(11, 16);
-  console.log('eventdeets',details);
-  console.log('attendees', attendees)
-  console.log('user', sessionUser)
-
+  const localStartDateObj = new Date(details?.startDate);
+  const startYear = localStartDateObj.getFullYear();
+  const startMonth = localStartDateObj.getMonth() + 1;
+  const startDay = localStartDateObj.getDate();
+  const startHour = localStartDateObj.getHours();
+  const startMin = localStartDateObj.getMinutes();
+  const localEndDateObj = new Date(details?.endDate);
+  const endYear = localEndDateObj.getFullYear();
+  const endMonth = localEndDateObj.getMonth() + 1;
+  const endDay = localEndDateObj.getDate();
+  const endHour = localEndDateObj.getHours();
+  const endMin = localEndDateObj.getMinutes();
 
   useEffect(() => {
     dispatch(getDetails(eventId));
@@ -84,10 +88,10 @@ function EventDetailPage() {
               <i style={{height: "16px", width: "16px"}} className="fa-regular fa-clock"></i>
               <div className="event-detail__bottom__info__time__container">
                 <div className="event-detail__bottom__info__time__startTime">
-                  START {startDate} · {startTime}
+                  START {startYear + '-' + startMonth.toString().padStart(2, '0') + '-' + startDay.toString().padStart(2, '0')} · {startHour.toString().padStart(2, '0') + ':' + startMin.toString().padStart(2, '0')}
                 </div>
                 <div className="event-detail__bottom__info__time__endTime">
-                  END {endDate} · {endTime}
+                  END {endYear + '-' + endMonth.toString().padStart(2, '0') + '-' + endDay.toString().padStart(2, '0')} · {endHour.toString().padStart(2, '0') + ':' + endMin.toString().padStart(2, '0')}
                 </div>
               </div>
             </div>

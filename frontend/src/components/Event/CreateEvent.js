@@ -27,8 +27,21 @@ function CreateEventPage() {
 
   const createEvent = async (eventBody) => {
     const { groupId, venueId, name, type, price, startDate, endDate, description } = eventBody;
-    console.log(startDate);
-    console.log(venueId);
+    const startDateObj = new Date(startDate); // turn into date obj
+    const endDateObj = new Date(endDate);
+    console.log(startDateObj)
+
+    // convert to utc from local, then store this in backend
+    const backendStartDate = startDateObj.toUTCString();
+    const backendEndDate = endDateObj.toUTCString();
+    console.log(backendStartDate);
+
+    // convert back to user's local time, display this in frontend
+    // const frontendStartDateObj = new Date(backendStartDate);
+    // const frontendStartDate = frontendStartDateObj.toString();
+    // const frontendEndDateObj = new Date(backendEndDate);
+    // const frontendEndDate = frontendEndDateObj.toString();
+    // console.log(frontendStartDate);
 
     const res = await csrfFetch(`/api/events/groups/${groupId}`, {
       method: "POST",
@@ -39,8 +52,8 @@ function CreateEventPage() {
         capacity,
         price,
         description,
-        startDate,
-        endDate
+        startDate: backendStartDate,
+        endDate: backendEndDate
       }),
     });
 
