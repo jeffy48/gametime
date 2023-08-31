@@ -16,7 +16,16 @@ function UpdateGroupPage() {
   const [ groupPrivate, setGroupPrivate ] = useState(details?.private);
   const [ errors, setErrors ] = useState({});
   const history = useHistory();
-  console.log(details);
+  const sessionUser = useSelector(state => state.session.user);
+
+  const isOrganizer = () => {
+    if (sessionUser?.id === details?.organizerId) return true;
+    return false;
+  };
+
+  if (!sessionUser || !isOrganizer()) {
+    history.push('/');
+  };
 
   useEffect(() => {
     dispatch(getDetails(groupId))

@@ -201,7 +201,7 @@ function CreateEventPage() {
       <label>When does your event start?</label>
       <input
         type="text"
-        placeholder="MM/DD/YYYY, HH/mm AM"
+        placeholder="MM-DD-YYYY, HH:mm AM"
         value={startDate}
         onChange={(e) => setStartDate(e.target.value)}
       />
@@ -209,7 +209,7 @@ function CreateEventPage() {
       <label>When does your event end?</label>
       <input
         type="text"
-        placeholder="MM/DD/YYYY, HH/mm AM"
+        placeholder="MM-DD-YYYY, HH:mm AM"
         value={endDate}
         onChange={(e) => setEndDate(e.target.value)}
       />

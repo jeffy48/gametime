@@ -34,6 +34,7 @@ function CreateVenuePage() {
           <input
             type='text'
             value={address}
+            placeholder='Street address'
             onChange={(e) => setAddress(e.target.value)}
             required
           />
@@ -44,6 +45,7 @@ function CreateVenuePage() {
           <input
             type='text'
             value={city}
+            placeholder='City'
             onChange={(e) => setCity(e.target.value)}
             required
           />
@@ -54,6 +56,7 @@ function CreateVenuePage() {
           <input
             type='text'
             value={state}
+            placeholder='ST'
             onChange={(e) => setState(e.target.value)}
             required
           />
@@ -64,6 +67,7 @@ function CreateVenuePage() {
           <input
             type='text'
             value={lat}
+            placeholder='decimal'
             onChange={(e) => setLat(e.target.value)}
             required
           />
@@ -72,8 +76,9 @@ function CreateVenuePage() {
         <label>
           <span>Longitude</span>
           <input
-            type='password'
+            type='text'
             value={lng}
+            placeholder='decimal'
             onChange={(e) => setLng(e.target.value)}
             required
           />

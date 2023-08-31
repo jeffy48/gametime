@@ -459,6 +459,12 @@ router.get('/:groupId', validateGroupId, async (req, res,) => {
         }
     });
 
+    group.dataValues.numEvents = await Event.count({
+        where: {
+            groupId: { [Op.eq]: id }
+        }
+    });
+
     res.json(group);
 });
 

@@ -61,7 +61,7 @@ function GroupDetailPage() {
         <div className="group-detail-page__card__name">{details?.name}</div>
         <div className="group-detail-page__card__location">{details?.city}, {details?.state}</div>
         <div className="group-detail-page__card__numevents">
-          <div className="grouppage__other"># events · {details?.type ? 'Private' : 'Public'}</div>
+          <div className="grouppage__other">{details?.numEvents} events · {details?.type ? 'Private' : 'Public'}</div>
         </div>
         <div className="group-detail-page__card__organizer">Organized by {details?.Organizer?.firstName} {details?.Organizer?.lastName}</div>
         {renderJoinButton() && (
@@ -86,10 +86,13 @@ function GroupDetailPage() {
           <div className="group-detail-page__bottom__abouthead">What we're about</div>
           <div className="group-detail-page__bottom__about">{details?.about}</div>
           <div className="group-detail-page__bottom__events">
-            {/* Upcoming events component */}
+            <h1>Upcoming Events</h1>
+            <div>
+
+            </div>
           </div>
           <div className="group-detail-page__bottom__past-events">
-            {/* Past events component */}
+
           </div>
         </div>
       </div>
