@@ -532,7 +532,7 @@ router.get('/groups/:groupId', validateGroupId, async (req, res) => {
             attributes: ['id', 'city', 'state']
             }
         ],
-        attributes: { exclude: ['createdAt', 'updatedAt', 'capacity', 'price', 'description'] }
+        attributes: { exclude: ['createdAt', 'updatedAt', 'capacity', 'price'] }
     });
     const allEvents = await getNumAttending(events)
     res.json(allEvents);
@@ -599,7 +599,7 @@ router.get('/:eventId', validateEventId, async (req, res) => {
         where: { id: req.params.eventId },
         include: [{
             model: Group,
-            attributes: ['id', 'name','private', 'city', 'state']
+            attributes: ['id', 'name', 'type', 'private', 'city', 'state', 'previewImage']
             },
             {
             model: Venue,
@@ -678,7 +678,7 @@ router.get('/', query('startDate').isDate(), async (req, res, next) => {
             attributes: ['id', 'city', 'state']
             }
         ],
-        attributes: { exclude: ['createdAt', 'updatedAt', 'capacity', 'price', 'description'] },
+        attributes: { exclude: ['createdAt', 'updatedAt', 'capacity', 'price'] },
         offset: (page - 1) * size,
         limit: size
     });

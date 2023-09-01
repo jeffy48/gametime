@@ -1,7 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;500;700&display=swap');
+
 .event-page__head {
   display: flex;
   gap: 20px;
   margin-bottom: 25px;
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 500;
 }
 
 .event-page {
@@ -14,8 +18,9 @@
 }
 
 .event-page__list > a {
+  font-family: 'Noto Sans', sans-serif;
   display: grid;
-  grid-template-rows: auto auto 25% auto;
+  grid-template-rows: auto auto 25% auto auto;
   grid-template-columns: 50% 50%;
   border-bottom: solid grey;
   padding-top: 25px;
@@ -23,29 +28,32 @@
 }
 
 .event-page__caption {
+  font-family: 'Noto Sans', sans-serif;
   border-bottom: solid grey;
   padding-bottom: 25px;
-  font-size: 13pt;
+  font-size: 12pt;
   font-weight: 500;
   color: grey;
 }
 
 .event-page__list__type {
   align-self: end;
+  font-weight: 300;
 }
 
 .event-page__list__date {
+  font-weight: 300;
   color: teal;
 }
 
 .event-page__list__name {
-  font-weight: 525;
+  font-weight: 500;
   font-size: 20pt;
 }
 
 .event-page__head > a {
   font-size: 20pt;
-  font-weight: 525;
+  font-weight: 500;
 }
 
 .event-page__list img {
@@ -55,4 +63,16 @@
 
 .event-page__list__location {
   color: grey;
+  font-weight: 300;
+}
+
+.event-page__list__desc {
+  font-weight: 300;
+  grid-row-start: 5;
+  grid-row-end: 6;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  margin-top: 3vh
 }

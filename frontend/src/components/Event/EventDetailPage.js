@@ -24,6 +24,7 @@ function EventDetailPage() {
   const endDay = localEndDateObj.getDate();
   const endHour = localEndDateObj.getHours();
   const endMin = localEndDateObj.getMinutes();
+  console.log(details?.Group) // use this data to populate group card (need image, name, and type)
 
   useEffect(() => {
     dispatch(getDetails(eventId));

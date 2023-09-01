@@ -6,17 +6,29 @@ import './GroupDetailPage.css';
 import DeleteGroupModal from './DeleteGroupModal.js';
 import OpenModalButton from "../Modal/OpenModalButton";
 import './DeleteGroupModal.css';
+import { getGroupEvents } from "../../store/event";
 
 function GroupDetailPage() {
   const history = useHistory();
   const { groupId } = useParams();
   const dispatch = useDispatch();
-  const details = useSelector(state => state.group ? state.group.details : {});
-  const sessionUser = useSelector(state => state.session.user);
-  console.log(details);
+  const details = useSelector(state => state.group ? state.group?.details : {});
+  const sessionUser = useSelector(state => state.session?.user);
+  const groupEvents = useSelector(state => state.event ? state.event?.groupEvents : []);
+  // console.log(details);
+  console.log(groupEvents);
+  const today = new Date();
+  // console.log('today', today)
+  // console.log(groupEvents[0].startDate);
+  let upcomingGroupEvents = groupEvents?.filter((event) => new Date(event?.startDate) > today);
+  // console.log('upc', upcomingGroupEvents);
+  let pastGroupEvents = groupEvents?.filter((event) => new Date(event?.startDate) < today);
+  // console.log('past', pastGroupEvents);
+
 
   useEffect(() => {
     dispatch(getDetails(groupId));
+    dispatch(getGroupEvents(groupId))
   }, [dispatch])
 
   const handleOnClick = () => {
@@ -86,13 +98,46 @@ function GroupDetailPage() {
           <div className="group-detail-page__bottom__abouthead">What we're about</div>
           <div className="group-detail-page__bottom__about">{details?.about}</div>
           <div className="group-detail-page__bottom__events">
-            <h1>Upcoming Events</h1>
+            {upcomingGroupEvents?.length && <h1>Upcoming Events</h1>}
             <div>
-
+              {upcomingGroupEvents?.map(event => {
+              const localStartDateObj = new Date(event?.startDate);
+              const startYear = localStartDateObj.getFullYear();
+              const startMonth = localStartDateObj.getMonth() + 1;
+              const startDay = localStartDateObj.getDate();
+              const startHour = localStartDateObj.getHours();
+              const startMin = localStartDateObj.getMinutes();
+              return (
+                <NavLink key={event?.id} to={`/events/${event?.id}`}>
+                  <img src={event?.previewImage} style={{objectFit: "contain", height: "16vw", width: "28vw"}}/>
+                  <div className="event-page__list__date">{startYear + '-' + startMonth.toString().padStart(2, '0') + '-' + startDay.toString().padStart(2, '0')} · {startHour.toString().padStart(2, '0') + ':' + startMin.toString().padStart(2, '0')}</div>
+                  <div className="event-page__list__name">{event?.name}</div>
+                  <div className="event-page__list__location">{event.Venue !== null ? event?.Venue?.city + ', ' + event?.Venue?.state : 'Online'}</div>
+                  <div className="event-page__list__desc">{event?.description}</div>
+                </NavLink>
+              )
+              })}
             </div>
-          </div>
-          <div className="group-detail-page__bottom__past-events">
-
+            {pastGroupEvents?.length && <h1>Past Events</h1>}
+            <div>
+              {pastGroupEvents?.map(event => {
+                const localStartDateObj = new Date(event?.startDate);
+                const startYear = localStartDateObj.getFullYear();
+                const startMonth = localStartDateObj.getMonth() + 1;
+                const startDay = localStartDateObj.getDate();
+                const startHour = localStartDateObj.getHours();
+                const startMin = localStartDateObj.getMinutes();
+                return (
+                  <NavLink key={event?.id} to={`/events/${event?.id}`}>
+                    <img src={event?.previewImage} style={{objectFit: "contain", height: "16vw", width: "28vw"}}/>
+                    <div className="event-page__list__date">{startYear + '-' + startMonth.toString().padStart(2, '0') + '-' + startDay.toString().padStart(2, '0')} · {startHour.toString().padStart(2, '0') + ':' + startMin.toString().padStart(2, '0')}</div>
+                    <div className="event-page__list__name">{event?.name}</div>
+                    <div className="event-page__list__location">{event.Venue !== null ? event?.Venue?.city + ', ' + event?.Venue?.state : 'Online'}</div>
+                    <div className="event-page__list__desc">{event?.description}</div>
+                  </NavLink>
+                )
+                })}
+            </div>
           </div>
         </div>
       </div>

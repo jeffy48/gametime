@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;500;700&display=swap');
 
 .group-detail-page__back {
   margin-top: 5vw;
   margin-left: 15vw;
   margin-right: 15vw;
+  margin-bottom: 1vw;
 }
 
 .group-detail-page__back a {

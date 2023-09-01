@@ -43,7 +43,7 @@ function LandingPage() {
           <img src="https://img.freepik.com/free-vector/smiling-person-crowd_23-2148422588.jpg?w=1480&t=st=1691223498~exp=1691224098~hmac=4cd35d93422871d65bd1f661808c5986d2a6e296568c9dba1e9819fec49266df"/>
           {sessionUser ?
             <NavLink exact to="/groups/new">Start a new group</NavLink>
-            : <div className="home__links__join--nonlink">Start a new group</div>
+            : <div className="home__links__join--nonlink" style={{fontSize:'12pt'}}>Start a new group</div>
           }
           <div>Create your own Meetup group, and<br></br>draw from a community of millions.</div>
         </div>

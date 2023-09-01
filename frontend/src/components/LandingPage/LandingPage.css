@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;500;700&display=swap');
 
 .home__welcome {
   display: grid;
@@ -8,19 +8,21 @@
 }
 
 .home__welcome > h1 {
-  font-family: 'Noto Sans';
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 700;
   grid-row-start: 1;
   grid-row-end: 2;
   font-size: 26pt;
-  font-weight: 600;
   justify-self: center;
   align-self: end;
 }
 
 .home__welcome > p {
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 300;
   grid-row-start: 2;
   grid-row-end: 3;
-  font-size: 12pt;
+  font-size: 11pt;
   text-align: center;
   align-self: start;
 }
@@ -46,13 +48,16 @@
 }
 
 .home__info > h1 {
+  font-family: 'Noto Sans', sans-serif;
   font-size: 20pt;
-  font-weight: 550;
+  font-weight: 500;
   justify-self: center;
 }
 
 .home__info > div {
-  font-size: 12pt;
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 300;
+  font-size: 10pt;
   text-align: center;
 }
 
@@ -64,6 +69,8 @@
 }
 
 .home__links {
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 300;
   display: flex;
   justify-content: center;
   justify-items: center;
@@ -107,17 +114,20 @@ a {
 
 .home__links a {
   color: teal;
-  font-size: 16pt;
-  font-weight: 525;
+  font-size: 14pt;
+  font-weight: 500;
 }
 
 .home__links__join--nonlink {
   color: rgb(127, 124, 124);
-  font-size: 16pt;
-  font-weight: 525;
+  font-size: 14pt;
+  font-weight: 500;
 }
 
 .home__signup > button {
+  width: 12vw;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 12pt;
   background-color: teal;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -129,5 +139,5 @@ a {
 
 .home__links > div > div {
   margin-top: 10px;
-  font-size: 12pt;
+  font-size: 10pt;
 }
