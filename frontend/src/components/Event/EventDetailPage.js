@@ -9,9 +9,9 @@ import DeleteEventModal from "./DeleteEventModal";
 function EventDetailPage() {
   const { eventId } = useParams();
   const dispatch = useDispatch();
-  const details = useSelector(state => state.event ? state.event.details : {});
-  const attendees = useSelector(state => state.event ? state.event.attendees : {});
-  const sessionUser = useSelector(state => state.session ? state.session.user : null);
+  const details = useSelector(state => state.event ? state.event?.details : {});
+  const attendees = useSelector(state => state.event ? state.event?.attendees : {});
+  const sessionUser = useSelector(state => state.session ? state.session?.user : null);
   const localStartDateObj = new Date(details?.startDate);
   const startYear = localStartDateObj.getFullYear();
   const startMonth = localStartDateObj.getMonth() + 1;
