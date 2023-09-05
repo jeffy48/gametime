@@ -107,7 +107,7 @@ function EventDetailPage() {
               </div>
               <div className="event-detail__bottom__info__price">
                 <i className="fa-solid fa-dollar-sign"></i>
-                {details?.price === 0 ? "FREE" : details?.price?.toFixed(2)}
+                {details?.price === 0 ? "FREE" : details?.price}
               </div>
               <div className="event-detail__bottom__info__location">
                 <i className="fa-solid fa-map-pin"></i>
