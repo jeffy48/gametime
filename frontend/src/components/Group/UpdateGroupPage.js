@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from 'react-router-dom';
 import { getDetails } from "../../store/group";
 import { csrfFetch } from "../../store/csrf";
+import './UpdateGroupPage.css';
 
 function UpdateGroupPage() {
   // const GROUPS_BASE_PATH = ""
@@ -106,7 +107,7 @@ function UpdateGroupPage() {
           {errors.city && <p>{errors.city}</p>}
           {errors.state && <p>{errors.state}</p>}
         </div>
-        <div className="create-group__name">
+        <div className="update-group__name">
           <h1>What will your group's name be?</h1>
           <div>
           Choose a name that will give people a clear idea of what the group is about.
@@ -120,7 +121,7 @@ function UpdateGroupPage() {
           />
           {errors.name && <p>{errors.name}</p>}
         </div>
-        <div className="create-group__about">
+        <div className="update-group__about">
           <h1>Describe the purpose of your group</h1>
           <div>
             People will see this when we promote your group, but you'll be able to add to it later, too.
@@ -131,14 +132,14 @@ function UpdateGroupPage() {
           </div>
           <input
             type="text"
-            className='create-group__about__input'
+            className='update-group__about__input'
             value={about}
             onChange={(e) => setAbout(e.target.value)}
             required
           />
           {errors.about && <p>{errors.about}</p>}
         </div>
-        <div className="create-group__final">
+        <div className="update-group__final">
           <label style={{marginTop: "10px"}} for="group-type-select">Is this an in-person or online group?</label>
           <select
             id="group-type-select"
@@ -161,7 +162,7 @@ function UpdateGroupPage() {
         </div>
         <button
           type="submit"
-          className="create-group__submit"
+          className="update-group__submit"
           >Update Group
         </button>
       </form>

@@ -1,12 +1,14 @@
 .delete-group-modal__1 {
   margin: .5vw;
   text-align: center;
+  font-size: 18pt;
 }
 
 .delete-group-modal {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 15px;
 }
 
 .delete-group-modal__2 {

@@ -243,7 +243,7 @@ router.put('/:eventId/attendees', validateEventId, validateBodyStatus, requireAu
 
 //Get all Attendees of an Event specified by its id
 router.get('/:eventId/attendees', validateEventId, async (req, res) => {
-    const id = req.user.id;
+    const id = req.user.id
     const event = await Event.findOne({
         where: {
             id: req.params.eventId

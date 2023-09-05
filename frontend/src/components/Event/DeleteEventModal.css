@@ -1,12 +1,14 @@
 .delete-event-modal__1 {
   margin: .5vw;
   text-align: center;
+  font-size: 18pt;
 }
 
 .delete-event-modal {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 15px;
 }
 
 .delete-event-modal__2 {

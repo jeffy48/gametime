@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;500;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600&display=swap');
 
 .hidden {
   display: none
@@ -16,6 +15,7 @@
   justify-content: space-between;
   border-bottom: grey solid;
   height: 60px;
+  font-family: 'Rubik', sans-serif;
 }
 
 .navbar__logo {

@@ -15,14 +15,18 @@
   justify-content: center;
   display: flex;
   flex-direction: column;
-  width: 100px;
-  left: -30px;
+  width: 120px;
+  left: -20px;
 }
 
 .profile-dropdown > li {
   margin-top: 3px;
   margin-bottom: 3px;
   text-align: center;
+}
+
+.profile-dropdown a {
+  color: black;
 }
 
 .profile-dropdown > a {
@@ -34,4 +38,10 @@
 .menu-modals:hover {
   color: red;
   text-decoration-line: underline;
+}
+
+.user-menu-logout {
+  /* background-color: rgb(255, 116, 116); */
+  background-color: teal;
+  color: white;
 }

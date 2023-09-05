@@ -11,7 +11,7 @@ function EventDetailPage() {
   const dispatch = useDispatch();
   const details = useSelector(state => state.event ? state.event.details : {});
   const attendees = useSelector(state => state.event ? state.event.attendees : {});
-  const sessionUser = useSelector(state => state.session.user);
+  const sessionUser = useSelector(state => state.session ? state.session.user : null);
   const localStartDateObj = new Date(details?.startDate);
   const startYear = localStartDateObj.getFullYear();
   const startMonth = localStartDateObj.getMonth() + 1;
@@ -24,7 +24,7 @@ function EventDetailPage() {
   const endDay = localEndDateObj.getDate();
   const endHour = localEndDateObj.getHours();
   const endMin = localEndDateObj.getMinutes();
-  console.log(details?.Group) // use this data to populate group card (need image, name, and type)
+  // console.log(details?.Group) // use this data to populate group card (need image, name, and type)
 
   useEffect(() => {
     dispatch(getDetails(eventId));
@@ -40,11 +40,11 @@ function EventDetailPage() {
 
     for (let i = 0; i < images?.length; i++) {
       if (images[i]?.preview) {
-        previews.unshift(images[i]?.url);
+        previews?.unshift(images[i]?.url);
       };
     };
 
-    return previews[previews.length-1];
+    return previews[previews?.length-1];
   };
 
   const isHost = () => {
@@ -67,7 +67,7 @@ function EventDetailPage() {
   };
 
   return (
-    <main className="event-detail">
+    <div className="event-detail">
       <div className="event-detail__head">
         <div className="event-detail__head__back">
           {"<  "}
@@ -79,48 +79,58 @@ function EventDetailPage() {
         <div className="event-detail__head__host">Hosted by {details?.Group?.name}</div>
       </div>
       <div className="event-detail__bottom">
-        <div className="event-detail__bottom__container">
+        <div className="event-detail__bottom__middle-container">
           <div className="event-detail__bottom__image">
-            <img style={{objectFit: "contain", height: "22vw", width: "50vw"}} src={findPreview()}/>
+            <img src={findPreview()}/>
           </div>
-          {/* <EventDetailGroupCard groupId={details?.Group?.id}/> */}
-          <div className="event-detail__bottom__info">
-            <div className="event-detail__bottom__info__time">
-              <i style={{height: "16px", width: "16px"}} className="fa-regular fa-clock"></i>
-              <div className="event-detail__bottom__info__time__container">
-                <div className="event-detail__bottom__info__time__startTime">
-                  START {startYear + '-' + startMonth.toString().padStart(2, '0') + '-' + startDay.toString().padStart(2, '0')} · {startHour.toString().padStart(2, '0') + ':' + startMin.toString().padStart(2, '0')}
-                </div>
-                <div className="event-detail__bottom__info__time__endTime">
-                  END {endYear + '-' + endMonth.toString().padStart(2, '0') + '-' + endDay.toString().padStart(2, '0')} · {endHour.toString().padStart(2, '0') + ':' + endMin.toString().padStart(2, '0')}
+          <div className="event-detail__bottom__middle-right">
+            <NavLink to={`/groups/${details?.Group?.id}`} className="event-detail-group-details">
+              <div className="event-detail-group-details-image-container">
+                <img src={details?.Group?.previewImage}/>
+              </div>
+              <div className="event-detail-group-details-container">
+                <div className="event-detail-group-details-name">{details?.Group?.name}</div>
+                <div className="event-detail-group-details-private">{details?.Group?.private ? "Private" : "Public"}</div>
+              </div>
+            </NavLink>
+            <div className="event-detail-event-details">
+              <div className="event-detail__bottom__info__time">
+                <i style={{height: "16px", width: "16px"}} className="fa-regular fa-clock"></i>
+                <div className="event-detail__bottom__info__time__container">
+                  <div className="event-detail__bottom__info__time__startTime">
+                    START {startYear + '-' + startMonth.toString().padStart(2, '0') + '-' + startDay.toString().padStart(2, '0')} · {startHour.toString().padStart(2, '0') + ':' + startMin.toString().padStart(2, '0')}
+                  </div>
+                  <div className="event-detail__bottom__info__time__endTime">
+                    END {endYear + '-' + endMonth.toString().padStart(2, '0') + '-' + endDay.toString().padStart(2, '0')} · {endHour.toString().padStart(2, '0') + ':' + endMin.toString().padStart(2, '0')}
+                  </div>
                 </div>
               </div>
+              <div className="event-detail__bottom__info__price">
+                <i className="fa-solid fa-dollar-sign"></i>
+                {details?.price === 0 ? "FREE" : details?.price?.toFixed(2)}
+              </div>
+              <div className="event-detail__bottom__info__location">
+                <i className="fa-solid fa-map-pin"></i>
+                {details?.type}
+              </div>
+              {renderButton() && (
+                <div className="event-detail__bottom__info__button">
+                <OpenModalButton
+                  eventId={eventId}
+                  groupId={details?.groupId}
+                  buttonText="Delete"
+                  modalComponent={<DeleteEventModal eventId={eventId} groupId={details?.groupId}/>}
+                />
+                <button onClick={handleUpdate}>Update</button>
+                </div>
+              )}
             </div>
-            <div className="event-detail__bottom__info__price">
-              <i className="fa-solid fa-dollar-sign"></i>
-              {details?.price}
-            </div>
-            <div className="event-detail__bottom__info__location">
-              <i className="fa-solid fa-map-pin"></i>
-              {details?.type}
-            </div>
-            {renderButton() && (
-              <div className="event-detail__bottom__info__button">
-               <OpenModalButton
-                 eventId={eventId}
-                 groupId={details?.groupId}
-                 buttonText="Delete"
-                 modalComponent={<DeleteEventModal eventId={eventId} groupId={details?.groupId}/>}
-               />
-               <button onClick={handleUpdate}>Update</button>
-             </div>
-            )}
           </div>
         </div>
-        <div className="event-detail-caption">Details</div>
-        <div className="event-detail-details">{details?.description}</div>
+        <div className="event-detail__bottom__details-head">Details</div>
+        <div className="event-detail__bottom__details">{details?.description}</div>
       </div>
-    </main>
+    </div>
   );
 }
 

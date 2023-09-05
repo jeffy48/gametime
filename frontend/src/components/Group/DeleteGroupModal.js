@@ -5,7 +5,6 @@ import { deleteGroup } from "../../store/group";
 import { useModal } from "../../context/Modal";
 
 function DeleteGroupModal({ groupId }) {
-  console.log('groupid',groupId)
   const history = useHistory();
   const dispatch = useDispatch();
   const { closeModal } = useModal()

@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { csrfFetch } from '../../store/csrf';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGroupVenues } from '../../store/venue';
+import { getDetails } from '../../store/group';
+import './CreateEvent.css';
 
 function CreateEventPage() {
   const history = useHistory();
@@ -19,29 +21,24 @@ function CreateEventPage() {
   const [ capacity, setCapacity ] = useState(10);
   const [ venueId, setVenueId ] = useState(null);
   const dispatch = useDispatch();
-  const groupVenues = useSelector(state => state.venue ? state.venue.groupVenues : []);
-  console.log(venueId);
+  const groupVenues = useSelector(state => state.venue ? state.venue?.groupVenues : []);
+  const details = useSelector(state => state.group ? state.group?.details : {});
+
   useEffect(() => {
     dispatch(getGroupVenues(groupId));
+    dispatch(getDetails(groupId));
   }, [dispatch]);
 
   const createEvent = async (eventBody) => {
     const { groupId, venueId, name, type, price, startDate, endDate, description } = eventBody;
     const startDateObj = new Date(startDate); // turn into date obj
     const endDateObj = new Date(endDate);
-    console.log(startDateObj)
 
     // convert to utc from local, then store this in backend
     const backendStartDate = startDateObj.toUTCString();
     const backendEndDate = endDateObj.toUTCString();
-    console.log(backendStartDate);
 
     // convert back to user's local time, display this in frontend
-    // const frontendStartDateObj = new Date(backendStartDate);
-    // const frontendStartDate = frontendStartDateObj.toString();
-    // const frontendEndDateObj = new Date(backendEndDate);
-    // const frontendEndDate = frontendEndDateObj.toString();
-    // console.log(frontendStartDate);
 
     const res = await csrfFetch(`/api/events/groups/${groupId}`, {
       method: "POST",
@@ -103,7 +100,6 @@ function CreateEventPage() {
         history.push(`/events/${eventId}`);
       })
       .catch(async (res) => {
-        // console.log(res);
         const data = await res.json();
         if (data && data.errors) {
           setErrors(data.errors);
@@ -117,7 +113,6 @@ function CreateEventPage() {
 
   const hasVenueInPerson = () => {
     if (type === 'In person' && groupVenues.length > 0) {
-      // console.log('hasvenue!')
       return true; //disply dropdown
     } else {
       return false;
@@ -133,8 +128,8 @@ function CreateEventPage() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Create an event for </h1>
+    <form className="create-event" onSubmit={handleSubmit}>
+      <h1>Create an event for {details?.name}</h1>
       <label>What is the name of your event?</label>
       <input
         type="text"
@@ -144,7 +139,7 @@ function CreateEventPage() {
         required
       />
       {errors.name && <p>{errors.name}</p>}
-      <label>Is this an in person or online event?</label>
+      <label className="create-event__label-1">Is this an in person or online event?</label>
       <select
         onChange={(e) => setType(e.target.value)}
         value={type}>
@@ -191,14 +186,14 @@ function CreateEventPage() {
         onChange={(e) => setPrice(e.target.value)}
       />
       {errors.price && <p>{errors.price}</p>}
-      <label>What is the capacity of your event?</label>
+      <label className="create-event__label-capacity">What is the capacity of your event?</label>
       <input
         type="number"
         value={capacity}
         onChange={(e) => setCapacity(e.target.value)}
       />
       {errors.capacity && <p>{errors.capacity}</p>}
-      <label>When does your event start?</label>
+      <label className="create-event__label-start">When does your event start?</label>
       <input
         type="text"
         placeholder="MM-DD-YYYY, HH:mm AM"
@@ -206,26 +201,28 @@ function CreateEventPage() {
         onChange={(e) => setStartDate(e.target.value)}
       />
       {errors.startDate && <p>{errors.startDate}</p>}
-      <label>When does your event end?</label>
+      <label className="create-event__label-end">When does your event end?</label>
       <input
         type="text"
-        placeholder="MM-DD-YYYY, HH:mm AM"
+        placeholder="MM-DD-YYYY, HH:mm PM"
         value={endDate}
         onChange={(e) => setEndDate(e.target.value)}
+        className="create-event__input-end"
       />
       {errors.endDate && <p>{errors.endDate}</p>}
-      <label>Please add in image url for your event below:</label>
+      <label className="create-event__label-imageurl">Please add in image url for your event below:</label>
       <input
         type="text"
         placeholder="Image URL"
         value={url}
         onChange={(e) => setUrl(e.target.value)}
+        className="create-event__label-image-input"
       />
       {errors.previewImage && <p>{errors.previewImage}</p>}
-      <label>Please describe your next event:</label>
+      <label className="create-event__label-about">Please describe your next event:</label>
       <textarea name="desc" rows="5" cols="33" onChange={(e) => setDesc(e.target.value)}>Please include at least 30 characters.</textarea>
       {errors.description && <p>{errors.description}</p>}
-      <button type="submit">Create Event</button>
+      <button className="create-event-button" type="submit">Create Event</button>
     </form>
   );
 }

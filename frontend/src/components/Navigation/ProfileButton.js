@@ -60,7 +60,7 @@ function ProfileButton({ user }) {
               <NavLink exact to="/events">View events</NavLink>
             </li>
             <li>
-              <button onClick={logout}>Log Out</button>
+              <button className="user-menu-logout" onClick={logout}>Log Out</button>
             </li>
           </>
         ) : (

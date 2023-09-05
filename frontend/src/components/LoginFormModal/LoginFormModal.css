@@ -1,23 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600&display=swap');
+
 .login__input {
   display: flex;
   flex-direction: column;
+  gap:10px;
+  align-items: center;
 }
 
 .login > h1 {
   text-align: center;
   font-size: 20pt;
-  font-weight: bold;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  font-weight: 400;
 }
 
 .login {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 18px;
-  margin-right:18px;
-  margin-bottom: 20px;
+  margin: 20px;
+  font-family: 'Rubik', sans-serif;
 }
 
 .login__input > label {
@@ -29,12 +30,11 @@
 .login__input span {
   text-align: center;
   font-size: 12pt;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .login__input input {
   width: 250px;
-  margin-bottom: 15px;
 }
 
 .login__errors {
@@ -47,6 +47,12 @@
   font-size: 11pt;
   font-weight: bold;
   box-shadow: 2px 2px 2px black;
+  width: 100%;
+}
+
+.login__input > button:enabled {
+  background-color: rgb(249, 75, 75);
+  color: white;
 }
 
 .login__demo {
@@ -57,4 +63,6 @@
 
 .login__demo > button {
   box-shadow: 2px 2px 2px black;
+  background-color: teal;
+  color: white;
 }

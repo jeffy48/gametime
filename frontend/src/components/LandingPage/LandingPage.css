@@ -1,15 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600&display=swap');
 
-.home__welcome {
+.landing-page__welcome {
   display: grid;
   grid-template-rows: auto;
   grid-template-columns: auto;
   align-self: center;
 }
 
-.home__welcome > h1 {
-  font-family: 'Noto Sans', sans-serif;
-  font-weight: 700;
+.landing-page__welcome > h1 {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 600;
   grid-row-start: 1;
   grid-row-end: 2;
   font-size: 26pt;
@@ -17,8 +17,8 @@
   align-self: end;
 }
 
-.home__welcome > p {
-  font-family: 'Noto Sans', sans-serif;
+.landing-page__welcome > p {
+  font-family: 'Rubik', sans-serif;
   font-weight: 300;
   grid-row-start: 2;
   grid-row-end: 3;
@@ -27,7 +27,7 @@
   align-self: start;
 }
 
-.home__welcome > img {
+.landing-page__welcome > img {
   grid-row-start: 1;
   grid-row-end: 3;
   grid-column-start: 2;
@@ -39,7 +39,7 @@
   object-fit: fill;
 }
 
-.home__info {
+.landing-page__info {
   display: grid;
   grid-template-rows: auto;
   grid-template-columns: auto;
@@ -47,15 +47,15 @@
   margin-bottom: 40px;
 }
 
-.home__info > h1 {
-  font-family: 'Noto Sans', sans-serif;
+.landing-page__info > h1 {
+  font-family: 'Rubik', sans-serif;
   font-size: 20pt;
-  font-weight: 500;
+  font-weight: 400;
   justify-self: center;
 }
 
-.home__info > div {
-  font-family: 'Noto Sans', sans-serif;
+.landing-page__info > div {
+  font-family: 'Rubik', sans-serif;
   font-weight: 300;
   font-size: 10pt;
   text-align: center;
@@ -68,8 +68,8 @@
   margin-bottom: 40px;
 }
 
-.home__links {
-  font-family: 'Noto Sans', sans-serif;
+.landing-page__links {
+  font-family: 'Rubik', sans-serif;
   font-weight: 300;
   display: flex;
   justify-content: center;
@@ -77,56 +77,51 @@
   text-align: center;
 }
 
-.home__links img {
+.landing-page__links img {
   width: 300px;
   height: 200px;
   object-fit: fill;
 }
 
-.home__links > * {
+.landing-page__links > * {
   margin: 50px 50px 50px 50px
 }
 
-a:hover {
-  color: red;
+.landing-page__links__groups {
+  display:flex;
+  flex-direction: column;
+}
+
+.landing-page__links__events {
+  display:flex;
+  flex-direction: column;
+}
+
+.landing-page__links__join {
+  display:flex;
+  flex-direction: column;
+}
+
+.landing-page__links a {
+  text-decoration: none;
+  color: teal;
+  font-size: 14pt;
+  font-weight: 400;
+}
+
+.landing-page__links a:hover {
   text-decoration: underline;
 }
 
-a {
-  color: black;
-  text-decoration-line: none;
-}
-
-.home__links__groups {
-  display:flex;
-  flex-direction: column;
-}
-
-.home__links__events {
-  display:flex;
-  flex-direction: column;
-}
-
-.home__links__join {
-  display:flex;
-  flex-direction: column;
-}
-
-.home__links a {
-  color: teal;
-  font-size: 14pt;
-  font-weight: 500;
-}
-
-.home__links__join--nonlink {
+.landing-page__links__join__nonlink {
   color: rgb(127, 124, 124);
   font-size: 14pt;
-  font-weight: 500;
+  font-weight: 400;
 }
 
-.home__signup > button {
+.landing-page__signup > button {
   width: 12vw;
-  font-family: 'Noto Sans', sans-serif;
+  font-family: 'Rubik', sans-serif;
   font-size: 12pt;
   background-color: teal;
   padding-top: 10px;
@@ -137,7 +132,12 @@ a {
   box-shadow: 3px 3px 3px black;
 }
 
-.home__links > div > div {
+.landing-page__links > div > div {
   margin-top: 10px;
   font-size: 10pt;
+}
+
+.landing-page__signup {
+  display: flex;
+  justify-content: center;
 }

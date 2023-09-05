@@ -10,7 +10,7 @@
 .signup-modal > h1 {
   text-align: center;
   font-size: 20pt;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .signup-modal > form {
@@ -28,7 +28,7 @@
 
 .signup-modal span {
   font-size: 12pt;
-  font-weight: 500;
+  font-weight: 400;
   text-align: center;
 }
 
@@ -43,6 +43,11 @@
   font-size: 11pt;
   font-weight: bold;
   box-shadow: 2px 2px 2px black;
+}
+
+.signup-modal button:enabled {
+  background-color: rgb(255, 103, 103);
+  color: white;
 }
 
 .signup-modal__errors {

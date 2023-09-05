@@ -448,8 +448,7 @@ router.get('/:groupId', validateGroupId, async (req, res,) => {
             model: Venue,
             attributes: { exclude: ['createdAt', 'updatedAt'] }
             }
-        ],
-        attributes: { exclude: ['previewImage'] }
+        ]
     });
 
     group.dataValues.numMembers = await Member.count({
