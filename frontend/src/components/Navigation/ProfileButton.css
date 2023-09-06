@@ -23,6 +23,7 @@
   margin-top: 3px;
   margin-bottom: 3px;
   text-align: center;
+  word-wrap: break-word;
 }
 
 .profile-dropdown a {
