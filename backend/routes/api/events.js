@@ -611,7 +611,7 @@ router.get('/:eventId', validateEventId, async (req, res) => {
             attributes: ['id', 'url', 'preview']
             }
         ],
-        attributes: { exclude: ['createdAt', 'updatedAt', 'previewImage'] }
+        attributes: { exclude: ['createdAt', 'updatedAt'] }
     });
 
     event.dataValues.numAttending = await Attendee.count({

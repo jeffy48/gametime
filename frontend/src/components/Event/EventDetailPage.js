@@ -24,7 +24,7 @@ function EventDetailPage() {
   const endDay = localEndDateObj.getDate();
   const endHour = localEndDateObj.getHours();
   const endMin = localEndDateObj.getMinutes();
-  // console.log(details?.Group) // use this data to populate group card (need image, name, and type)
+  console.log('details.group',details) // use this data to populate group card (need image, name, and type)
 
   useEffect(() => {
     dispatch(getDetails(eventId));
@@ -81,7 +81,7 @@ function EventDetailPage() {
       <div className="event-detail__bottom">
         <div className="event-detail__bottom__middle-container">
           <div className="event-detail__bottom__image">
-            <img src={findPreview()}/>
+            <img src={details?.previewImage}/>
           </div>
           <div className="event-detail__bottom__middle-right">
             <NavLink to={`/groups/${details?.Group?.id}`} className="event-detail-group-details">

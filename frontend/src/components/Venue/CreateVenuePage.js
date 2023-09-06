@@ -14,15 +14,12 @@ function CreateVenuePage() {
   const [ lng, setLng ] = useState("");
   const [ errors, setErrors ] = useState({});
   const { groupId } = useParams();
-  // console.log(groupId);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
-    // console.log('submitted')
     dispatch(createVenue(groupId, address, city, state, lat, lng));
-    // console.log(venue);
-    history.push(`/groups/${groupId}/events/new`);
+    history.push(`/groups/${groupId}`);
   };
 
   return (
